@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FlashCards</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="new_deck">New Deck</string>
+    <string name="new_deck_hint">Enter new deck name</string>
+    <string name="create_deck">Create Deck</string>
+
+</resources>
