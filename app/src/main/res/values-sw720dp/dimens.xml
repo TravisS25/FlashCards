@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Universal Settings -->
+    <dimen name="button_width">320dp</dimen>
+    <dimen name="button_height">120dp</dimen>
+    <dimen name="text_size">28sp</dimen>
+    <dimen name="text_size_header">70sp</dimen>
+    <dimen name="text_size_button">40sp</dimen>
+    <dimen name="top_margin">16dp</dimen>
+</resources>

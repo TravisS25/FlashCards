@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="textbox_background">#00000000</color>
+    <color name="scrollview_background">#FFC9C6C7</color>
+</resources>

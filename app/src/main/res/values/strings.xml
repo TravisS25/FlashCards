@@ -7,5 +7,12 @@
     <string name="new_deck">New Deck</string>
     <string name="new_deck_hint">Enter new deck name</string>
     <string name="create_deck">Create Deck</string>
+    <string name="decks">Decks</string>
+
+    <!-- create_card_activity.xml -->
+    <string name="question">Question</string>
+    <string name="answer">Answer</string>
+    <string name="add_card">Add Card</string>
+    <string name="done">Done</string>
 
 </resources>
