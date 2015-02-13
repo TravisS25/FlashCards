@@ -9,10 +9,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Deck Name"
+        android:id="@+id/deck_name"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/text_size_header" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/question"
         android:id="@+id/textView1"
-        android:layout_marginTop="39dp"
-        android:textSize="@dimen/text_size_header"
+        android:layout_marginTop="37dp"
+        android:textSize="@dimen/text_size_small_header"
         android:layout_below="@+id/deck_name"
         android:layout_centerHorizontal="true" />
 
@@ -43,7 +52,7 @@
         android:id="@+id/textView2"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:textSize="@dimen/text_size_header" />
+        android:textSize="@dimen/text_size_small_header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -87,14 +96,6 @@
         android:layout_alignLeft="@+id/add_card_button"
         android:layout_alignStart="@+id/add_card_button" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Deck Name"
-        android:id="@+id/deck_name"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="@dimen/text_size_header" />
 
 
 </RelativeLayout>

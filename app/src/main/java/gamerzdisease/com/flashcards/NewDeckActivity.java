@@ -4,12 +4,9 @@ package gamerzdisease.com.flashcards;
  */
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,28 +15,24 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import gamerzdisease.com.flashcards.deck.Consts;
+import gamerzdisease.com.flashcards.deck.Deck;
 
 public class NewDeckActivity extends Activity {
 
-    public final static String DECKNAME = "gamerzdisease.com.flashcards.DECKNAME";
-    private final static String FILENAME = "decks";
-    private final static String BLANK_DECK_NAME = "You must enter a deck name";
     private final static String DECK_NAME_EXISTS = "That deck name already exists";
+    private final static String DECK_CHARACTERS = "Deck name must contain at least one character";
     private final static String TAG = "NewDeckActivity";
-
     private ArrayList<Deck> deckList;
-
+    private File file;
 
 
     @Override
@@ -47,6 +40,7 @@ public class NewDeckActivity extends Activity {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.new_deck_activity);
+        this.deckList = new ArrayList<>();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,9 +51,6 @@ public class NewDeckActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
 
         switch (item.getItemId())
         {
@@ -72,10 +63,10 @@ public class NewDeckActivity extends Activity {
     }
 
     public void createDeck(View V){
-        if(isDeckNameBlank(getDeckName()))
-            Toast.makeText(this, BLANK_DECK_NAME, Toast.LENGTH_SHORT).show();
-        else if(deckNameExists(getDeckName()))
+        if(deckNameExists(getDeckName()))
             Toast.makeText(this, DECK_NAME_EXISTS, Toast.LENGTH_SHORT).show();
+        else if(!doesDeckHaveCharacters(getDeckName()))
+            Toast.makeText(this, DECK_CHARACTERS, Toast.LENGTH_SHORT).show();
         else {
             try {
                 writeDeckToFile(deckToFile());
@@ -101,51 +92,68 @@ public class NewDeckActivity extends Activity {
         return deck;
     }
 
+
     private boolean deckNameExists(String userDeckName){
         FileInputStream fileInputStream;
         ObjectInputStream objectInputStream;
 
         try {
-            fileInputStream = openFileInput(FILENAME);
+            String filePath = getFilesDir() + "/" + Consts.FILENAME;
+            this.file = new File(filePath);
+            fileInputStream = new FileInputStream(file);
             objectInputStream = new ObjectInputStream(fileInputStream);
-            this.deckList = (ArrayList<Deck>) objectInputStream.readObject();
+            try{
+                this.deckList = (ArrayList<Deck>) objectInputStream.readObject();
 
-            for(Deck deck : this.deckList){
-                String fileDeckName = deck.getName();
-                if(userDeckName.matches(fileDeckName))
-                    return true;
+                for (Deck deck : this.deckList) {
+                    String fileDeckName = deck.getName();
+                    if (userDeckName.matches(fileDeckName))
+                        return true;
+                }
             }
+            finally {
+                fileInputStream.close();
+                objectInputStream.close();
+            }
+
         }
         catch (IOException | ClassNotFoundException ex){
-            ex.getMessage();
+            ex.printStackTrace();
         }
+
         return false;
         }
 
 
+    private boolean doesDeckHaveCharacters(String deckName){
+        String pattern = "^\\d*[a-zA-Z][a-zA-Z0-9]*$";
+        Pattern r = Pattern.compile(pattern);
+        deckName.trim();
+        Matcher m = r.matcher(deckName);
 
-    private boolean isDeckNameBlank(String deckName){
-        if(deckName.matches(""))
-            return true;
-        else
+        if(!m.find())
             return false;
+        else
+            return true;
+
     }
 
     private void writeDeckToFile(Deck deck) throws IOException{
         FileOutputStream fileOutputStream;
         ObjectOutputStream objectOutputStream;
 
-        fileOutputStream = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-        objectOutputStream = new ObjectOutputStream(fileOutputStream);
         this.deckList.add(deck);
+        fileOutputStream = new FileOutputStream(this.file);
+        objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(this.deckList);
         objectOutputStream.flush();
         objectOutputStream.close();
+        fileOutputStream.close();
     }
 
     private void initiateIntent(String deckName){
         Intent intent = new Intent(this, CreateCardActivity.class);
-        intent.putExtra(DECKNAME, deckName);
+        intent.putExtra(Consts.DECKNAME, deckName);
         startActivity(intent);
     }
 

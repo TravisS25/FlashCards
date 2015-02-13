@@ -15,4 +15,11 @@
     <string name="add_card">Add Card</string>
     <string name="done">Done</string>
 
+    <!-- options_activity.xml -->
+    <string name="study_deck">Study Deck</string>
+    <string name="delete_deck">Delete Deck</string>
+    <string name="deck_list">Deck List</string>
+    <string name="grades">Grades</string>
+    <string name="edit_deck">Edit Deck</string>
+
 </resources>

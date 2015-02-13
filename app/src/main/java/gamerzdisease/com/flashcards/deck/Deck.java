@@ -1,4 +1,4 @@
-package gamerzdisease.com.flashcards;
+package gamerzdisease.com.flashcards.deck;
 
 /**
  * Created by Travis on 1/31/2015.
