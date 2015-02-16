@@ -15,6 +15,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.io.BufferedInputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -37,7 +39,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        //createobject();
         initiateDeckFile();
 
         try {
@@ -45,12 +46,7 @@ public class MainActivity extends Activity {
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        ListView listView = (ListView) findViewById(R.id.deck_listview);
-        BaseAdapter deckAdapter = new DeckAdapter(this.deckList);
-        listView.setAdapter(deckAdapter);
-        initiateListener();
-        listView.setOnItemClickListener(this.onItemClickListener);
-
+        initiateListAdapter();
     }
 
     @Override
@@ -84,11 +80,13 @@ public class MainActivity extends Activity {
     private void getDecksFromFile() throws IOException, ClassNotFoundException{
         ObjectInputStream objectInputStream;
         FileInputStream fileInputStream;
+        BufferedInputStream bufferedInputStream;
 
         this.deckList = new ArrayList<>();
         fileInputStream = new FileInputStream(this.file);
-        objectInputStream = new ObjectInputStream(fileInputStream);
-        this.deckList = (ArrayList<Deck>) objectInputStream.readObject();
+        bufferedInputStream = new BufferedInputStream(fileInputStream);
+        objectInputStream = new ObjectInputStream(bufferedInputStream);
+        this.deckList = (ArrayList<Deck>)objectInputStream.readObject();
         objectInputStream.close();
         fileInputStream.close();
 
@@ -99,8 +97,12 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(parent.getContext(), OptionsActivity.class);
+                Deck deck = new Deck(deckList.get(position));
                 String name = deckList.get(position).getName();
+                int pos = position;
+                intent.putExtra(Consts.DECK, deck);
                 intent.putExtra(Consts.DECKNAME, name);
+                intent.putExtra(Consts.POSITION, pos);
                 startActivity(intent);
             }
         };
@@ -123,12 +125,13 @@ public class MainActivity extends Activity {
         catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
-    private void createobject(){
-        this.deckList = new ArrayList<>();
+    private void initiateListAdapter(){
+        ListView listView = (ListView) findViewById(R.id.deck_listview);
+        DeckAdapter deckAdapter = new DeckAdapter(this.deckList);
+        listView.setAdapter(deckAdapter);
+        initiateListener();
+        listView.setOnItemClickListener(this.onItemClickListener);
     }
-
-
 }

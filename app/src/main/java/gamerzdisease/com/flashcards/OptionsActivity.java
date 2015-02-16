@@ -16,15 +16,15 @@ import gamerzdisease.com.flashcards.deck.Consts;
  */
 public class OptionsActivity extends Activity {
 
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.options_activity);
+
         setDeckName();
-
-
     }
 
     @Override
@@ -50,9 +50,13 @@ public class OptionsActivity extends Activity {
         initiateStudyDeckIntent();
     }
 
+    //public void editDeck(View V){initiateEditDeckIntent();}
+
     public void addCard(View v){
         initiateAddCardIntent();
     }
+
+    public void grades(View v){initiateGradeIntent();}
 
 
 
@@ -73,5 +77,19 @@ public class OptionsActivity extends Activity {
         TextView textView = (TextView) findViewById(R.id.deck_name);
         textView.setText(deckName);
     }
+/*
+    private void initiateEditDeckIntent(){
+        Bundle intent = getIntent().getExtras();
+        this.intent = new Intent(this, EditDeckActivity.class);
+        intent.putExtra
+        startActivity(intent);
+    }
+*/
+    private void initiateGradeIntent(){
+        this.intent = new Intent(this, GradeActivity.class);
+        startActivity(intent);
+    }
+
+
 
 }

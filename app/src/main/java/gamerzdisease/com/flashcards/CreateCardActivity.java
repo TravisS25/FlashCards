@@ -29,8 +29,6 @@ import gamerzdisease.com.flashcards.deck.Deck;
 
 public class CreateCardActivity extends Activity {
 
-    private final static String BACK_BUTTON = "Press done to finish creating deck";
-    private final static  String MESSAGE = "You must enter text in the question and answer textbox";
     private ArrayList<Deck> deckList;
     private Deck deck;
 
@@ -69,12 +67,12 @@ public class CreateCardActivity extends Activity {
 
     @Override
     public void onBackPressed(){
-        Toast.makeText(this, BACK_BUTTON, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, Consts.BACK_BUTTON, Toast.LENGTH_SHORT).show();
     }
 
     public void addCardToDeck(View V){
         if(!isEditBoxesFilled())
-            Toast.makeText(this, MESSAGE, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, Consts.MESSAGE, Toast.LENGTH_SHORT).show();
 
     }
 

@@ -1,28 +1,22 @@
 package gamerzdisease.com.flashcards;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.FileInputStream;
-import java.util.ArrayList;
-
-import gamerzdisease.com.flashcards.deck.Deck;
-
 /**
- * Created by Travis on 2/10/2015.
+ * Created by Travis on 2/13/2015.
  */
-public class EditDeckActivity extends Activity {
+public class GradeActivity extends Activity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        setContentView(R.layout.edit_deck_activity);
+        setContentView(R.layout.grades_activity);
     }
 
     @Override
@@ -34,15 +28,13 @@ public class EditDeckActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
-
-//=================================================================================================
 
 }

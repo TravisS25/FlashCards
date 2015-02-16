@@ -20,8 +20,7 @@ public class DeckAdapter extends BaseAdapter {
     ArrayList<Deck> deckList;
 
     public DeckAdapter(ArrayList<Deck> deckList) {
-        this.deckList = new ArrayList<>();
-        this.deckList = deckList;
+        this.deckList = new ArrayList<>(deckList);
     }
 
     @Override
@@ -54,4 +53,5 @@ public class DeckAdapter extends BaseAdapter {
         }
         return convertView;
     }
+
 }

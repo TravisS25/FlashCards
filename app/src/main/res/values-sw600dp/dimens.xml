@@ -4,6 +4,7 @@
     <dimen name="button_width">250dp</dimen>
     <dimen name="button_height">100dp</dimen>
     <dimen name="text_size">22sp</dimen>
+    <dimen name="text_size_smaller_header">26sp</dimen>
     <dimen name="text_size_small_header">35sp</dimen>
     <dimen name="text_size_header">50sp</dimen>
     <dimen name="text_size_button">30sp</dimen>
