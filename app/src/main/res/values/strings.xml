@@ -22,4 +22,10 @@
     <string name="grades">Grades</string>
     <string name="edit_deck">Edit Deck</string>
 
+    <!-- edit_deck_table_activitytivity.xml -->
+    <string name="options">Options</string>
+
+    <!-- edit_card_activity.xml -->
+    <string name="edit_card">Edit Card</string>
+
 </resources>

@@ -10,24 +10,27 @@ import android.util.Log;
 import java.io.Serializable;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
-public class Deck implements Parcelable {
+public class Deck implements Parcelable, Serializable {
 
     private final static String TAG = "DECK";
 
     private String name;
-    private HashMap<String, String> card;
+    private LinkedHashMap<String, String> cards;
 
-    public Deck(){}
+    public Deck(){
+        this.cards = new LinkedHashMap();
+    }
 
     public Deck(Deck deck){
         this.name = deck.name;
-        this.card = new HashMap<>(deck.card);
+        this.cards = new LinkedHashMap(deck.cards);
     }
 
     public Deck(Parcel p){
         this.name = p.readString();
-        this.card = p.readHashMap(this.card.getClass().getClassLoader());
+        this.cards = (LinkedHashMap)p.readHashMap(this.cards.getClass().getClassLoader());
     }
 
     @Override
@@ -38,7 +41,7 @@ public class Deck implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
-        dest.writeMap(this.card);
+        dest.writeMap(this.cards);
     }
 
     public static final Creator<Deck> CREATOR = new Creator<Deck>() {
@@ -61,12 +64,12 @@ public class Deck implements Parcelable {
         this.name = name;
     }
 
-    public HashMap<String, String> getCard(){
-        return this.card;
+    public HashMap<String, String> getCards(){
+        return this.cards;
     }
 
     public void setCard(String key, String value){
-        this.card.put(key, value);
+        this.cards.put(key, value);
     }
 
 }

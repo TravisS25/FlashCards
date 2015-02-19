@@ -6,6 +6,7 @@ package gamerzdisease.com.flashcards;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -26,24 +27,18 @@ import java.util.ArrayList;
 
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
+import gamerzdisease.com.flashcards.deck.DeckHolder;
 
 public class CreateCardActivity extends Activity {
 
-    private ArrayList<Deck> deckList;
-    private Deck deck;
+    private DeckHolder deckInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_card_activity);
         setDeckName();
-        try {
-            initiateDeck();
-        }
-        catch (IOException | ClassNotFoundException ex){
-            ex.printStackTrace();
-        }
-
+        deckInfo = (DeckHolder)getApplication();
     }
 
     @Override
@@ -73,11 +68,21 @@ public class CreateCardActivity extends Activity {
     public void addCardToDeck(View V){
         if(!isEditBoxesFilled())
             Toast.makeText(this, Consts.MESSAGE, Toast.LENGTH_SHORT).show();
+        else {
+            this.deckInfo.addCardToDeck(getQuestionEdit(), getAnswerEdit());
+            clearEditBoxes();
+        }
 
     }
 
     public void toDeckTable(View v){
-        initiateIntent();
+        try {
+            this.deckInfo.writeDeckToFile();
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+        initiateMainActivityIntent();
     }
 
     //==============================================================================================
@@ -87,11 +92,6 @@ public class CreateCardActivity extends Activity {
         String deckName = intent.getStringExtra(Consts.DECKNAME);
         TextView textView = (TextView) findViewById(R.id.deck_name);
         textView.setText(deckName);
-    }
-
-    private String getDeckName(){
-        Intent intent = getIntent();
-        return intent.getStringExtra(Consts.DECKNAME);
     }
 
     private boolean isEditBoxesFilled(){
@@ -105,38 +105,10 @@ public class CreateCardActivity extends Activity {
             return true;
     }
 
-    private void initiateIntent(){
+    private void initiateMainActivityIntent(){
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-    }
-/*
-    private void addCardToDeck() throws IOException, ClassNotFoundException {
-        String questionText;
-        String answerText;
-
-        for(int i = 0; i < this.deckList.size(); i++){
-
-        }
-
-
-        this.deckList.add()
-    }
-*/
-    private void initiateDeck() throws IOException, ClassNotFoundException{
-        File file;
-        FileInputStream fileInputStream;
-        ObjectInputStream objectInputStream;
-        String filePath;
-
-        filePath = getFilesDir() + "/" + Consts.FILENAME;
-        file = new File(filePath);
-        fileInputStream = new FileInputStream(file);
-        objectInputStream = new ObjectInputStream(fileInputStream);
-        this.deck = new Deck();
-        this.deckList = new ArrayList<>();
-        this.deckList = (ArrayList<Deck>) objectInputStream.readObject();
-
     }
 
     private String getQuestionEdit(){
@@ -150,5 +122,11 @@ public class CreateCardActivity extends Activity {
         return answerEdit.getText().toString();
     }
 
+    private void clearEditBoxes(){
+        EditText questionEdit = (EditText)findViewById(R.id.question_edit);
+        questionEdit.setText("");
+        EditText answerEdt = (EditText)findViewById(R.id.answer_edit);
+        answerEdt.setText("");
+    }
 
 }

@@ -16,7 +16,7 @@ import gamerzdisease.com.flashcards.deck.Consts;
  */
 public class OptionsActivity extends Activity {
 
-    Intent intent;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class OptionsActivity extends Activity {
         initiateStudyDeckIntent();
     }
 
-    //public void editDeck(View V){initiateEditDeckIntent();}
+    public void editDeck(View V){initiateEditDeckIntent();}
 
     public void addCard(View v){
         initiateAddCardIntent();
@@ -62,34 +62,30 @@ public class OptionsActivity extends Activity {
 
 //=================================================================================================
     private void initiateStudyDeckIntent(){
-        Intent intent = new Intent(this, StudyDeckActivity.class);
+        this.intent = new Intent(this, StudyDeckActivity.class);
         startActivity(intent);
     }
 
     private void initiateAddCardIntent(){
-        Intent intent = new Intent(this, CreateCardActivity.class);
+        this.intent = new Intent(this, CreateCardActivity.class);
         startActivity(intent);
     }
 
-    private void setDeckName(){
-        Intent intent = getIntent();
-        String deckName = intent.getStringExtra(Consts.DECKNAME);
-        TextView textView = (TextView) findViewById(R.id.deck_name);
-        textView.setText(deckName);
-    }
-/*
     private void initiateEditDeckIntent(){
-        Bundle intent = getIntent().getExtras();
-        this.intent = new Intent(this, EditDeckActivity.class);
-        intent.putExtra
-        startActivity(intent);
+        this.intent = new Intent(this, EditDeckTableActivity.class);
+        startActivity(this.intent);
     }
-*/
+
     private void initiateGradeIntent(){
         this.intent = new Intent(this, GradeActivity.class);
         startActivity(intent);
     }
 
-
+    private void setDeckName(){
+        this.intent = getIntent();
+        String deckName = intent.getStringExtra(Consts.DECKNAME);
+        TextView textView = (TextView) findViewById(R.id.deck_name);
+        textView.setText(deckName);
+    }
 
 }

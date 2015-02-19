@@ -3,6 +3,7 @@
     package="gamerzdisease.com.flashcards" >
 
     <application
+        android:name=".deck.DeckHolder"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -42,6 +43,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
+        </activity>
+
+        <activity
+            android:name=".EditDeckTableActivity"
+            android:label="@string/options"
+            android:parentActivityName=".OptionsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OptionsActivity"/>
         </activity>
 
     </application>

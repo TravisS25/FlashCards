@@ -25,22 +25,19 @@ import java.util.regex.Pattern;
 
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
+import gamerzdisease.com.flashcards.deck.DeckHolder;
 
 public class NewDeckActivity extends Activity {
 
-    private final static String DECK_NAME_EXISTS = "That deck name already exists";
-    private final static String DECK_CHARACTERS = "Deck name must contain at least one character";
     private final static String TAG = "NewDeckActivity";
-    private ArrayList<Deck> deckList;
-    private File file;
-
+    private DeckHolder deckInfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.new_deck_activity);
-        this.deckList = new ArrayList<>();
+        deckInfo = (DeckHolder)getApplication();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -64,17 +61,11 @@ public class NewDeckActivity extends Activity {
 
     public void createDeck(View V){
         if(deckNameExists(getDeckName()))
-            Toast.makeText(this, DECK_NAME_EXISTS, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, Consts.DECK_NAME_EXISTS, Toast.LENGTH_SHORT).show();
         else if(!doesDeckHaveCharacters(getDeckName()))
-            Toast.makeText(this, DECK_CHARACTERS, Toast.LENGTH_SHORT).show();
-        else {
-            try {
-                writeDeckToFile(deckToFile());
-                initiateIntent(getDeckName());
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+            Toast.makeText(this, Consts.DECK_CHARACTERS, Toast.LENGTH_SHORT).show();
+        else
+            initiateNewCardIntent(getDeckName());
 
     }
 
@@ -85,45 +76,14 @@ public class NewDeckActivity extends Activity {
         return deckEditText.getText().toString();
     }
 
-    private Deck deckToFile(){
-        Deck deck = new Deck();
-
-        deck.setName(getDeckName());
-        return deck;
-    }
-
-
     private boolean deckNameExists(String userDeckName){
-        FileInputStream fileInputStream;
-        ObjectInputStream objectInputStream;
-
-        try {
-            String filePath = getFilesDir() + "/" + Consts.FILENAME;
-            this.file = new File(filePath);
-            fileInputStream = new FileInputStream(file);
-            objectInputStream = new ObjectInputStream(fileInputStream);
-            try{
-                this.deckList = (ArrayList<Deck>) objectInputStream.readObject();
-
-                for (Deck deck : this.deckList) {
-                    String fileDeckName = deck.getName();
-                    if (userDeckName.matches(fileDeckName))
-                        return true;
-                }
-            }
-            finally {
-                fileInputStream.close();
-                objectInputStream.close();
-            }
-
+        for(Deck deck : this.deckInfo.getDeckList()){
+            String fileDeckName = deck.getName();
+            if (userDeckName.matches(fileDeckName))
+                return true;
         }
-        catch (IOException | ClassNotFoundException ex){
-            ex.printStackTrace();
-        }
-
         return false;
-        }
-
+    }
 
     private boolean doesDeckHaveCharacters(String deckName){
         String pattern = "^\\d*[a-zA-Z][a-zA-Z0-9]*$";
@@ -138,21 +98,9 @@ public class NewDeckActivity extends Activity {
 
     }
 
-    private void writeDeckToFile(Deck deck) throws IOException{
-        FileOutputStream fileOutputStream;
-        ObjectOutputStream objectOutputStream;
-
-        this.deckList.add(deck);
-        fileOutputStream = new FileOutputStream(this.file);
-        objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(this.deckList);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-        fileOutputStream.close();
-    }
-
-    private void initiateIntent(String deckName){
+    private void initiateNewCardIntent(String deckName){
         Intent intent = new Intent(this, CreateCardActivity.class);
+        this.deckInfo.saveDeckName(deckName);
         intent.putExtra(Consts.DECKNAME, deckName);
         startActivity(intent);
     }

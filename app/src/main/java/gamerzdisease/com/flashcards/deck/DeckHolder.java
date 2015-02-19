@@ -6,8 +6,11 @@ import android.util.Log;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,11 +21,15 @@ public class DeckHolder extends Application {
 
     private ArrayList<Deck> deckList;
     private File file;
+    private Deck deck;
+    private int position;
     private final static String TAG = "Deckholder";
 
     @Override
     public void onCreate(){
         super.onCreate();
+        Log.d(TAG, "onCreate called");
+        initiateMainObjects();
         initiateDeckFile();
         try {
             getDecksFromFile();
@@ -33,9 +40,55 @@ public class DeckHolder extends Application {
 
     }
 
-    public void saveDeckName(Deck deckName){
+    public void saveDeckName(String deckName){
+        this.deck = new Deck();
+        this.deck.setName(deckName);
+    }
+
+    public void setPosition(int position){
+        this.position = position;
+    }
+
+    public int getPosition(){
+        return this.position;
+    }
+
+    public ArrayList<Deck> getDeckList(){
+        return this.deckList;
+    }
+
+    public void writeDeckToFile() throws IOException{
+        FileOutputStream fileOutputStream;
+        ObjectOutputStream objectOutputStream;
+
+        this.deckList.add(this.deck);
+        fileOutputStream = new FileOutputStream(this.file);
+        objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(this.deckList);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+        fileOutputStream.close();
+    }
+
+    public void getDecksFromFile() throws IOException, ClassNotFoundException{
+        ObjectInputStream objectInputStream;
+        FileInputStream fileInputStream;
+        BufferedInputStream bufferedInputStream;
+
+        fileInputStream = new FileInputStream(this.file);
+        bufferedInputStream = new BufferedInputStream(fileInputStream);
+        objectInputStream = new ObjectInputStream(bufferedInputStream);
+        this.deckList = (ArrayList<Deck>)objectInputStream.readObject();
+        objectInputStream.close();
+        fileInputStream.close();
 
     }
+
+    public void addCardToDeck(String question, String answer){
+        this.deck.setCard(question, answer);
+    }
+
+
 
 //==================================================================================================
 
@@ -53,18 +106,8 @@ public class DeckHolder extends Application {
         }
     }
 
-    private void getDecksFromFile() throws IOException, ClassNotFoundException{
-        ObjectInputStream objectInputStream;
-        FileInputStream fileInputStream;
-        BufferedInputStream bufferedInputStream;
-
+    private void initiateMainObjects(){
         this.deckList = new ArrayList<>();
-        fileInputStream = new FileInputStream(this.file);
-        bufferedInputStream = new BufferedInputStream(fileInputStream);
-        objectInputStream = new ObjectInputStream(bufferedInputStream);
-        this.deckList = (ArrayList<Deck>)objectInputStream.readObject();
-        objectInputStream.close();
-        fileInputStream.close();
-
     }
+
 }

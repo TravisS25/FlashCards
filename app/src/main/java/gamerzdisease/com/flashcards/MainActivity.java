@@ -26,27 +26,22 @@ import java.util.ArrayList;
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckAdapter;
+import gamerzdisease.com.flashcards.deck.DeckHolder;
 
 
 public class MainActivity extends Activity {
 
     private final static String TAG = "MainActivity";
     private AdapterView.OnItemClickListener onItemClickListener;
-    private File file;
-    private ArrayList<Deck> deckList;
+    private DeckHolder deckInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        initiateDeckFile();
-
-        try {
-            getDecksFromFile();
-        } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
+        this.deckInfo = (DeckHolder)getApplication();
         initiateListAdapter();
+        Log.d(TAG, "onCreate called");
     }
 
     @Override
@@ -71,38 +66,44 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d(TAG, "onResume called");
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.d(TAG, "onPause Called");
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.d(TAG, "onStop called");
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        Log.d(TAG, "onDestroy called");
+    }
+
     public void newDeck(View V) {
         initiateNewDeckIntent();
     }
 
     //==============================================================================================
 
-    private void getDecksFromFile() throws IOException, ClassNotFoundException{
-        ObjectInputStream objectInputStream;
-        FileInputStream fileInputStream;
-        BufferedInputStream bufferedInputStream;
-
-        this.deckList = new ArrayList<>();
-        fileInputStream = new FileInputStream(this.file);
-        bufferedInputStream = new BufferedInputStream(fileInputStream);
-        objectInputStream = new ObjectInputStream(bufferedInputStream);
-        this.deckList = (ArrayList<Deck>)objectInputStream.readObject();
-        objectInputStream.close();
-        fileInputStream.close();
-
-    }
-
     private void initiateListener(){
        onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(parent.getContext(), OptionsActivity.class);
-                Deck deck = new Deck(deckList.get(position));
-                String name = deckList.get(position).getName();
-                int pos = position;
-                intent.putExtra(Consts.DECK, deck);
+                String name = deckInfo.getDeckList().get(position).getName();
+                deckInfo.setPosition(position);
                 intent.putExtra(Consts.DECKNAME, name);
-                intent.putExtra(Consts.POSITION, pos);
                 startActivity(intent);
             }
         };
@@ -113,25 +114,18 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    private void initiateDeckFile() {
-        String filePath = this.getFilesDir() + "/" + Consts.FILENAME;
-        file = new File(filePath);
-        try {
-            if (this.file.createNewFile())
-                Log.d(TAG, "Created file");
-            else
-                Log.d(TAG, "File already exists");
-        }
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     private void initiateListAdapter(){
         ListView listView = (ListView) findViewById(R.id.deck_listview);
-        DeckAdapter deckAdapter = new DeckAdapter(this.deckList);
+        try {
+            this.deckInfo.getDecksFromFile();
+        }
+        catch (IOException | ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
+        DeckAdapter deckAdapter = new DeckAdapter(this.deckInfo.getDeckList());
         listView.setAdapter(deckAdapter);
         initiateListener();
         listView.setOnItemClickListener(this.onItemClickListener);
     }
+
 }
