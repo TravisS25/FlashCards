@@ -24,11 +24,11 @@
         android:layout_height="@dimen/button_height"
         android:text="@string/create_deck"
         android:id="@+id/button2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:textSize="@dimen/text_size_button"
         android:clickable="true"
-        android:onClick="createDeck"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+        android:onClick="createDeck" />
 
 </RelativeLayout>

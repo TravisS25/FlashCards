@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout2"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
@@ -22,42 +22,40 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout">
-
+        android:layout_below="@+id/linearLayout2">
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout"
             android:id="@+id/tableLayout">
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:clickable="true"
-                android:onClick="studyDeck">
-                <LinearLayout
+                <TableRow android:layout_marginTop="@dimen/row_margin"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/study"
-                        android:contentDescription="study"
-                        android:adjustViewBounds="false" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/study_deck"
-                        android:id="@+id/study_deck_text"
-                        android:textSize="@dimen/text_size_small_header"
-                        android:clickable="false"
-                        android:layout_marginTop="@dimen/image_top_margin2"
-                        android:layout_marginLeft="@dimen/image_left_margin" />
-                </LinearLayout>
-            </TableRow>
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:onClick="studyDeck">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/study"
+                            android:contentDescription="study"
+                            android:adjustViewBounds="false" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/study_deck"
+                            android:id="@+id/study_deck_text"
+                            android:textSize="@dimen/text_size_small_header"
+                            android:clickable="false"
+                            android:layout_marginTop="@dimen/image_top_margin2"
+                            android:layout_marginLeft="@dimen/image_left_margin" />
+                    </LinearLayout>
+                </TableRow>
 
 
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
+            <TableRow android:layout_marginTop="@dimen/row_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -85,7 +83,7 @@
                 </LinearLayout>
             </TableRow>
 
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
+            <TableRow android:layout_marginTop="@dimen/row_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -112,7 +110,7 @@
                 </LinearLayout>
             </TableRow>
 
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
+            <TableRow android:layout_marginTop="@dimen/row_margin"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,11 +132,12 @@
                         android:id="@+id/grades_text"
                         android:clickable="false"
                         android:textSize="@dimen/text_size_small_header"
-                        android:layout_marginTop="@dimen/image_top_margin1"
+                        android:layout_marginTop="@dimen/image_top_margin2"
                         android:layout_marginLeft="@dimen/image_left_margin" />
                 </LinearLayout>
             </TableRow>
 
         </TableLayout>
     </ScrollView>
+
 </RelativeLayout>

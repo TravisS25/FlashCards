@@ -31,11 +31,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/question_edit"
-        android:lines="4"
-        android:minLines="4"
-        android:maxLines="4"
+        android:lines="@integer/textbox_lines_port"
+        android:minLines="@integer/textbox_lines_port"
+        android:maxLines="@integer/textbox_lines_port"
         android:gravity="top"
-        android:background="@color/scrollview_background"
+        android:background="@color/textbox_background"
         android:layout_below="@+id/textView6"
         android:layout_alignLeft="@+id/answer_edit"
         android:layout_alignStart="@+id/answer_edit" />
@@ -54,33 +54,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/answer_edit"
-        android:lines="4"
-        android:maxLines="4"
-        android:minLines="4"
+        android:lines="@integer/textbox_lines_port"
+        android:maxLines="@integer/textbox_lines_port"
+        android:minLines="@integer/textbox_lines_port"
         android:gravity="top"
-        android:background="@color/scrollview_background"
+        android:background="@color/textbox_background"
         android:layout_below="@+id/textView7"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_height_small"
         android:text="@string/add_card"
         android:id="@+id/button4"
-        android:layout_below="@+id/answer_edit"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
         android:clickable="true"
-        android:onClick="addCard" />
+        android:onClick="addCard"
+        android:layout_above="@+id/button5"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_height_small"
         android:text="@string/done"
         android:id="@+id/button5"
-        android:layout_below="@+id/button4"
-        android:layout_alignLeft="@+id/button4"
-        android:layout_alignStart="@+id/button4"
         android:clickable="true"
-        android:onClick="toDeckTable" />
+        android:onClick="toDeckTable"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/button4"
+        android:layout_alignStart="@+id/button4" />
 </RelativeLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="gamerzdisease.com.flashcards" >
-
+    <uses-sdk android:minSdkVersion="15" />
     <application
         android:name=".deck.DeckHolder"
         android:allowBackup="true"
@@ -30,10 +30,7 @@
         <activity
             android:name=".CreateCardActivity"
             android:label="@string/create_deck"
-            android:parentActivityName=".NewDeckActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NewDeckActivity"/>
+            android:windowSoftInputMode="adjustPan">
         </activity>
 
         <activity

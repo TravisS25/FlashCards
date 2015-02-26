@@ -5,19 +5,19 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Universal Settings -->
-    <dimen name="button_width">250dp</dimen>
-    <dimen name="button_height">100dp</dimen>
-    <dimen name="button_height_small">80dp</dimen>
-    <dimen name="button_height_smaller">65dp</dimen>
-    <dimen name="text_size_button">30sp</dimen>
+    <dimen name="button_width">150dp</dimen>
+    <dimen name="button_height">70dp</dimen>
+    <dimen name="button_height_small">40dp</dimen>
+    <dimen name="text_size_button">20sp</dimen>
 
-    <!-- create_card_activity.xml -->
+    <!-- main_activity.xml -->
 
 
-    <dimen name="text_size">22sp</dimen>
-    <dimen name="text_size_smaller_header">26sp</dimen>
-    <dimen name="text_size_small_header">35sp</dimen>
-    <dimen name="text_size_header">50sp</dimen>
+    <dimen name="text_size">18sp</dimen>
+    <dimen name="text_size_smaller_header">18sp</dimen>
+    <dimen name="text_size_small_header">28sp</dimen>
+    <dimen name="text_size_header">35sp</dimen>
+
     <dimen name="top_margin">12dp</dimen>
 
     <!-- options_activity.xml -->

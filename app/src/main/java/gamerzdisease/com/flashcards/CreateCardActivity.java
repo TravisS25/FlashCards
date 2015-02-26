@@ -7,11 +7,19 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Point;
+import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,14 +39,16 @@ import gamerzdisease.com.flashcards.deck.DeckHolder;
 
 public class CreateCardActivity extends Activity {
 
-    private DeckHolder deckInfo;
+    private DeckHolder mDeckInfo;
+    private double mDpHeight;
+    private final static String TAG = "CreateCardActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_card_activity);
         setDeckName();
-        deckInfo = (DeckHolder)getApplication();
+        mDeckInfo = (DeckHolder) getApplication();
     }
 
     @Override
@@ -50,36 +60,28 @@ public class CreateCardActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()){
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-
-        }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         Toast.makeText(this, Consts.BACK_BUTTON, Toast.LENGTH_SHORT).show();
     }
 
-    public void addCardToDeck(View V){
-        if(!isEditBoxesFilled())
+    public void addCardToDeck(View V) {
+        if (!isEditBoxesFilled())
             Toast.makeText(this, Consts.MESSAGE, Toast.LENGTH_SHORT).show();
         else {
-            this.deckInfo.addCardToDeck(getQuestionEdit(), getAnswerEdit());
+            mDeckInfo.addCardToDeck(getQuestionEdit(), getAnswerEdit());
             clearEditBoxes();
         }
 
     }
 
-    public void toDeckTable(View v){
+    public void toDeckTable(View v) {
         try {
-            this.deckInfo.writeDeckToFile();
-        }
-        catch (IOException ex){
+            mDeckInfo.writeDeckToFile();
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         initiateMainActivityIntent();
@@ -87,46 +89,56 @@ public class CreateCardActivity extends Activity {
 
     //==============================================================================================
 
-    private void setDeckName(){
+    private void setDeckName() {
         Intent intent = getIntent();
         String deckName = intent.getStringExtra(Consts.DECKNAME);
         TextView textView = (TextView) findViewById(R.id.deck_name);
         textView.setText(deckName);
     }
 
-    private boolean isEditBoxesFilled(){
+    private boolean isEditBoxesFilled() {
 
         String questionText = getQuestionEdit();
         String answerText = getAnswerEdit();
 
-        if(questionText.matches("") || answerText.matches(""))
+        if (questionText.matches("") || answerText.matches(""))
             return false;
         else
             return true;
     }
 
-    private void initiateMainActivityIntent(){
+    private void initiateMainActivityIntent() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
-    private String getQuestionEdit(){
-       EditText questionEdit = (EditText)findViewById(R.id.question_edit);
-       return questionEdit.getText().toString();
+    private String getQuestionEdit() {
+        EditText questionEdit = (EditText) findViewById(R.id.question_edit);
+        return questionEdit.getText().toString();
 
     }
 
-    private String getAnswerEdit(){
-        EditText answerEdit = (EditText)findViewById(R.id.answer_edit);
+    private String getAnswerEdit() {
+        EditText answerEdit = (EditText) findViewById(R.id.answer_edit);
         return answerEdit.getText().toString();
     }
 
-    private void clearEditBoxes(){
+    private void clearEditBoxes() {
         EditText questionEdit = (EditText)findViewById(R.id.question_edit);
         questionEdit.setText("");
         EditText answerEdt = (EditText)findViewById(R.id.answer_edit);
         answerEdt.setText("");
     }
 
+    private void setDensityPixels(){
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        mDpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        Log.d(TAG, "Density height: " + mDpHeight);
+    }
+
+
+
 }
+
+
