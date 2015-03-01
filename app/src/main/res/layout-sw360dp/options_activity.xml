@@ -27,12 +27,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tableLayout">
-                <TableRow android:layout_marginTop="@dimen/row_margin"
+                <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:clickable="true"
-                    android:onClick="studyDeck">
+                    android:onClick="studyDeck"
+                    android:layout_marginTop="@dimen/row_margin">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -49,7 +50,7 @@
                             android:id="@+id/study_deck_text"
                             android:textSize="@dimen/text_size_small_header"
                             android:clickable="false"
-                            android:layout_marginTop="@dimen/image_top_margin2"
+                            android:layout_marginTop="@dimen/image_top_margin"
                             android:layout_marginLeft="@dimen/image_left_margin" />
                     </LinearLayout>
                 </TableRow>
@@ -78,7 +79,7 @@
                         android:textSize="@dimen/text_size_small_header"
                         android:clickable="false"
                         android:gravity="center"
-                        android:layout_marginTop="@dimen/image_top_margin2"
+                        android:layout_marginTop="@dimen/image_top_margin"
                         android:layout_marginLeft="@dimen/image_left_margin" />
                 </LinearLayout>
             </TableRow>
@@ -105,7 +106,7 @@
                         android:id="@+id/add_card_text"
                         android:clickable="false"
                         android:textSize="@dimen/text_size_small_header"
-                        android:layout_marginTop="@dimen/image_top_margin2"
+                        android:layout_marginTop="@dimen/image_top_margin1"
                         android:layout_marginLeft="@dimen/image_left_margin" />
                 </LinearLayout>
             </TableRow>
@@ -132,7 +133,7 @@
                         android:id="@+id/grades_text"
                         android:clickable="false"
                         android:textSize="@dimen/text_size_small_header"
-                        android:layout_marginTop="@dimen/image_top_margin2"
+                        android:layout_marginTop="@dimen/image_top_margin1"
                         android:layout_marginLeft="@dimen/image_left_margin" />
                 </LinearLayout>
             </TableRow>

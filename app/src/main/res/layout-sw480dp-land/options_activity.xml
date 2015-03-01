@@ -44,7 +44,8 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/study"
                         android:contentDescription="study"
-                        android:adjustViewBounds="false" />
+                        android:adjustViewBounds="false"
+                        android:layout_marginTop="@dimen/image_top_margin2" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -52,7 +53,6 @@
                         android:id="@+id/study_deck_text"
                         android:textSize="@dimen/text_size_small_header"
                         android:clickable="false"
-                        android:layout_marginTop="@dimen/image_top_margin"
                         android:layout_marginLeft="@dimen/image_left_margin" />
                 </LinearLayout>
             </TableRow>
@@ -72,7 +72,8 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/edit"
                         android:contentDescription="edit"
-                        android:adjustViewBounds="false" />
+                        android:adjustViewBounds="false"
+                        android:layout_marginTop="@dimen/image_top_margin1" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -81,7 +82,6 @@
                         android:textSize="@dimen/text_size_small_header"
                         android:clickable="false"
                         android:gravity="center"
-                        android:layout_marginTop="@dimen/image_top_margin1"
                         android:layout_marginLeft="@dimen/image_left_margin" />
                 </LinearLayout>
             </TableRow>
@@ -100,7 +100,8 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/add"
                         android:contentDescription="add"
-                        android:adjustViewBounds="false" />
+                        android:adjustViewBounds="false"
+                        android:layout_marginTop="@dimen/image_top_margin1" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -108,7 +109,6 @@
                         android:id="@+id/add_card_text"
                         android:clickable="false"
                         android:textSize="@dimen/text_size_small_header"
-                        android:layout_marginTop="@dimen/image_top_margin1"
                         android:layout_marginLeft="@dimen/image_left_margin" />
                 </LinearLayout>
             </TableRow>
@@ -127,7 +127,8 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/checkmark"
                         android:contentDescription="add"
-                        android:adjustViewBounds="false"/>
+                        android:adjustViewBounds="false"
+                        android:layout_marginTop="@dimen/image_top_margin1" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -135,7 +136,6 @@
                         android:id="@+id/grades_text"
                         android:clickable="false"
                         android:textSize="@dimen/text_size_small_header"
-                        android:layout_marginTop="@dimen/image_top_margin1"
                         android:layout_marginLeft="@dimen/image_left_margin" />
                 </LinearLayout>
             </TableRow>

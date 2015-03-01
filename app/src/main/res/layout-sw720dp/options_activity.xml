@@ -42,7 +42,7 @@
                         android:src="@drawable/study"
                         android:contentDescription="study"
                         android:adjustViewBounds="false"
-                        android:layout_marginTop="@dimen/image_top_margin1" />
+                        android:layout_marginTop="@dimen/image_top_margin2" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                         android:src="@drawable/edit"
                         android:contentDescription="edit"
                         android:adjustViewBounds="false"
-                        android:layout_marginTop="@dimen/image_top_margin1" />
+                        android:layout_marginTop="@dimen/image_top_margin2" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                         android:src="@drawable/add"
                         android:contentDescription="add"
                         android:adjustViewBounds="false"
-                        android:layout_marginTop="@dimen/image_top_margin1" />
+                        android:layout_marginTop="@dimen/image_top_margin2" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                         android:src="@drawable/checkmark"
                         android:contentDescription="add"
                         android:adjustViewBounds="false"
-                        android:layout_marginTop="@dimen/image_top_margin1" />
+                        android:layout_marginTop="@dimen/image_top_margin2" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

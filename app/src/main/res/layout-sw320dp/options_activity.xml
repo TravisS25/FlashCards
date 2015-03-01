@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout2"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
@@ -22,15 +22,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout"
-        android:fadeScrollbars="false">
-
+        android:layout_below="@+id/linearLayout2">
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout"
             android:id="@+id/tableLayout">
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
+            <TableRow android:layout_marginTop="@dimen/row_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -58,7 +55,7 @@
             </TableRow>
 
 
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
+            <TableRow android:layout_marginTop="@dimen/row_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -86,7 +83,7 @@
                 </LinearLayout>
             </TableRow>
 
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
+            <TableRow android:layout_marginTop="@dimen/row_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -113,7 +110,7 @@
                 </LinearLayout>
             </TableRow>
 
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
+            <TableRow android:layout_marginTop="@dimen/row_margin"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -142,4 +139,5 @@
 
         </TableLayout>
     </ScrollView>
+
 </RelativeLayout>

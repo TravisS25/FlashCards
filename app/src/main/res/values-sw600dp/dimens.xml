@@ -8,22 +8,21 @@
     <dimen name="button_width">250dp</dimen>
     <dimen name="button_height">100dp</dimen>
     <dimen name="button_height_small">80dp</dimen>
-    <dimen name="button_height_smaller">65dp</dimen>
+    <dimen name="button_height_smaller">60dp</dimen>
+    <dimen name="button_height_smallest">55dp</dimen>
     <dimen name="text_size_button">30sp</dimen>
 
-    <!-- create_card_activity.xml -->
-
-
     <dimen name="text_size">22sp</dimen>
-    <dimen name="text_size_smaller_header">26sp</dimen>
-    <dimen name="text_size_small_header">35sp</dimen>
-    <dimen name="text_size_header">50sp</dimen>
+    <dimen name="text_size_smaller_header">40sp</dimen>
+    <dimen name="text_size_small_header">55sp</dimen>
+    <dimen name="text_size_header">70sp</dimen>
     <dimen name="top_margin">12dp</dimen>
 
     <!-- options_activity.xml -->
     <dimen name="row_margin">100dp</dimen>
     <dimen name="row_margin_land">40dp</dimen>
-    <dimen name="image_top_margin1">3dp</dimen>
-    <dimen name="image_top_margin2">6dp</dimen>
-    <dimen name="image_left_margin">4dp</dimen>
+    <dimen name="image_top_margin">5dp</dimen>
+    <dimen name="image_top_margin1">9dp</dimen>
+    <dimen name="image_top_margin2">13dp</dimen>
+    <dimen name="image_left_margin">10dp</dimen>
 </resources>

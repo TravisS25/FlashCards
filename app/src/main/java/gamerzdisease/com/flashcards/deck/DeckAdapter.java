@@ -1,6 +1,7 @@
 package gamerzdisease.com.flashcards.deck;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,6 +19,7 @@ import gamerzdisease.com.flashcards.R;
 public class DeckAdapter extends BaseAdapter {
 
     ArrayList<Deck> deckList;
+    private final static String TAG = "DeckAdapter";
 
     public DeckAdapter(ArrayList<Deck> deckList) {
         this.deckList = new ArrayList<>(deckList);
@@ -42,6 +44,7 @@ public class DeckAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent){
         Context context = parent.getContext();
         int textSize = (int)context.getResources().getDimension(R.dimen.text_size);
+        Log.d(TAG,"textsize: "+ textSize);
         if(convertView == null){
             LinearLayout view = new LinearLayout(context);
             TextView nameTextView = new TextView(context);

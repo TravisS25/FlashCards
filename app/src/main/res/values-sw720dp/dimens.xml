@@ -8,20 +8,23 @@
     <dimen name="button_width">320dp</dimen>
     <dimen name="button_height">120dp</dimen>
     <dimen name="button_height_small">100dp</dimen>
+    <dimen name="button_height_smaller">75dp</dimen>
     <dimen name="text_size_button">40sp</dimen>
 
+
     <dimen name="text_size">28sp</dimen>
-    <dimen name="text_size_smaller_header">40sp</dimen>
-    <dimen name="text_size_small_header">55sp</dimen>
-    <dimen name="text_size_header">70sp</dimen>
+    <dimen name="text_size_smaller_header">50sp</dimen>
+    <dimen name="text_size_small_header">70sp</dimen>
+    <dimen name="text_size_header">90sp</dimen>
     <dimen name="top_margin">16dp</dimen>
 
 
     <!-- options_activity.xml -->
-    <dimen name="row_margin">130dp</dimen>
-    <dimen name="row_margin_land">60dp</dimen>
-    <dimen name="image_top_margin1">6dp</dimen>
-    <dimen name="image_top_margin2">15dp</dimen>
+    <dimen name="row_margin">90dp</dimen>
+    <dimen name="row_margin_land">50dp</dimen>
+    <dimen name="image_top_margin">8dp</dimen>
+    <dimen name="image_top_margin1">13dp</dimen>
+    <dimen name="image_top_margin2">17dp</dimen>
     <dimen name="image_bottom_margin">6dp</dimen>
     <dimen name="image_left_margin">8dp</dimen>
 </resources>

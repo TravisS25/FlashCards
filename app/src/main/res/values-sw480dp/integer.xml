@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="textbox_lines_port">3</integer>
-    <integer name="textbox_lines_land">2</integer>
+    <integer name="textbox_lines_port">8</integer>
+    <integer name="textbox_lines_land">5</integer>
 </resources>

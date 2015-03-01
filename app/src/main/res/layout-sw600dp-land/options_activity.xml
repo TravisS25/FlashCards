@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="Deck Name"
             android:id="@+id/deck_name"
-            android:textSize="@dimen/text_size_header" />
+            android:textSize="@dimen/text_size_small_header" />
     </LinearLayout>
 
     <TableLayout
@@ -44,9 +44,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/study_deck"
                     android:id="@+id/study_deck_text"
-                    android:textSize="@dimen/text_size_small_header"
+                    android:textSize="@dimen/text_size_smaller_header"
                     android:clickable="false"
-                    android:layout_marginTop="@dimen/image_top_margin1"
                     android:layout_marginLeft="@dimen/image_left_margin" />
             </LinearLayout>
         </TableRow>
@@ -72,10 +71,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/edit_deck"
                     android:id="@+id/edit_deck_text"
-                    android:textSize="@dimen/text_size_small_header"
+                    android:textSize="@dimen/text_size_smaller_header"
                     android:clickable="false"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/image_top_margin2"
                     android:layout_marginLeft="@dimen/image_left_margin" />
             </LinearLayout>
         </TableRow>
@@ -101,8 +99,7 @@
                     android:text="@string/add_card"
                     android:id="@+id/add_card_text"
                     android:clickable="false"
-                    android:textSize="@dimen/text_size_small_header"
-                    android:layout_marginTop="@dimen/image_top_margin2"
+                    android:textSize="@dimen/text_size_smaller_header"
                     android:layout_marginLeft="@dimen/image_left_margin" />
             </LinearLayout>
         </TableRow>
@@ -128,8 +125,7 @@
                     android:text="@string/grades"
                     android:id="@+id/grades_text"
                     android:clickable="false"
-                    android:textSize="@dimen/text_size_small_header"
-                    android:layout_marginTop="@dimen/image_top_margin2"
+                    android:textSize="@dimen/text_size_smaller_header"
                     android:layout_marginLeft="@dimen/image_left_margin" />
             </LinearLayout>
         </TableRow>

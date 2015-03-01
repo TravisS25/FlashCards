@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:id="@+id/grg">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 
     <TextView
@@ -21,63 +23,62 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/question"
-        android:id="@+id/textView10"
+        android:id="@+id/textView16"
         android:layout_below="@+id/deck_name"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/question_edit"
-        android:layout_below="@+id/textView10"
         android:layout_centerHorizontal="true"
-        android:lines="@integer/textbox_lines_land"
-        android:maxLines="@integer/textbox_lines_land"
-        android:minLines="@integer/textbox_lines_land"
-        android:background="@color/textbox_background"
-        android:gravity="top" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/answer"
-        android:id="@+id/textView11"
-        android:layout_below="@+id/question_edit"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:textSize="@dimen/text_size" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/answer_edit"
-        android:layout_below="@+id/textView11"
+        android:id="@+id/editText"
+        android:layout_below="@+id/textView16"
+        android:layout_centerHorizontal="true"
+        android:lines="@integer/textbox_lines_land"
+        android:maxLines="@integer/textbox_lines_land"
+        android:nestedScrollingEnabled="false"
+        android:minLines="@integer/textbox_lines_land"
+        android:background="@color/textbox_background" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/answer"
+        android:id="@+id/textView17"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/text_size" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:layout_below="@+id/textView17"
         android:layout_centerHorizontal="true"
         android:lines="@integer/textbox_lines_land"
         android:maxLines="@integer/textbox_lines_land"
         android:minLines="@integer/textbox_lines_land"
-        android:background="@color/textbox_background"
-        android:gravity="top" />
+        android:background="@color/textbox_background" />
 
     <Button
         android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height"
+        android:layout_height="@dimen/button_height_smaller"
         android:text="@string/add_card"
-        android:id="@+id/button6"
-        android:clickable="true"
-        android:onClick="addCard"
-        android:layout_below="@+id/answer_edit"
-        android:layout_toLeftOf="@+id/textView10"
-        android:layout_toStartOf="@+id/textView10" />
+        android:id="@+id/button13"
+        android:textSize="@dimen/text_size"
+        android:layout_below="@+id/editText2"
+        android:layout_toLeftOf="@+id/textView16"
+        android:layout_toStartOf="@+id/textView16" />
 
     <Button
         android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height"
+        android:layout_height="@dimen/button_height_smaller"
         android:text="@string/done"
-        android:id="@+id/button8"
-        android:clickable="true"
-        android:onClick="toDeckTable"
-        android:layout_alignBottom="@+id/button6"
-        android:layout_toRightOf="@+id/textView10"
-        android:layout_toEndOf="@+id/textView10" />
-
+        android:id="@+id/button14"
+        android:layout_alignBottom="@+id/button13"
+        android:layout_toRightOf="@+id/textView17"
+        android:layout_toEndOf="@+id/textView17"
+        android:textSize="@dimen/text_size" />
 </RelativeLayout>

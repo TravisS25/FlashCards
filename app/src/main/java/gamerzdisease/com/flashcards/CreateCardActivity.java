@@ -40,7 +40,7 @@ import gamerzdisease.com.flashcards.deck.DeckHolder;
 public class CreateCardActivity extends Activity {
 
     private DeckHolder mDeckInfo;
-    private double mDpHeight;
+    private double mWidthPixels;
     private final static String TAG = "CreateCardActivity";
 
     @Override
@@ -48,6 +48,8 @@ public class CreateCardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_card_activity);
         setDeckName();
+        setRealDeviceSizeInPixels();
+        getScreenWidth();
         mDeckInfo = (DeckHolder) getApplication();
     }
 
@@ -68,7 +70,7 @@ public class CreateCardActivity extends Activity {
         Toast.makeText(this, Consts.BACK_BUTTON, Toast.LENGTH_SHORT).show();
     }
 
-    public void addCardToDeck(View V) {
+    public void addCard(View V) {
         if (!isEditBoxesFilled())
             Toast.makeText(this, Consts.MESSAGE, Toast.LENGTH_SHORT).show();
         else {
@@ -131,13 +133,46 @@ public class CreateCardActivity extends Activity {
         answerEdt.setText("");
     }
 
-    private void setDensityPixels(){
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        mDpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        Log.d(TAG, "Density height: " + mDpHeight);
+    private void setDisplay(){
+
     }
 
+    private void getScreenWidth(){
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        double x = Math.pow(mWidthPixels/dm.xdpi,2);
+        Log.d(TAG,"Screen width : " + x);
+    }
 
+    private void setRealDeviceSizeInPixels() {
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        display.getMetrics(displayMetrics);
+
+
+        // since SDK_INT = 1;
+        mWidthPixels = displayMetrics.widthPixels;
+
+        // includes window decorations (statusbar bar/menu bar)
+        if (Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT < 17) {
+            try {
+                mWidthPixels = (Integer) Display.class.getMethod("getRawWidth").invoke(display);
+            } catch (Exception ignored) {
+            }
+        }
+
+        // includes window decorations (statusbar bar/menu bar)
+        if (Build.VERSION.SDK_INT >= 17) {
+            try {
+                Point realSize = new Point();
+                Display.class.getMethod("getRealSize", Point.class).invoke(display, realSize);
+                mWidthPixels = realSize.x;
+            } catch (Exception ignored) {
+            }
+        }
+
+    }
 
 }
 
