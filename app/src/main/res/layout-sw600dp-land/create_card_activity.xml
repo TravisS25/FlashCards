@@ -79,7 +79,7 @@
         android:id="@+id/button10"
         android:textSize="@dimen/text_size"
         android:clickable="true"
-        android:onClick="toDeckTable"
+        android:onClick="writeToList"
         android:layout_below="@+id/answer_edit"
         android:layout_toRightOf="@+id/textView2"
         android:layout_toEndOf="@+id/textView2" />

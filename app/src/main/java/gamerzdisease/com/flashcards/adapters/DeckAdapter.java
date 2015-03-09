@@ -1,4 +1,4 @@
-package gamerzdisease.com.flashcards.deck;
+package gamerzdisease.com.flashcards.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,27 +12,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gamerzdisease.com.flashcards.R;
+import gamerzdisease.com.flashcards.deck.Deck;
 
 /**
  * Created by Travis on 2/8/2015.
  */
 public class DeckAdapter extends BaseAdapter {
 
-    ArrayList<Deck> deckList;
+    ArrayList<Deck> mDeckList;
     private final static String TAG = "DeckAdapter";
 
     public DeckAdapter(ArrayList<Deck> deckList) {
-        this.deckList = new ArrayList<>(deckList);
+        mDeckList = new ArrayList<>(deckList);
     }
 
     @Override
     public int getCount(){
-        return this.deckList.size();
+        return mDeckList.size();
     }
 
     @Override
     public Object getItem(int position){
-        return this.deckList.get(position);
+        return mDeckList.get(position);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class DeckAdapter extends BaseAdapter {
         if(convertView == null){
             LinearLayout view = new LinearLayout(context);
             TextView nameTextView = new TextView(context);
-            nameTextView.setText(deckList.get(position).getName());
+            nameTextView.setText(mDeckList.get(position).getName());
             nameTextView.setPadding(0, 0, 10, 0);
             nameTextView.setTextSize(textSize);
             view.addView(nameTextView);

@@ -4,16 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import gamerzdisease.com.flashcards.deck.CardAdapter;
-import gamerzdisease.com.flashcards.deck.Consts;
+import gamerzdisease.com.flashcards.adapters.CardAdapter;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
 
@@ -23,15 +27,15 @@ import gamerzdisease.com.flashcards.deck.DeckHolder;
 public class EditDeckTableActivity extends Activity {
 
     private final static String TAG = "EditDeckActivity";
-    private AdapterView.OnItemClickListener onItemClickListener;
-    private DeckHolder deckInfo;
+    private AdapterView.OnItemClickListener mOnItemClickListener;
+    private DeckHolder mDeckInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.edit_deck_table_activity);
-        this.deckInfo = (DeckHolder)getApplication();
+        mDeckInfo = (DeckHolder)getApplication();
         initiateListAdapter();
     }
 
@@ -43,25 +47,43 @@ public class EditDeckTableActivity extends Activity {
     }
 
     @Override
+    public boolean onNavigateUp () {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+
+        switch (item.getItemId()){
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
 //=================================================================================================
     private void initiateListener(){
-        onItemClickListener = new AdapterView.OnItemClickListener() {
+        mOnItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(parent.getContext(), OptionsActivity.class);
-                String name = deckInfo.getDeckList().get(position).getName();
-                deckInfo.setPosition(position);
-                intent.putExtra(Consts.DECKNAME, name);
+                Intent intent = new Intent(parent.getContext(), EditCardActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                int deckPosition = mDeckInfo.getDeckPosition();
+                Log.d(TAG, "deck position: " + String.valueOf(deckPosition));
+                Deck deck = mDeckInfo.getDeckList().get(deckPosition);
+                deck.setCardPosition(position);
+                Log.d(TAG, "card position: " + String.valueOf(deck.getCardPosition()));
+
+                ArrayList<String> questions = new ArrayList<>(deck.getQuestions());
+                ArrayList<String> answers = new ArrayList<>(deck.getAnswers());
+                String question = questions.get(position);
+                String answer = answers.get(position);
+                mDeckInfo.setQuestion(question);
+                mDeckInfo.setAnswer(answer);
                 startActivity(intent);
             }
         };
@@ -69,13 +91,12 @@ public class EditDeckTableActivity extends Activity {
 
     private void initiateListAdapter(){
         ListView listView = (ListView) findViewById(R.id.deck_listview);
-        int position = this.deckInfo.getPosition();
-        Deck deck = new Deck(this.deckInfo.getDeckList().get(position));
-        HashMap<String, String> cards = new HashMap<>(deck.getCards());
-        CardAdapter cardAdapter = new CardAdapter(cards);
+        int position = mDeckInfo.getDeckPosition();
+        Deck deck = new Deck(mDeckInfo.getDeckList().get(position));
+        CardAdapter cardAdapter = new CardAdapter(deck);
         listView.setAdapter(cardAdapter);
         initiateListener();
-        listView.setOnItemClickListener(this.onItemClickListener);
+        listView.setOnItemClickListener(mOnItemClickListener);
     }
 
 }

@@ -19,95 +19,57 @@ import java.util.HashMap;
  */
 public class DeckHolder extends Application {
 
-    private ArrayList<Deck> deckList;
-    private File file;
-    private Deck deck;
-    private int position;
     private final static String TAG = "Deckholder";
+    private ArrayList<Deck> mDeckList;
+    private ArrayList<String> mQuestionList, mAnswerList;
+    private Deck mDeck;
+    private int mDeckPosition;
+    private String mQuestion;
+    private String mAnswer;
 
     @Override
     public void onCreate(){
         super.onCreate();
         Log.d(TAG, "onCreate called");
         initiateMainObjects();
-        initiateDeckFile();
-        try {
-            getDecksFromFile();
-        }
-        catch (IOException | ClassNotFoundException ex){
-            ex.printStackTrace();
-        }
-
     }
 
-    public void saveDeckName(String deckName){
-        this.deck = new Deck();
-        this.deck.setName(deckName);
+    public void setDeck(String deckName){
+        mDeck = new Deck(deckName);
     }
 
-    public void setPosition(int position){
-        this.position = position;
+    public Deck getDeck(){
+        return mDeck;
     }
 
-    public int getPosition(){
-        return this.position;
+    public void setDeckPosition(int position){
+        mDeckPosition = position;
+    }
+
+    public int getDeckPosition(){
+        return mDeckPosition;
+    }
+
+    public void setDeckList(ArrayList<Deck> deckList){
+        mDeckList = new ArrayList<>(deckList);
     }
 
     public ArrayList<Deck> getDeckList(){
-        return this.deckList;
+        return mDeckList;
     }
 
-    public void writeDeckToFile() throws IOException{
-        FileOutputStream fileOutputStream;
-        ObjectOutputStream objectOutputStream;
+    public void setQuestion(String question){mQuestion = question; }
 
-        this.deckList.add(this.deck);
-        fileOutputStream = new FileOutputStream(this.file);
-        objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(this.deckList);
-        objectOutputStream.flush();
-        objectOutputStream.close();
-        fileOutputStream.close();
-    }
+    public String getQuestion(){ return mQuestion;}
 
-    public void getDecksFromFile() throws IOException, ClassNotFoundException{
-        ObjectInputStream objectInputStream;
-        FileInputStream fileInputStream;
-        BufferedInputStream bufferedInputStream;
+    public void setAnswer(String answer){mAnswer = answer;}
 
-        fileInputStream = new FileInputStream(this.file);
-        bufferedInputStream = new BufferedInputStream(fileInputStream);
-        objectInputStream = new ObjectInputStream(bufferedInputStream);
-        this.deckList = (ArrayList<Deck>)objectInputStream.readObject();
-        objectInputStream.close();
-        fileInputStream.close();
-
-    }
-
-    public void addCardToDeck(String question, String answer){
-        this.deck.setCard(question, answer);
-    }
-
-
+    public String getAnswer(){ return mAnswer; }
 
 //==================================================================================================
 
-    private void initiateDeckFile() {
-        String filePath = this.getFilesDir() + "/" + Consts.FILENAME;
-        file = new File(filePath);
-        try {
-            if (this.file.createNewFile())
-                Log.d(TAG, "Created file");
-            else
-                Log.d(TAG, "File already exists");
-        }
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     private void initiateMainObjects(){
-        this.deckList = new ArrayList<>();
+        mDeckList = new ArrayList<>();
     }
 
 }

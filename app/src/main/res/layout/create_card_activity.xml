@@ -82,5 +82,5 @@
         android:layout_alignLeft="@+id/button4"
         android:layout_alignStart="@+id/button4"
         android:clickable="true"
-        android:onClick="toDeckTable" />
+        android:onClick="writeToList" />
 </RelativeLayout>

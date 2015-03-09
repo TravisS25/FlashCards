@@ -10,14 +10,19 @@ public final class Consts {
     // Universal Constants
     public final static String DECKNAME = "gamerzdisease.com.flashcards.DECKNAME";
     public final static String DECK = "gamerzdisease.com.flashcards.DECK";
-    public final static String FILENAME = "decks";
+    public static String DECK_FILEPATH;
+    public static String GRADE_FILEPATH;
+    public final static String DECK_FILENAME = "decks";
+    public final static String GRADE_FILENAME = "grades";
 
     //MainActivity
     public final static String POSITION = "gamerzdisease.com.flashcards.position";
+    public final static String MAIN_ACTIVITY = "MainActivity";
 
     //NewDeckActivity
     public final static String DECK_NAME_EXISTS = "That deck name already exists";
-    public final static String DECK_CHARACTERS = "Deck name must contain at least one character";
+    public final static String DECK_CHARACTERS = "Deck name can only contain alphabet characters and numbers";
+    public final static String DECK_CHARACTER_LIMIT = "Deck name can't contain more than 12 characters";
 
     //CreateCardActivity
     public final static String BACK_BUTTON = "Press done to finish creating deck";

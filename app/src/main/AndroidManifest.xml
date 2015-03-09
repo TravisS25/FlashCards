@@ -30,7 +30,11 @@
         <activity
             android:name=".CreateCardActivity"
             android:label="@string/create_deck"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName=".OptionsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OptionsActivity"/>
         </activity>
 
         <activity
@@ -44,6 +48,34 @@
 
         <activity
             android:name=".EditDeckTableActivity"
+            android:label="@string/options"
+            android:parentActivityName=".OptionsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OptionsActivity"/>
+        </activity>
+
+        <activity
+            android:name=".EditCardActivity"
+            android:label="@string/card_table"
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName=".EditDeckTableActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".EditDeckTableActivity"/>
+        </activity>
+
+        <activity
+            android:name=".StudyDeckActivity"
+            android:label="@string/options"
+            android:parentActivityName=".OptionsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OptionsActivity"/>
+        </activity>
+
+        <activity
+            android:name=".GradeActivity"
             android:label="@string/options"
             android:parentActivityName=".OptionsActivity">
             <meta-data

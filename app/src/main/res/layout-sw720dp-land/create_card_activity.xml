@@ -17,7 +17,7 @@
         android:id="@+id/textView21"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="@dimen/text_size_small_header" />
+        android:textSize="@dimen/text_size_smaller_header" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,21 +63,21 @@
 
     <Button
         android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height_smaller"
+        android:layout_height="@dimen/button_height_small"
         android:text="@string/add_card"
         android:id="@+id/button17"
-        android:layout_below="@+id/editText6"
+        android:textSize="@dimen/text_size"
+        android:layout_alignTop="@+id/button18"
         android:layout_toLeftOf="@+id/textView23"
-        android:layout_toStartOf="@+id/textView23"
-        android:textSize="@dimen/text_size" />
+        android:layout_toStartOf="@+id/textView23" />
 
     <Button
         android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height_smaller"
+        android:layout_height="@dimen/button_height_small"
         android:text="@string/done"
         android:id="@+id/button18"
+        android:textSize="@dimen/text_size"
         android:layout_below="@+id/editText6"
         android:layout_toRightOf="@+id/textView23"
-        android:layout_toEndOf="@+id/textView23"
-        android:textSize="@dimen/text_size" />
+        android:layout_toEndOf="@+id/textView23" />
 </RelativeLayout>

@@ -8,29 +8,42 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Deck implements Parcelable, Serializable {
 
     private final static String TAG = "DECK";
 
-    private String name;
-    private LinkedHashMap<String, String> cards;
+    private String mName;
+    private ArrayList<String> mQuestions;
+    private ArrayList<String> mAnswers;
+    private int mCardPosition;
 
     public Deck(){
-        this.cards = new LinkedHashMap();
+        mQuestions = new ArrayList<>();
+        mAnswers = new ArrayList<>();
     }
 
     public Deck(Deck deck){
-        this.name = deck.name;
-        this.cards = new LinkedHashMap(deck.cards);
+        mName = deck.mName;
+        mQuestions = new ArrayList<>(deck.getQuestions());
+        mAnswers = new ArrayList<>(deck.getAnswers());
+    }
+
+    public Deck(String deckName){
+        mName = deckName;
+        mQuestions = new ArrayList<>();
+        mAnswers = new ArrayList<>();
     }
 
     public Deck(Parcel p){
-        this.name = p.readString();
-        this.cards = (LinkedHashMap)p.readHashMap(this.cards.getClass().getClassLoader());
+        mName = p.readString();
+        mQuestions = (ArrayList<String>)p.readArrayList(mQuestions.getClass().getClassLoader());
+        mAnswers = (ArrayList<String>)p.readArrayList(mQuestions.getClass().getClassLoader());
     }
 
     @Override
@@ -40,8 +53,9 @@ public class Deck implements Parcelable, Serializable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeMap(this.cards);
+        dest.writeString(mName);
+        dest.writeArray(mQuestions.toArray());
+        dest.writeArray(mAnswers.toArray());
     }
 
     public static final Creator<Deck> CREATOR = new Creator<Deck>() {
@@ -57,19 +71,29 @@ public class Deck implements Parcelable, Serializable {
     };
 
     public String getName(){
-        return this.name;
+        return mName;
     }
 
     public void setName(String name){
-        this.name = name;
+        mName = name;
     }
 
-    public HashMap<String, String> getCards(){
-        return this.cards;
-    }
+    public void setQuestion(String question){ mQuestions.add(question); }
 
-    public void setCard(String key, String value){
-        this.cards.put(key, value);
-    }
+    public void setQuestionList(ArrayList<String> questionList){ mQuestions = new ArrayList<>(questionList); }
+
+    public ArrayList<String> getQuestions(){ return mQuestions; }
+
+    public void setAnswer(String answer){ mAnswers.add(answer); }
+
+    public void setAnswerList(ArrayList<String> answerList){ mAnswers = new ArrayList<>(answerList); }
+
+    public ArrayList<String> getAnswers(){ return mAnswers; }
+
+
+
+    public void setCardPosition(int position){ mCardPosition = position; }
+
+    public int getCardPosition(){ return mCardPosition; }
 
 }

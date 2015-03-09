@@ -78,7 +78,7 @@
         android:text="@string/done"
         android:id="@+id/button5"
         android:clickable="true"
-        android:onClick="toDeckTable"
+        android:onClick="writeToList"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/button4"
         android:layout_alignStart="@+id/button4" />

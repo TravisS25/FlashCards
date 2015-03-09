@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,18 +27,20 @@ import java.util.regex.Pattern;
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
+import gamerzdisease.com.flashcards.filesystem.FileWriter;
+import gamerzdisease.com.flashcards.filesystem.IStorageWriter;
 
 public class NewDeckActivity extends Activity {
 
     private final static String TAG = "NewDeckActivity";
-    private DeckHolder deckInfo;
+    private DeckHolder mDeckInfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.new_deck_activity);
-        deckInfo = (DeckHolder)getApplication();
+        initiateObjects();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,36 +51,40 @@ public class NewDeckActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()){
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
+    //Activates when user clicks "Create Deck" button
+    //Contains checks for deck name
     public void createDeck(View V){
         if(deckNameExists(getDeckName()))
             Toast.makeText(this, Consts.DECK_NAME_EXISTS, Toast.LENGTH_SHORT).show();
         else if(!doesDeckHaveCharacters(getDeckName()))
             Toast.makeText(this, Consts.DECK_CHARACTERS, Toast.LENGTH_SHORT).show();
+        else if(deckCharacterLimit())
+            Toast.makeText(this, Consts.DECK_CHARACTER_LIMIT, Toast.LENGTH_SHORT).show();
         else
-            initiateNewCardIntent(getDeckName());
+            initiateMainActivityIntent(getDeckName());
 
     }
 
+
     //===============================================================================================
 
+    //Sets deck name to class variable mDeckEditText
     private String getDeckName(){
         EditText deckEditText = (EditText) findViewById(R.id.new_deck_text);
         return deckEditText.getText().toString();
     }
 
+    //Checks if given deck name exists in application variable mDeckInfo
     private boolean deckNameExists(String userDeckName){
-        for(Deck deck : this.deckInfo.getDeckList()){
+        for(Deck deck : mDeckInfo.getDeckList()){
             String fileDeckName = deck.getName();
             if (userDeckName.matches(fileDeckName))
                 return true;
@@ -85,6 +92,7 @@ public class NewDeckActivity extends Activity {
         return false;
     }
 
+    //Checks if deck name only contains alphabet characters or numbers
     private boolean doesDeckHaveCharacters(String deckName){
         String pattern = "^\\d*[a-zA-Z][a-zA-Z0-9]*$";
         Pattern r = Pattern.compile(pattern);
@@ -95,14 +103,37 @@ public class NewDeckActivity extends Activity {
             return false;
         else
             return true;
-
     }
 
-    private void initiateNewCardIntent(String deckName){
-        Intent intent = new Intent(this, CreateCardActivity.class);
-        this.deckInfo.saveDeckName(deckName);
-        intent.putExtra(Consts.DECKNAME, deckName);
+    //Checks if deck name does not exceed character limit
+    private boolean deckCharacterLimit(){
+        int characterLimit = 12;
+        return getDeckName().length() > characterLimit;
+    }
+
+    //Starts intent for MainActivity and adds deck name to application variable mDeckInfo
+    //Also writes to storage
+    private void initiateMainActivityIntent(String deckName){
+        Thread t1;
+        IStorageWriter storageWriter;
+        Intent intent;
+
+        mDeckInfo.setDeck(deckName);
+        mDeckInfo.getDeckList().add(mDeckInfo.getDeck());
+
+        Log.d(TAG, Consts.GRADE_FILEPATH);
+        storageWriter = new FileWriter(mDeckInfo.getDeckList(), Consts.DECK_FILEPATH);
+        t1 = new Thread(storageWriter);
+        t1.start();
+
+        intent = new Intent(this, MainActivity.class);
+        MainActivity.flag = false;
         startActivity(intent);
+    }
+
+    //Initializes class variables
+    private void initiateObjects(){
+        mDeckInfo = (DeckHolder)getApplication();
     }
 
 }

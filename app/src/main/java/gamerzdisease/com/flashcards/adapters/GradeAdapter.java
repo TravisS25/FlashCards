@@ -1,4 +1,4 @@
-package gamerzdisease.com.flashcards.deck;
+package gamerzdisease.com.flashcards.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -7,32 +7,22 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
 import gamerzdisease.com.flashcards.R;
 
 /**
- * Created by Travis on 2/18/2015.
+ * Created by Travis on 3/1/2015.
  */
-public class CardAdapter extends BaseAdapter {
+public class GradeAdapter extends BaseAdapter {
 
-    private LinkedHashMap<String, String> cards;
-    private String[] keys;
-
-    public CardAdapter(HashMap<String, String> othercards){
-        this.cards = new LinkedHashMap<>(othercards);
-        this.keys = this.cards.keySet().toArray(new String[othercards.size()]);
-    }
 
     @Override
     public int getCount(){
-        return this.cards.size();
+        return 0;
     }
 
     @Override
     public Object getItem(int position){
-        return this.cards.get(this.keys[position]);
+        return 0;
     }
 
     @Override
@@ -47,7 +37,6 @@ public class CardAdapter extends BaseAdapter {
         if(convertView == null){
             LinearLayout view = new LinearLayout(context);
             TextView nameTextView = new TextView(context);
-            nameTextView.setText(this.cards.get(this.keys[position]));
             nameTextView.setPadding(0, 0, 10, 0);
             nameTextView.setTextSize(textSize);
             view.addView(nameTextView);
@@ -55,4 +44,5 @@ public class CardAdapter extends BaseAdapter {
         }
         return convertView;
     }
+
 }

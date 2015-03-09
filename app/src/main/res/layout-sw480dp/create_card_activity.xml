@@ -82,5 +82,5 @@
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/text_size"
         android:clickable="true"
-        android:onClick="toDeckTable" />
+        android:onClick="writeToList" />
 </RelativeLayout>

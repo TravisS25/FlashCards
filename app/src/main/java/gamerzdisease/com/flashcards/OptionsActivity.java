@@ -4,26 +4,32 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import gamerzdisease.com.flashcards.deck.Consts;
+import gamerzdisease.com.flashcards.deck.DeckHolder;
 
 /**
  * Created by Travis on 2/8/2015.
  */
 public class OptionsActivity extends Activity {
 
-    private Intent intent;
+    private Intent mIntent;
+    private DeckHolder mDeckInfo;
+    private final static String TAG = "OptionsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.options_activity);
-
+        mDeckInfo = (DeckHolder)getApplication();
+        Log.d(TAG, "Position: " + mDeckInfo.getDeckPosition());
+        Log.d(TAG, mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition()).toString());
         setDeckName();
     }
 
@@ -36,13 +42,11 @@ public class OptionsActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()){
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -62,28 +66,29 @@ public class OptionsActivity extends Activity {
 
 //=================================================================================================
     private void initiateStudyDeckIntent(){
-        this.intent = new Intent(this, StudyDeckActivity.class);
-        startActivity(intent);
+        mIntent = new Intent(this, StudyDeckActivity.class);
+        startActivity(mIntent);
     }
 
     private void initiateAddCardIntent(){
-        this.intent = new Intent(this, CreateCardActivity.class);
-        startActivity(intent);
+        mIntent = new Intent(this, CreateCardActivity.class);
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(mIntent);
     }
 
     private void initiateEditDeckIntent(){
-        this.intent = new Intent(this, EditDeckTableActivity.class);
-        startActivity(this.intent);
+        mIntent = new Intent(this, EditDeckTableActivity.class);
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(mIntent);
     }
 
     private void initiateGradeIntent(){
-        this.intent = new Intent(this, GradeActivity.class);
-        startActivity(intent);
+        mIntent = new Intent(this, GradeActivity.class);
+        startActivity(mIntent);
     }
 
     private void setDeckName(){
-        this.intent = getIntent();
-        String deckName = intent.getStringExtra(Consts.DECKNAME);
+        String deckName = mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition()).getName();
         TextView textView = (TextView) findViewById(R.id.deck_name);
         textView.setText(deckName);
     }

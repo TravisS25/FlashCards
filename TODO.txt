@@ -1,0 +1,11 @@
+// Things to do
+1) Create study deck layout
+2) Create study deck activity
+3) Create grade layout
+4) Create grade activity
+
+// Bug fixes
+
+
+
+// Testing
