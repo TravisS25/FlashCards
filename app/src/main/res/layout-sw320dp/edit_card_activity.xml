@@ -35,7 +35,7 @@
         android:minLines="@integer/textbox_lines_port"
         android:maxLines="@integer/textbox_lines_port"
         android:gravity="top"
-        android:background="@color/scrollview_background"
+        android:background="@color/textbox_background"
         android:layout_below="@+id/textView6"
         android:layout_alignLeft="@+id/answer_edit"
         android:layout_alignStart="@+id/answer_edit" />
@@ -58,7 +58,7 @@
         android:maxLines="@integer/textbox_lines_port"
         android:minLines="@integer/textbox_lines_port"
         android:gravity="top"
-        android:background="@color/scrollview_background"
+        android:background="@color/textbox_background"
         android:layout_below="@+id/textView7"
         android:layout_centerHorizontal="true" />
 

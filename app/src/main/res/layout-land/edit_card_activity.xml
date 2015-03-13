@@ -30,7 +30,7 @@
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/textView4"
-        android:background="@color/scrollview_background">
+        android:background="@color/textbox_background">
 
         <EditText
             android:layout_width="match_parent"
@@ -74,7 +74,7 @@
         android:layout_below="@+id/textView4"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/button"
-        android:background="@color/scrollview_background">
+        android:background="@color/textbox_background">
 
         <EditText
             android:layout_width="match_parent"

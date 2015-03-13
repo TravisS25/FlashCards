@@ -19,7 +19,7 @@ import gamerzdisease.com.flashcards.deck.Deck;
 /**
  * Created by Travis on 2/18/2015.
  */
-public class CardAdapter extends BaseAdapter {
+public class CardAdapter extends BaseAdapter{
 
     private Deck mDeck;
 
@@ -45,15 +45,26 @@ public class CardAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         Context context = parent.getContext();
-        int textSize = (int)context.getResources().getDimension(R.dimen.text_size);
+        int textSize = (int)context.getResources().getDimension(R.dimen.text_size), questionLength, maxLength = 20, color = 0xFFC9C6C7;
+        String questionText;
 
         if(convertView == null){
             LinearLayout view = new LinearLayout(context);
             TextView nameTextView = new TextView(context);
-            nameTextView.setText(mDeck.getQuestions().get(position));
-            nameTextView.setPadding(0, 0, 10, 0);
+            questionLength = mDeck.getQuestions().get(position).trim().length();
+
+            if(questionLength > maxLength)
+                questionText =  mDeck.getQuestions().get(position).trim().substring(0, 20) + "...";
+            else
+                questionText = mDeck.getQuestions().get(position).trim();
+
+            nameTextView.setText(questionText);
+            nameTextView.setPadding(10, 10, 0, 10);
             nameTextView.setTextSize(textSize);
             view.addView(nameTextView);
+
+            if(position % 2 == 0)
+                view.setBackgroundColor(color);
             return view;
         }
         return convertView;

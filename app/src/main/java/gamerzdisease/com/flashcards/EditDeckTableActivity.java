@@ -1,15 +1,21 @@
 package gamerzdisease.com.flashcards;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,8 +41,8 @@ public class EditDeckTableActivity extends Activity {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.edit_deck_table_activity);
-        mDeckInfo = (DeckHolder)getApplication();
-        initiateListAdapter();
+        initiateObjects();
+        setView();
     }
 
     @Override
@@ -73,10 +79,8 @@ public class EditDeckTableActivity extends Activity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                 int deckPosition = mDeckInfo.getDeckPosition();
-                Log.d(TAG, "deck position: " + String.valueOf(deckPosition));
                 Deck deck = mDeckInfo.getDeckList().get(deckPosition);
                 deck.setCardPosition(position);
-                Log.d(TAG, "card position: " + String.valueOf(deck.getCardPosition()));
 
                 ArrayList<String> questions = new ArrayList<>(deck.getQuestions());
                 ArrayList<String> answers = new ArrayList<>(deck.getAnswers());
@@ -89,14 +93,42 @@ public class EditDeckTableActivity extends Activity {
         };
     }
 
-    private void initiateListAdapter(){
+    private void initiateObjects(){
+        mDeckInfo = (DeckHolder)getApplication();
+    }
+
+    private void initiateListAdapter(Deck deck){
         ListView listView = (ListView) findViewById(R.id.deck_listview);
-        int position = mDeckInfo.getDeckPosition();
-        Deck deck = new Deck(mDeckInfo.getDeckList().get(position));
         CardAdapter cardAdapter = new CardAdapter(deck);
         listView.setAdapter(cardAdapter);
         initiateListener();
         listView.setOnItemClickListener(mOnItemClickListener);
     }
 
+    private void initiateNoCardsMessage(){
+        RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.edit_deck_table);
+        LinearLayout linearLayout = new LinearLayout(this);
+        TextView textView = new TextView(this);
+        String message = "(No Cards in Deck)";
+        int textSize = (int)getResources().getDimension(R.dimen.text_size);
+
+        textView.setText(message);
+        textView.setTextSize(textSize);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        linearLayout.setGravity(Gravity.CENTER);
+        linearLayout.addView(textView);
+        relativeLayout.addView(linearLayout);
+    }
+
+    private void setView(){
+        int position = mDeckInfo.getDeckPosition();
+        Deck deck = new Deck(mDeckInfo.getDeckList().get(position));
+        int cardLength = deck.getQuestions().size();
+        Log.d(TAG, "Card length: " + cardLength);
+
+        if(cardLength == 0)
+            initiateNoCardsMessage();
+        else
+            initiateListAdapter(deck);
+    }
 }

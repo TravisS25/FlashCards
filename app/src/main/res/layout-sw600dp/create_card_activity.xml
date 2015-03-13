@@ -38,7 +38,7 @@
         android:lines="@integer/textbox_lines_port"
         android:maxLines="@integer/textbox_lines_port"
         android:minLines="@integer/textbox_lines_port"
-        android:background="@color/scrollview_background" />
+        android:background="@color/textbox_background" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
         android:lines="@integer/textbox_lines_port"
         android:maxLines="@integer/textbox_lines_port"
         android:minLines="@integer/textbox_lines_port"
-        android:background="@color/scrollview_background" />
+        android:background="@color/textbox_background" />
 
     <Button
         android:layout_width="@dimen/button_width"

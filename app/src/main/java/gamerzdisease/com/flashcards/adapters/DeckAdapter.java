@@ -43,16 +43,18 @@ public class DeckAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
+        int color = 0xFFC9C6C7;
         Context context = parent.getContext();
         int textSize = (int)context.getResources().getDimension(R.dimen.text_size);
-        Log.d(TAG,"textsize: "+ textSize);
         if(convertView == null){
             LinearLayout view = new LinearLayout(context);
             TextView nameTextView = new TextView(context);
-            nameTextView.setText(mDeckList.get(position).getName());
-            nameTextView.setPadding(0, 0, 10, 0);
+            nameTextView.setText(mDeckList.get(position).getName().trim());
+            nameTextView.setPadding(10, 10, 0, 10);
             nameTextView.setTextSize(textSize);
             view.addView(nameTextView);
+            if(position % 2 == 0)
+                view.setBackgroundColor(color);
             return view;
         }
         return convertView;

@@ -6,6 +6,7 @@
 
     <!-- Universal Settings -->
     <dimen name="button_width">150dp</dimen>
+    <dimen name="button_width_small">120dp</dimen>
     <dimen name="button_height">60dp</dimen>
     <dimen name="button_height_small">40dp</dimen>
     <dimen name="text_size_button">20sp</dimen>

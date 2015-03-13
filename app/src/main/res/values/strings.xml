@@ -27,6 +27,10 @@
 
     <!-- edit_card_activity.xml -->
     <string name="edit_card">Edit Card</string>
-    <string name="edit_card_function">editCard</string>
+    <string name="card_table">Card Table</string>
+
+    <!--  study_card_activity.xml -->
+    <string name="correct">Correct</string>
+    <string name="incorrect">Incorrect</string>
 
 </resources>
