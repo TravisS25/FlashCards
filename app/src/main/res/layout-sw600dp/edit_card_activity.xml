@@ -11,19 +11,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Deck Name"
-        android:id="@+id/deck_name"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="@dimen/text_size_header" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/question"
         android:id="@+id/textView6"
         android:textSize="@dimen/text_size_smaller_header"
-        android:layout_below="@+id/deck_name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
 
@@ -71,5 +60,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:clickable="true"
-        android:onClick="editCard" />
+        android:onClick="editCard"
+        android:textSize="@dimen/text_size_button" />
 </RelativeLayout>

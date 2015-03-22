@@ -8,13 +8,14 @@
     <dimen name="button_width">200dp</dimen>
     <dimen name="button_height">100dp</dimen>
     <dimen name="button_height_small">80dp</dimen>
-    <dimen name="button_height_smaller">55dp</dimen>
+    <dimen name="button_height_smaller">60dp</dimen>
     <dimen name="text_size_button">30sp</dimen>
 
     <!-- main_activity.xml -->
 
 
-    <dimen name="text_size">21sp</dimen>
+    <dimen name="text_size">19sp</dimen>
+    <dimen name="text_size_special">28sp</dimen>
     <dimen name="text_size_smaller_header">28sp</dimen>
     <dimen name="text_size_small_header">45sp</dimen>
     <dimen name="text_size_header">60sp</dimen>

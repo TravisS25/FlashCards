@@ -28,8 +28,6 @@ public class OptionsActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.options_activity);
         mDeckInfo = (DeckHolder)getApplication();
-        Log.d(TAG, "Position: " + mDeckInfo.getDeckPosition());
-        Log.d(TAG, mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition()).toString());
         setDeckName();
     }
 
@@ -67,6 +65,7 @@ public class OptionsActivity extends Activity {
 //=================================================================================================
     private void initiateStudyDeckIntent(){
         mIntent = new Intent(this, StudyDeckActivity.class);
+        mIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(mIntent);
     }
 

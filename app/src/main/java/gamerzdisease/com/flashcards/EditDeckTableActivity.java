@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import java.util.Map;
 import gamerzdisease.com.flashcards.adapters.CardAdapter;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
+import gamerzdisease.com.flashcards.deck.Grade;
 
 /**
  * Created by Travis on 2/10/2015.
@@ -93,9 +95,7 @@ public class EditDeckTableActivity extends Activity {
         };
     }
 
-    private void initiateObjects(){
-        mDeckInfo = (DeckHolder)getApplication();
-    }
+    private void initiateObjects(){ mDeckInfo = (DeckHolder)getApplication(); }
 
     private void initiateListAdapter(Deck deck){
         ListView listView = (ListView) findViewById(R.id.deck_listview);
@@ -113,7 +113,7 @@ public class EditDeckTableActivity extends Activity {
         int textSize = (int)getResources().getDimension(R.dimen.text_size);
 
         textView.setText(message);
-        textView.setTextSize(textSize);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         linearLayout.setGravity(Gravity.CENTER);
         linearLayout.addView(textView);

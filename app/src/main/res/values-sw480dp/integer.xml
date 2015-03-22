@@ -3,6 +3,6 @@
     <integer name="card_flip_time_full">2000</integer>
     <integer name="card_flip_time_half">1000</integer>
 
-    <integer name="textbox_lines_port">8</integer>
+    <integer name="textbox_lines_port">9</integer>
     <integer name="textbox_lines_land">5</integer>
 </resources>

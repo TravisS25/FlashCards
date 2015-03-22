@@ -29,7 +29,7 @@
         android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height"
         android:text="@string/answer"
-        android:id="@+id/button19"
+        android:id="@+id/answer_button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:clickable="true"
@@ -43,7 +43,7 @@
         android:layout_height="fill_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/button19">
+        android:layout_above="@+id/answer_button">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text"
-                android:id="@+id/textView12"
+                android:id="@+id/question"
                 android:layout_gravity="center_horizontal"
                 android:textSize="@dimen/text_size"
                 android:textColor="@color/text" />

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
+    xmlns:bootstrap="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -19,7 +20,7 @@
         android:layout_alignParentStart="true"
         android:layout_gravity="center|right" />
 
-    <Button
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:text="@string/create_deck"
@@ -29,6 +30,7 @@
         android:layout_alignParentStart="true"
         android:textSize="@dimen/text_size_button"
         android:clickable="true"
+        bootstrap:bb_type="default"
         android:onClick="createDeck" />
 
 </RelativeLayout>

@@ -12,26 +12,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 
+import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
+import gamerzdisease.com.flashcards.deck.Grade;
+import gamerzdisease.com.flashcards.deck.StudyMode;
+import gamerzdisease.com.flashcards.fragments.CardBackFragment;
+import gamerzdisease.com.flashcards.fragments.CardFrontFragment;
+import gamerzdisease.com.flashcards.fragments.IAnimation;
 
 /**
  * Created by Travis on 2/8/2015.
  */
-public class StudyDeckActivity extends Activity implements FragmentManager.OnBackStackChangedListener {
 
-    private DeckHolder mDeckInfo;
-    private boolean mShowingBack = false;
+public class StudyDeckActivity extends Activity implements FragmentManager.OnBackStackChangedListener, IAnimation {
+
     private Handler mHandler;
+    private DeckHolder mDeckInfo;
+    private Deck mDeck;
+
+    public StudyDeckActivity(){}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.study_deck_activity);
         initiateObjects();
-
         if (savedInstanceState == null) {
             // If there is no saved instance state, add a fragment representing the
             // front of the card to this activity. If there is saved instance state,
@@ -40,13 +49,7 @@ public class StudyDeckActivity extends Activity implements FragmentManager.OnBac
                     .beginTransaction()
                     .add(R.id.container, new CardFrontFragment())
                     .commit();
-        } else {
-            mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
         }
-
-        // Monitor back stack changes to ensure the action bar shows the appropriate
-        // button (either "photo" or "info").
-        getFragmentManager().addOnBackStackChangedListener(this);
     }
 
 
@@ -64,42 +67,56 @@ public class StudyDeckActivity extends Activity implements FragmentManager.OnBac
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    public void flip(View v){
-        flipCard();
+    @Override
+    public void onBackStackChanged() {
+        // When the back stack changes, invalidate the options menu (action bar).
+        invalidateOptionsMenu();
+    }
+
+
+
+    public void flipCardBack(){
+        flipCardToBack();
+    }
+
+    public void incorrectAnswer(){
+        if(mDeck.getQuestions().size() > StudyMode.getPosition()) {
+            flipCardToFront();
+        }
+        else{
+            Intent intent = new Intent(this, DeckScoreActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void correctAnswer(){
+        if(mDeck.getQuestions().size() > StudyMode.getPosition()) {
+            flipCardToFront();
+        }
+        else{
+            Intent intent = new Intent(this, DeckScoreActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void complete(){
+
     }
 
 
 //==================================================================================================
 
     private void initiateObjects(){
-        mDeckInfo = (DeckHolder) getApplication();
+        mDeckInfo = (DeckHolder)getApplication();
         mHandler = new Handler();
+        mDeck = new Deck(mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition()));
     }
 
-    @Override
-    public void onBackStackChanged() {
-        mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
-
-        // When the back stack changes, invalidate the options menu (action bar).
-        invalidateOptionsMenu();
-    }
-
-    private void flipCard() {
-        if (mShowingBack) {
-            getFragmentManager().popBackStack();
-            return;
-        }
-
-        // Flip to the back.
-
-        mShowingBack = true;
-
-        // Create and commit a new fragment transaction that adds the fragment for the back of
-        // the card, uses custom animations, and is part of the fragment manager's back stack.
+    private void flipCardToBack() {
+        CardBackFragment cardBackFragment = new CardBackFragment();
 
         getFragmentManager()
                 .beginTransaction()
@@ -108,18 +125,12 @@ public class StudyDeckActivity extends Activity implements FragmentManager.OnBac
                         // rotations when switching to the back of the card, as well as animator
                         // resources representing rotations when flipping back to the front (e.g. when
                         // the system Back button is pressed).
-                .setCustomAnimations(
-                        R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-                        R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+                .setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out)
 
                         // Replace any fragments currently in the container view with a fragment
                         // representing the next page (indicated by the just-incremented currentPage
                         // variable).
-                .replace(R.id.container, new CardBackFragment())
-
-                        // Add this transaction to the back stack, allowing users to press Back
-                        // to get to the front of the card.
-                .addToBackStack(null)
+                .replace(R.id.container, cardBackFragment)
 
                         // Commit the transaction.
                 .commit();
@@ -132,28 +143,38 @@ public class StudyDeckActivity extends Activity implements FragmentManager.OnBac
         });
     }
 
-    public static class CardFrontFragment extends Fragment {
-        public CardFrontFragment() {
-        }
+    private void flipCardToFront(){
+        CardFrontFragment cardFrontFragment = new CardFrontFragment();
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_card_front, container, false);
-        }
+        getFragmentManager()
+                .beginTransaction()
+
+                        // Replace the default fragment animations with animator resources representing
+                        // rotations when switching to the back of the card, as well as animator
+                        // resources representing rotations when flipping back to the front (e.g. when
+                        // the system Back button is pressed).
+                .setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out)
+
+                        // Replace any fragments currently in the container view with a fragment
+                        // representing the next page (indicated by the just-incremented currentPage
+                        // variable).
+                .replace(R.id.container, cardFrontFragment)
+
+                        // Commit the transaction.
+                .commit();
+
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                invalidateOptionsMenu();
+            }
+        });
     }
 
-    /**
-     * A fragment representing the back of the card.
-     */
-    public static class CardBackFragment extends Fragment {
-        public CardBackFragment() {
-        }
+    private void deckComplete(){
+        CardFrontFragment cardFrontFragment = new CardFrontFragment();
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_card_back, container, false);
-        }
+
     }
+
 }

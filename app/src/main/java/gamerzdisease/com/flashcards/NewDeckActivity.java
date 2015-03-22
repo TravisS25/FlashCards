@@ -14,20 +14,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
-import gamerzdisease.com.flashcards.filesystem.FileWriter;
+import gamerzdisease.com.flashcards.filesystem.DeckWriter;
 import gamerzdisease.com.flashcards.filesystem.IStorageWriter;
 
 public class NewDeckActivity extends Activity {
@@ -122,12 +115,11 @@ public class NewDeckActivity extends Activity {
         mDeckInfo.getDeckList().add(mDeckInfo.getDeck());
 
         Log.d(TAG, Consts.GRADE_FILEPATH);
-        storageWriter = new FileWriter(mDeckInfo.getDeckList(), Consts.DECK_FILEPATH);
+        storageWriter = new DeckWriter(mDeckInfo.getDeckList(), Consts.DECK_FILEPATH);
         t1 = new Thread(storageWriter);
         t1.start();
 
         intent = new Intent(this, MainActivity.class);
-        MainActivity.flag = false;
         startActivity(intent);
     }
 

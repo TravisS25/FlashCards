@@ -21,10 +21,9 @@ import gamerzdisease.com.flashcards.adapters.DeckAdapter;
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
-import gamerzdisease.com.flashcards.filesystem.FileReader;
-import gamerzdisease.com.flashcards.filesystem.FileWriter;
+import gamerzdisease.com.flashcards.filesystem.DeckReader;
+import gamerzdisease.com.flashcards.filesystem.GradeReader;
 import gamerzdisease.com.flashcards.filesystem.IStorageReader;
-import gamerzdisease.com.flashcards.filesystem.IStorageWriter;
 
 
 public class MainActivity extends Activity {
@@ -32,17 +31,15 @@ public class MainActivity extends Activity {
     private final static String TAG = "MainActivity";
     private AdapterView.OnItemClickListener mOnItemClickListener;
     private DeckHolder mDeckInfo;
-    public static boolean flag = true;
+    private IStorageReader mDeckStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         initiateObjects();
-        if(flag) {
-            initiateStorage();
-            Log.d(TAG, "Flag reached");
-        }
+        initiateStorage();
+        readFromStorage();
         initiateListAdapter();
         Log.d(TAG, "onCreate called");
     }
@@ -99,6 +96,13 @@ public class MainActivity extends Activity {
 
     //==============================================================================================
 
+    //Initializes all necessary objects
+    private void initiateObjects(){
+        mDeckInfo = (DeckHolder)getApplication();
+        Consts.DECK_FILEPATH = getFilesDir() + "/" + Consts.DECK_FILENAME;
+        mDeckStorage = new DeckReader(Consts.DECK_FILEPATH);
+    }
+
     //Initializes onclicklistener for listview
     private void initiateListener(){
         mOnItemClickListener = new AdapterView.OnItemClickListener() {
@@ -129,21 +133,30 @@ public class MainActivity extends Activity {
 
     //Creates files for decks and grades if they haven't already and retrieves decks from file
     //Copies decks to application variable mDeckInfo
-    private void initiateStorage(){
-        IStorageReader storage;
-        ArrayList<Deck> deckList;
+    private void initiateStorage() {
+        IStorageReader gradeStorage;
 
-        Consts.DECK_FILEPATH = getFilesDir() + "/" + Consts.DECK_FILENAME;
         Consts.GRADE_FILEPATH = getFilesDir() + "/" + Consts.GRADE_FILENAME;
-        storage = new FileReader(Consts.DECK_FILEPATH, Consts.GRADE_FILEPATH);
+        gradeStorage = new GradeReader(Consts.GRADE_FILEPATH);
 
-        ExecutorService service = Executors.newFixedThreadPool(2);
-        Future<ArrayList<Deck>> future = service.submit(storage);
+        try {
+            mDeckStorage.initiateStorage();
+            gradeStorage.initiateStorage();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void readFromStorage(){
+        ArrayList<Deck> deckList;
+        ExecutorService service = Executors.newFixedThreadPool(6);
+        Future<Object> future = service.submit(mDeckStorage);
+
         while(true) {
             try {
                 if (future.isDone()) {
                     Log.d(TAG, "Future done");
-                    deckList = new ArrayList<>(future.get());
+                    deckList = new ArrayList<>((ArrayList<Deck>)future.get());
                     mDeckInfo.setDeckList(deckList);
                     return;
                 }
@@ -151,11 +164,6 @@ public class MainActivity extends Activity {
                 ex.printStackTrace();
             }
         }
-    }
-
-    //Initializes all necessary objects
-    private void initiateObjects(){
-        mDeckInfo = (DeckHolder)getApplication();
     }
 
 }

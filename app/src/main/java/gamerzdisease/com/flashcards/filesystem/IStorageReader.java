@@ -10,8 +10,7 @@ import gamerzdisease.com.flashcards.deck.DeckHolder;
 /**
  * Created by Travis on 3/4/2015.
  */
-public interface IStorageReader extends Callable<ArrayList<Deck>> {
-    ArrayList<Deck> readFromStorage() throws IOException, ClassNotFoundException;
-    void initiateDeckStorage() throws IOException;
-    void initiateGradeStorage() throws IOException;
+public interface IStorageReader extends Callable<Object> {
+    Object readFromStorage() throws IOException, ClassNotFoundException;
+    void initiateStorage() throws IOException;
 }

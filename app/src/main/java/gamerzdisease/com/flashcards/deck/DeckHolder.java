@@ -24,8 +24,7 @@ public class DeckHolder extends Application {
     private ArrayList<String> mQuestionList, mAnswerList;
     private Deck mDeck;
     private int mDeckPosition;
-    private String mQuestion;
-    private String mAnswer;
+    private String mQuestion, mAnswer;
 
     @Override
     public void onCreate(){

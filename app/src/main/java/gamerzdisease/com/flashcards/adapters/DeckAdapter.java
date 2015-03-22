@@ -2,6 +2,7 @@ package gamerzdisease.com.flashcards.adapters;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -43,18 +44,15 @@ public class DeckAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        int color = 0xFFC9C6C7;
         Context context = parent.getContext();
-        int textSize = (int)context.getResources().getDimension(R.dimen.text_size);
+        int textSize = (int)context.getResources().getDimension(R.dimen.text_size_special);
         if(convertView == null){
             LinearLayout view = new LinearLayout(context);
             TextView nameTextView = new TextView(context);
             nameTextView.setText(mDeckList.get(position).getName().trim());
-            nameTextView.setPadding(10, 10, 0, 10);
-            nameTextView.setTextSize(textSize);
+            nameTextView.setPadding(15, 15, 0, 15);
+            nameTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
             view.addView(nameTextView);
-            if(position % 2 == 0)
-                view.setBackgroundColor(color);
             return view;
         }
         return convertView;

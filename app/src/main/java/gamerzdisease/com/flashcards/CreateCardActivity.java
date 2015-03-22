@@ -5,30 +5,19 @@ package gamerzdisease.com.flashcards;
  */
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
-import gamerzdisease.com.flashcards.filesystem.FileWriter;
+import gamerzdisease.com.flashcards.filesystem.DeckWriter;
 import gamerzdisease.com.flashcards.filesystem.IStorageWriter;
 
 public class CreateCardActivity extends Activity {
@@ -42,7 +31,6 @@ public class CreateCardActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.create_card_activity);
         initiateObjects();
-        setDeckName();
     }
 
     @Override
@@ -60,12 +48,6 @@ public class CreateCardActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    // Used to make user can't press back button
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(this, Consts.BACK_BUTTON, Toast.LENGTH_SHORT).show();
     }
 
     //Activated when user clicks "Add Card" button
@@ -93,12 +75,6 @@ public class CreateCardActivity extends Activity {
 
     //==============================================================================================
 
-    //Sets current deck name as header for activity
-    private void setDeckName() {
-        TextView textView = (TextView) findViewById(R.id.deck_name);
-        String deckName = mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition()).getName();
-        textView.setText(deckName);
-    }
 
     //Checks if there is at least one character in both question and answer text boxes
     private boolean isEditBoxesFilled() {
@@ -147,7 +123,7 @@ public class CreateCardActivity extends Activity {
         IStorageWriter storage;
         Thread t1;
 
-        storage = new FileWriter(mDeckInfo.getDeckList(), Consts.DECK_FILEPATH);
+        storage = new DeckWriter(mDeckInfo.getDeckList(), Consts.DECK_FILEPATH);
         t1 = new Thread(storage);
         t1.start();
     }

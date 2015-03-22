@@ -10,8 +10,8 @@
     <string name="decks">Decks</string>
 
     <!-- create_card_activity.xml -->
-    <string name="question">Question</string>
-    <string name="answer">Answer</string>
+    <string name="question_edit">Enter your question here...</string>
+    <string name="answer_edit">Enter your answer here...</string>
     <string name="add_card">Add Card</string>
     <string name="done">Done</string>
 
@@ -32,5 +32,9 @@
     <!--  study_card_activity.xml -->
     <string name="correct">Correct</string>
     <string name="incorrect">Incorrect</string>
+    <string name="answer">Answer</string>
+
+    <!-- finished_deck -->
+    <string name="ok">OK</string>
 
 </resources>

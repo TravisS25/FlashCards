@@ -28,5 +28,4 @@ public final class Consts {
     public final static String BACK_BUTTON = "Press done to finish creating deck";
     public final static String MESSAGE = "You must enter text in the question and answer textbox";
 
-
 }

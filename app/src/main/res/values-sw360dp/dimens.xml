@@ -7,14 +7,24 @@
     <!-- Universal Settings -->
     <dimen name="button_width">150dp</dimen>
     <dimen name="button_height">70dp</dimen>
-    <dimen name="button_height_small">50dp</dimen>
+    <dimen name="button_height_small">60dp</dimen>
     <dimen name="button_height_smaller">40dp</dimen>
-    <dimen name="text_size_button">20sp</dimen>
+    <dimen name="button_margin_port_1">15dp</dimen>
+    <dimen name="button_margin_port_2">40dp</dimen>
+    <dimen name="button_margin_land_1">10dp</dimen>
+    <dimen name="button_margin_land_2">20dp</dimen>
+
+    <dimen name="textbox_margin_port_1">25dp</dimen>
+    <dimen name="textbox_margin_land_1">15dp</dimen>
+
+    <dimen name="study_mode_padding_1">10dp</dimen>
+
 
     <!-- main_activity.xml -->
 
-
-    <dimen name="text_size">17sp</dimen>
+    <dimen name="text_size">16sp</dimen>
+    <dimen name="text_size_button">20sp</dimen>
+    <dimen name="text_size_special">32sp</dimen>
     <dimen name="text_size_smaller_header">22sp</dimen>
     <dimen name="text_size_small_header">30sp</dimen>
     <dimen name="text_size_header">45sp</dimen>

@@ -10,57 +10,27 @@
     android:layout_height="wrap_content">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Deck Name"
-        android:id="@+id/deck_name"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="@dimen/text_size_header" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/question"
-        android:id="@+id/textView5"
-        android:layout_marginTop="70dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="@dimen/text_size_small_header" />
-
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/question_edit"
-        android:layout_below="@+id/textView5"
         android:layout_centerHorizontal="true"
         android:lines="@integer/textbox_lines_port"
         android:maxLines="@integer/textbox_lines_port"
         android:minLines="@integer/textbox_lines_port"
         android:background="@color/textbox_background" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/answer"
-        android:id="@+id/textView8"
-        android:layout_below="@+id/question_edit"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp"
-        android:textSize="@dimen/text_size_small_header" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/answer_edit"
-        android:layout_below="@+id/textView8"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:lines="@integer/textbox_lines_port"
         android:maxLines="@integer/textbox_lines_port"
         android:minLines="@integer/textbox_lines_port"
-        android:background="@color/textbox_background" />
+        android:background="@color/textbox_background"
+        android:layout_below="@+id/question_edit" />
 
     <Button
         android:layout_width="@dimen/button_width"
@@ -83,7 +53,6 @@
         android:onClick="writeToList"
         android:textSize="@dimen/text_size"
         android:layout_below="@+id/add_card"
-        android:layout_alignRight="@+id/deck_name"
-        android:layout_alignEnd="@+id/deck_name" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

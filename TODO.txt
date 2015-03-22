@@ -1,20 +1,6 @@
 // Things to do
-x Make deck and card list background alternate colors between white and grey to make look better
-- Implement grade system for decks
-- Create list view for grades
-- Make landscape version of the activities so far
 
 // Bug fixes
 
-x Need to make it where only a few words of the question are displayed in the edit card table and to
-eliminate unnecessary line breaks so questions are not spread apart in the table
-x If user tries to edit deck that has not had a card inserted into it yet, it should display a
-"No cards in deck" instead of being blank
-- If user tries to see grades for a deck they haven't tried yet, it should display a
- "No grade for this deck yet" instead of being blank
-- For some reason, text size on nexus 6 is really big in deck and card list, don't know if its just
-an emulator error or not
 
 
-// Testing
-- Test layouts for all screen sizes for all activities

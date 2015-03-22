@@ -6,13 +6,15 @@
 
     <!--Universal Settings -->
     <dimen name="button_width">320dp</dimen>
+    <dimen name="button_width_small">260dp</dimen>
     <dimen name="button_height">120dp</dimen>
     <dimen name="button_height_small">100dp</dimen>
     <dimen name="button_height_smaller">75dp</dimen>
     <dimen name="text_size_button">40sp</dimen>
 
 
-    <dimen name="text_size">28sp</dimen>
+    <dimen name="text_size">27sp</dimen>
+    <dimen name="text_size_special">36sp</dimen>
     <dimen name="text_size_smaller_header">50sp</dimen>
     <dimen name="text_size_small_header">70sp</dimen>
     <dimen name="text_size_header">90sp</dimen>

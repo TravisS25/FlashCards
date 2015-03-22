@@ -8,54 +8,29 @@
     android:id="@+id/grg">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Deck Name"
-        android:id="@+id/deck_name"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="@dimen/text_size_smaller_header" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/question"
-        android:id="@+id/textView10"
-        android:layout_below="@+id/deck_name"
-        android:layout_centerHorizontal="true" />
-
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/question_edit"
-        android:layout_below="@+id/textView10"
         android:layout_centerHorizontal="true"
         android:lines="@integer/textbox_lines_land"
         android:maxLines="@integer/textbox_lines_land"
         android:minLines="@integer/textbox_lines_land"
         android:background="@color/textbox_background"
-        android:gravity="top" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/answer"
-        android:id="@+id/textView11"
-        android:layout_below="@+id/question_edit"
-        android:layout_centerHorizontal="true" />
+        android:gravity="top"
+        android:hint="@string/question_edit" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/answer_edit"
-        android:layout_below="@+id/textView11"
         android:layout_centerHorizontal="true"
         android:lines="@integer/textbox_lines_land"
         android:maxLines="@integer/textbox_lines_land"
         android:minLines="@integer/textbox_lines_land"
         android:background="@color/textbox_background"
-        android:gravity="top" />
+        android:gravity="top"
+        android:layout_below="@+id/question_edit" />
 
     <Button
         android:layout_width="@dimen/button_width"
@@ -64,9 +39,8 @@
         android:id="@+id/button6"
         android:clickable="true"
         android:onClick="addCard"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/textView10"
-        android:layout_toStartOf="@+id/textView10" />
+        android:layout_below="@+id/answer_edit"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="@dimen/button_width"
@@ -76,7 +50,6 @@
         android:clickable="true"
         android:onClick="writeToList"
         android:layout_alignBottom="@+id/button6"
-        android:layout_toRightOf="@+id/textView10"
-        android:layout_toEndOf="@+id/textView10" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

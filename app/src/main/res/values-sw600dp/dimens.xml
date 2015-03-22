@@ -12,7 +12,8 @@
     <dimen name="button_height_smallest">55dp</dimen>
     <dimen name="text_size_button">30sp</dimen>
 
-    <dimen name="text_size">24sp</dimen>
+    <dimen name="text_size">23sp</dimen>
+    <dimen name="text_size_special">32sp</dimen>
     <dimen name="text_size_smaller_header">40sp</dimen>
     <dimen name="text_size_small_header">55sp</dimen>
     <dimen name="text_size_header">70sp</dimen>

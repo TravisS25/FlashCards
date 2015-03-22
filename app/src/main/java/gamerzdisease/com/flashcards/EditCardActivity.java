@@ -9,17 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
-import gamerzdisease.com.flashcards.filesystem.FileWriter;
+import gamerzdisease.com.flashcards.filesystem.DeckWriter;
 import gamerzdisease.com.flashcards.filesystem.IStorageWriter;
 
 /**
@@ -38,7 +35,6 @@ public class EditCardActivity extends Activity {
         setContentView(R.layout.edit_card_activity);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         initiateObjects();
-        setDeckName();
         setQuestionTextBox();
         setAnswerTextBox();
     }
@@ -51,7 +47,7 @@ public class EditCardActivity extends Activity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+      public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
@@ -77,12 +73,6 @@ public class EditCardActivity extends Activity {
 
 
 //==================================================================================================
-
-    private void setDeckName(){
-        TextView textView = (TextView)findViewById(R.id.deck_name);
-        String deckName = mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition()).getName();
-        textView.setText(deckName);
-    }
 
     private void setQuestionTextBox(){
         EditText questionEdit = (EditText)findViewById(R.id.question_edit);
@@ -129,7 +119,7 @@ public class EditCardActivity extends Activity {
         IStorageWriter storage;
         Thread t1;
 
-        storage = new FileWriter(mDeckInfo.getDeckList(), Consts.DECK_FILEPATH);
+        storage = new DeckWriter(mDeckInfo.getDeckList(), Consts.DECK_FILEPATH);
         t1 = new Thread(storage);
         t1.start();
     }

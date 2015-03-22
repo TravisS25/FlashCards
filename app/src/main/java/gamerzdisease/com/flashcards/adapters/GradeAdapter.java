@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import gamerzdisease.com.flashcards.R;
 
 /**
@@ -14,15 +16,18 @@ import gamerzdisease.com.flashcards.R;
  */
 public class GradeAdapter extends BaseAdapter {
 
+    ArrayList<Double> mGradeList;
+
+    public GradeAdapter(ArrayList<Double> gradeList){ mGradeList = new ArrayList<>(gradeList); }
 
     @Override
     public int getCount(){
-        return 0;
+        return mGradeList.size();
     }
 
     @Override
     public Object getItem(int position){
-        return 0;
+        return mGradeList.get(position);
     }
 
     @Override
@@ -34,12 +39,15 @@ public class GradeAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent){
         Context context = parent.getContext();
         int textSize = (int)context.getResources().getDimension(R.dimen.text_size);
+        double num = mGradeList.get(position);
+        String percentage =  String.valueOf(num);
         if(convertView == null){
             LinearLayout view = new LinearLayout(context);
-            TextView nameTextView = new TextView(context);
-            nameTextView.setPadding(0, 0, 10, 0);
-            nameTextView.setTextSize(textSize);
-            view.addView(nameTextView);
+            TextView gradeTextView = new TextView(context);
+            gradeTextView.setPadding(0, 0, 10, 0);
+            gradeTextView.setTextSize(textSize);
+            gradeTextView.setText(percentage + "%");
+            view.addView(gradeTextView);
             return view;
         }
         return convertView;
