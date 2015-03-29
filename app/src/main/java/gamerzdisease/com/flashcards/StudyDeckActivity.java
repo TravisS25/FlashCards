@@ -1,37 +1,36 @@
 package gamerzdisease.com.flashcards;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NavUtils;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
+import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
 import gamerzdisease.com.flashcards.deck.Grade;
 import gamerzdisease.com.flashcards.deck.StudyMode;
+import gamerzdisease.com.flashcards.filesystem.DeckPositionWriter;
+import gamerzdisease.com.flashcards.filesystem.IStorageWriter;
 import gamerzdisease.com.flashcards.fragments.CardBackFragment;
 import gamerzdisease.com.flashcards.fragments.CardFrontFragment;
-import gamerzdisease.com.flashcards.fragments.IAnimation;
+import gamerzdisease.com.flashcards.fragments.CardFragmentActivity;
 
 /**
  * Created by Travis on 2/8/2015.
  */
 
-public class StudyDeckActivity extends Activity implements FragmentManager.OnBackStackChangedListener, IAnimation {
+public class StudyDeckActivity extends Activity implements FragmentManager.OnBackStackChangedListener, CardFragmentActivity {
 
+    private final static String TAG = "StudyDeckActivity";
     private Handler mHandler;
-    private DeckHolder mDeckInfo;
     private Deck mDeck;
 
     public StudyDeckActivity(){}
@@ -40,7 +39,9 @@ public class StudyDeckActivity extends Activity implements FragmentManager.OnBac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.study_deck_activity);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         initiateObjects();
+
         if (savedInstanceState == null) {
             // If there is no saved instance state, add a fragment representing the
             // front of the card to this activity. If there is saved instance state,
@@ -65,6 +66,9 @@ public class StudyDeckActivity extends Activity implements FragmentManager.OnBac
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                if(findViewById(R.id.no_card_layout) == null)
+                    storeDeckPosition();
+                reset();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -76,7 +80,21 @@ public class StudyDeckActivity extends Activity implements FragmentManager.OnBac
         invalidateOptionsMenu();
     }
 
-
+    @Override
+    public void onBackPressed(){
+        Log.d(TAG, "no card output: " + findViewById(R.id.no_card_layout));
+        if(findViewById(R.id.no_card_layout) == null) {
+            Log.d(TAG, "Made to if");
+            storeDeckPosition();
+            reset();
+            super.onBackPressed();
+        }
+        else{
+            Log.d(TAG, "Made to else");
+            reset();
+            super.onBackPressed();
+        }
+    }
 
     public void flipCardBack(){
         flipCardToBack();
@@ -103,16 +121,42 @@ public class StudyDeckActivity extends Activity implements FragmentManager.OnBac
     }
 
     public void complete(){
-
+        storeDeckPosition();
+        initiateOptionsIntent();
     }
-
 
 //==================================================================================================
 
     private void initiateObjects(){
-        mDeckInfo = (DeckHolder)getApplication();
+        DeckHolder DeckInfo = (DeckHolder)getApplication();
         mHandler = new Handler();
-        mDeck = new Deck(mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition()));
+        mDeck = new Deck(DeckInfo.getDeckList().get(DeckInfo.getDeckPosition()));
+    }
+
+    private void initiateOptionsIntent(){
+        Intent intent = new Intent(this, OptionsActivity.class);
+        startActivity(intent);
+    }
+
+    private void storeDeckPosition(){
+        Thread t1;
+        IStorageWriter deckPositionWriter;
+        String deckName;
+        HashMap<String, Integer> deckPosition;
+        int position;
+
+        deckName = mDeck.getName();
+        position = StudyMode.getPosition();
+        deckPosition = new HashMap<>();
+        deckPosition.put(deckName, position);
+        deckPositionWriter = new DeckPositionWriter(deckPosition, Consts.DECK_POSITION_FILEPATH);
+        t1 = new Thread(deckPositionWriter);
+        t1.start();
+    }
+
+    private void reset(){
+        StudyMode.resetPosition();
+        Grade.resetCorrect();
     }
 
     private void flipCardToBack() {
@@ -169,12 +213,6 @@ public class StudyDeckActivity extends Activity implements FragmentManager.OnBac
                 invalidateOptionsMenu();
             }
         });
-    }
-
-    private void deckComplete(){
-        CardFrontFragment cardFrontFragment = new CardFrontFragment();
-
-
     }
 
 }

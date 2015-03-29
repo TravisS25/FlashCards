@@ -31,6 +31,7 @@
         android:textSize="@dimen/text_size_button"
         android:clickable="true"
         bootstrap:bb_type="default"
-        android:onClick="createDeck" />
+        android:onClick="createDeck"
+        bootstrap:bb_roundedCorners="true"/>
 
 </RelativeLayout>

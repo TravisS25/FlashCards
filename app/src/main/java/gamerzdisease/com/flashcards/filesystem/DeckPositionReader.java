@@ -14,32 +14,31 @@ import java.util.HashMap;
 import gamerzdisease.com.flashcards.deck.Deck;
 
 /**
- * Created by Travis on 3/20/2015.
+ * Created by Travis on 3/22/2015.
  */
-public class GradeReader implements IStorageReader {
-    private final static String TAG = "GradeReader";
-    private File mDeckFile;
+public class DeckPositionReader implements IStorageReader {
 
-    public GradeReader(String deckFile){
-        mDeckFile = new File(deckFile);
-    }
+    private final static String TAG = "DeckPositionReader";
+    private File mDeckPositionFile;
 
-    public HashMap<String, ArrayList<Integer>> readFromStorage() throws IOException, ClassNotFoundException {
+    public DeckPositionReader(String fileName){ mDeckPositionFile = new File(fileName); }
+
+    public HashMap<String, Integer> readFromStorage() throws IOException, ClassNotFoundException {
         ObjectInputStream objectInputStream;
         FileInputStream fileInputStream;
         BufferedInputStream bufferedInputStream;
-        HashMap<String, ArrayList<Integer>> gradeList;
+        HashMap<String, Integer> deckPosition;
 
-        fileInputStream = new FileInputStream(mDeckFile);
+        fileInputStream = new FileInputStream(mDeckPositionFile);
         bufferedInputStream = new BufferedInputStream(fileInputStream);
         objectInputStream = new ObjectInputStream(bufferedInputStream);
-        gradeList = (HashMap<String, ArrayList<Integer>>) objectInputStream.readObject();
+        deckPosition = (HashMap<String, Integer>) objectInputStream.readObject();
         objectInputStream.close();
         fileInputStream.close();
-        return gradeList;
+        return deckPosition;
     }
 
-    public HashMap<String, ArrayList<Integer>> call(){
+    public HashMap<String, Integer> call(){
         try{
             return readFromStorage();
         }
@@ -56,7 +55,7 @@ public class GradeReader implements IStorageReader {
     }
 
     public void initiateStorage() throws IOException{
-        if (mDeckFile.createNewFile())
+        if (mDeckPositionFile.createNewFile())
             Log.d(TAG, "Created deck file");
         else
             Log.d(TAG, "Deck file already exists");

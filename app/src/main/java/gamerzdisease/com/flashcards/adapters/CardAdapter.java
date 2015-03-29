@@ -1,6 +1,7 @@
 package gamerzdisease.com.flashcards.adapters;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -45,7 +46,7 @@ public class CardAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         Context context = parent.getContext();
-        int textSize = (int)context.getResources().getDimension(R.dimen.text_size), questionLength, maxLength = 20, color = 0xFFC9C6C7;
+        int textSize = (int)context.getResources().getDimension(R.dimen.text_size), questionLength, maxLength = 30, color = 0xFFC9C6C7;
         String questionText;
 
         if(convertView == null){
@@ -54,17 +55,15 @@ public class CardAdapter extends BaseAdapter{
             questionLength = mDeck.getQuestions().get(position).trim().length();
 
             if(questionLength > maxLength)
-                questionText =  mDeck.getQuestions().get(position).trim().substring(0, 20) + "...";
+                questionText =  mDeck.getQuestions().get(position).trim().substring(0, 30) + "...";
             else
                 questionText = mDeck.getQuestions().get(position).trim();
 
             nameTextView.setText(questionText);
-            nameTextView.setPadding(10, 10, 0, 10);
-            nameTextView.setTextSize(textSize);
+            nameTextView.setPadding(15, 10, 0, 10);
+            nameTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
             view.addView(nameTextView);
 
-            if(position % 2 == 0)
-                view.setBackgroundColor(color);
             return view;
         }
         return convertView;

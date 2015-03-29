@@ -55,5 +55,6 @@
         android:background="@color/textbox_background"
         android:onClick="toOptionsActivity"
         android:textSize="@dimen/text_size_button"
-        bootstrap:bb_type="default"/>
+        bootstrap:bb_type="default"
+        bootstrap:bb_roundedCorners="true"/>
 </RelativeLayout>

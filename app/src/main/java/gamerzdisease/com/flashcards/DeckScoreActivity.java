@@ -64,6 +64,7 @@ public class DeckScoreActivity extends Activity {
 
     public void toOptionsActivity(View v){
         Intent intent = new Intent(this, OptionsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
@@ -116,7 +117,6 @@ public class DeckScoreActivity extends Activity {
         Deck deck;
         String deckName;
         boolean flag = false;
-
 
         deck = mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition());
         deckName = deck.getName();

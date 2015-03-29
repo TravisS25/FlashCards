@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="deck" type="id"/>
+    <item name="grade" type="id"/>
+    <item name="deck_card_number" type="id"/>
+</resources>

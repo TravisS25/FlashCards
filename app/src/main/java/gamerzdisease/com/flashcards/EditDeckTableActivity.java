@@ -37,14 +37,20 @@ public class EditDeckTableActivity extends Activity {
     private final static String TAG = "EditDeckActivity";
     private AdapterView.OnItemClickListener mOnItemClickListener;
     private DeckHolder mDeckInfo;
+    private Deck mDeck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        setContentView(R.layout.edit_deck_table_activity);
         initiateObjects();
-        setView();
+        if(mDeck.getQuestions().size() == 0)
+            setContentView(R.layout.no_edit_card);
+        else {
+            setContentView(R.layout.edit_deck_table_activity);
+            initiateListAdapter(mDeck);
+        }
+
     }
 
     @Override
@@ -95,7 +101,10 @@ public class EditDeckTableActivity extends Activity {
         };
     }
 
-    private void initiateObjects(){ mDeckInfo = (DeckHolder)getApplication(); }
+    private void initiateObjects(){
+        mDeckInfo = (DeckHolder)getApplication();
+        mDeck = mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition());
+    }
 
     private void initiateListAdapter(Deck deck){
         ListView listView = (ListView) findViewById(R.id.deck_listview);
@@ -105,30 +114,4 @@ public class EditDeckTableActivity extends Activity {
         listView.setOnItemClickListener(mOnItemClickListener);
     }
 
-    private void initiateNoCardsMessage(){
-        RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.edit_deck_table);
-        LinearLayout linearLayout = new LinearLayout(this);
-        TextView textView = new TextView(this);
-        String message = "(No Cards in Deck)";
-        int textSize = (int)getResources().getDimension(R.dimen.text_size);
-
-        textView.setText(message);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
-        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        linearLayout.setGravity(Gravity.CENTER);
-        linearLayout.addView(textView);
-        relativeLayout.addView(linearLayout);
-    }
-
-    private void setView(){
-        int position = mDeckInfo.getDeckPosition();
-        Deck deck = new Deck(mDeckInfo.getDeckList().get(position));
-        int cardLength = deck.getQuestions().size();
-        Log.d(TAG, "Card length: " + cardLength);
-
-        if(cardLength == 0)
-            initiateNoCardsMessage();
-        else
-            initiateListAdapter(deck);
-    }
 }

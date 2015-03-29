@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -73,8 +74,23 @@ public class CreateCardActivity extends Activity {
         initiateOptionsIntent();
     }
 
+    public void keyBoard(View v){
+        if(findViewById(R.id.question_edit).isFocused() || findViewById(R.id.answer_edit).isFocused())
+            hideKeyBoard(v);
+    }
+
     //==============================================================================================
 
+    //Initializes class objects
+    private void initiateObjects(){
+        mDeckInfo = (DeckHolder)getApplication();
+    }
+
+    private void hideKeyBoard(View view){
+        Log.d(TAG, "Made to hide keyboard");
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     //Checks if there is at least one character in both question and answer text boxes
     private boolean isEditBoxesFilled() {
@@ -91,11 +107,6 @@ public class CreateCardActivity extends Activity {
     private void initiateOptionsIntent() {
         Intent intent = new Intent(this, OptionsActivity.class);
         startActivity(intent);
-    }
-
-    //Initializes class objects
-    private void initiateObjects(){
-        mDeckInfo = (DeckHolder)getApplication();
     }
 
     //Obtains the text from the question edit box

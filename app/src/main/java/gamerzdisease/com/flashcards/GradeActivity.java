@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -72,11 +73,8 @@ public class GradeActivity extends Activity {
     }
 
     private boolean isGradeForDeck(){
-        for(String key : mGradeList.keySet()){
-            if(key.equals(mDeckName))
-                return true;
-        }
-        return false;
+        Set deckGrades = mGradeList.keySet();
+        return deckGrades.contains(mDeckName);
     }
 
     private void readGradeFromStorage(){

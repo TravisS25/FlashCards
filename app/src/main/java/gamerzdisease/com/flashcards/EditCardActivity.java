@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -56,11 +57,6 @@ public class EditCardActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(this, Consts.BACK_BUTTON, Toast.LENGTH_SHORT).show();
-    }
-
     public void editCard(View v){
         if (!isEditBoxesFilled())
             Toast.makeText(this, Consts.MESSAGE, Toast.LENGTH_SHORT).show();
@@ -71,8 +67,17 @@ public class EditCardActivity extends Activity {
         }
     }
 
+    public void keyBoard(View v){
+        if(findViewById(R.id.question_edit).isFocused() || findViewById(R.id.answer_edit).isFocused())
+            hideKeyBoard(v);
+    }
+
 
 //==================================================================================================
+
+    private void initiateObjects(){
+        mDeckInfo = (DeckHolder)getApplication();
+    }
 
     private void setQuestionTextBox(){
         EditText questionEdit = (EditText)findViewById(R.id.question_edit);
@@ -86,8 +91,10 @@ public class EditCardActivity extends Activity {
         questionEdit.setText(answer);
     }
 
-    private void initiateObjects(){
-        mDeckInfo = (DeckHolder)getApplication();
+    private void hideKeyBoard(View view){
+        Log.d(TAG, "Made to hide keyboard");
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     //Checks if there is at least one character in both question and answer text boxes

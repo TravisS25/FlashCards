@@ -67,7 +67,12 @@
 
         <activity
             android:name=".StudyDeckActivity"
-            android:label="@string/options">
+            android:label="@string/options"
+            android:parentActivityName=".OptionsActivity"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".OptionsActivity"/>
         </activity>
 
         <activity

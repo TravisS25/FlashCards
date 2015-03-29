@@ -21,7 +21,6 @@ public class DeckHolder extends Application {
 
     private final static String TAG = "Deckholder";
     private ArrayList<Deck> mDeckList;
-    private ArrayList<String> mQuestionList, mAnswerList;
     private Deck mDeck;
     private int mDeckPosition;
     private String mQuestion, mAnswer;

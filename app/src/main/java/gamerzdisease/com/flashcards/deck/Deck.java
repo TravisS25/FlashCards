@@ -80,17 +80,11 @@ public class Deck implements Parcelable, Serializable {
 
     public void setQuestion(String question){ mQuestions.add(question); }
 
-    public void setQuestionList(ArrayList<String> questionList){ mQuestions = new ArrayList<>(questionList); }
-
     public ArrayList<String> getQuestions(){ return mQuestions; }
 
     public void setAnswer(String answer){ mAnswers.add(answer); }
 
-    public void setAnswerList(ArrayList<String> answerList){ mAnswers = new ArrayList<>(answerList); }
-
     public ArrayList<String> getAnswers(){ return mAnswers; }
-
-
 
     public void setCardPosition(int position){ mCardPosition = position; }
 

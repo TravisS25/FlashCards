@@ -21,8 +21,9 @@
 
 
     <!-- main_activity.xml -->
-
-    <dimen name="text_size">16sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_grade">17sp</dimen>
+    <dimen name="text_size">21sp</dimen>
     <dimen name="text_size_button">20sp</dimen>
     <dimen name="text_size_special">32sp</dimen>
     <dimen name="text_size_smaller_header">22sp</dimen>

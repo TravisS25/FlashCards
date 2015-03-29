@@ -1,6 +1,7 @@
 package gamerzdisease.com.flashcards.adapters;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import gamerzdisease.com.flashcards.R;
 
@@ -38,15 +40,16 @@ public class GradeAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         Context context = parent.getContext();
-        int textSize = (int)context.getResources().getDimension(R.dimen.text_size);
-        double num = mGradeList.get(position);
-        String percentage =  String.valueOf(num);
+        int textSize = (int)context.getResources().getDimension(R.dimen.text_size_special);
+        Collections.reverse(mGradeList);
+        double percentage = mGradeList.get(position);
+
         if(convertView == null){
             LinearLayout view = new LinearLayout(context);
             TextView gradeTextView = new TextView(context);
-            gradeTextView.setPadding(0, 0, 10, 0);
-            gradeTextView.setTextSize(textSize);
-            gradeTextView.setText(percentage + "%");
+            gradeTextView.setPadding(15, 10, 0, 10);
+            gradeTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+            gradeTextView.setText(String.format("%.1f", percentage) + "%");
             view.addView(gradeTextView);
             return view;
         }

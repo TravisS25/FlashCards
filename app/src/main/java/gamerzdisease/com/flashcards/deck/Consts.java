@@ -8,16 +8,14 @@ public final class Consts {
     private Consts(){}
 
     // Universal Constants
-    public final static String DECKNAME = "gamerzdisease.com.flashcards.DECKNAME";
+    public final static String DECK_NAME = "gamerzdisease.com.flashcards.DECKNAME";
     public final static String DECK = "gamerzdisease.com.flashcards.DECK";
     public static String DECK_FILEPATH;
     public static String GRADE_FILEPATH;
+    public static String DECK_POSITION_FILEPATH;
     public final static String DECK_FILENAME = "decks";
     public final static String GRADE_FILENAME = "grades";
-
-    //MainActivity
-    public final static String POSITION = "gamerzdisease.com.flashcards.position";
-    public final static String MAIN_ACTIVITY = "MainActivity";
+    public final static String DECK_POSITION_FILENAME = "position";
 
     //NewDeckActivity
     public final static String DECK_NAME_EXISTS = "That deck name already exists";
@@ -27,5 +25,8 @@ public final class Consts {
     //CreateCardActivity
     public final static String BACK_BUTTON = "Press done to finish creating deck";
     public final static String MESSAGE = "You must enter text in the question and answer textbox";
+
+    //StudyModeActivity
+    public final static String DECK_POSITION = "deck position";
 
 }

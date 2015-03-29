@@ -53,8 +53,9 @@
         android:clickable="true"
         android:onClick="editCard"
         android:textSize="@dimen/text_size_button"
-        android:layout_below="@+id/answer_edit"
-        android:layout_centerHorizontal="true"
-        bootstrap:bb_type="default"/>
+        bootstrap:bb_type="default"
+        bootstrap:bb_roundedCorners="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

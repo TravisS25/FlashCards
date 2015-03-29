@@ -20,7 +20,8 @@
             android:id="@+id/new_deck_button"
             bootstrap:bb_type="default"
             android:textSize="@dimen/text_size_button"
-            android:onClick="newDeck" />
+            android:onClick="newDeck"
+            bootstrap:bb_roundedCorners="true"/>
 
     </LinearLayout>
 

@@ -15,20 +15,22 @@
         <com.beardedhen.androidbootstrap.BootstrapButton
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
+            android:layout_margin="10dp"
             android:text="@string/new_deck"
             android:id="@+id/new_deck_button"
-            android:clickable="true"
+            bootstrap:bb_type="default"
             android:textSize="@dimen/text_size_button"
             android:onClick="newDeck"
-            android:layout_marginBottom="20dp"
-            bootstrap:bb_type="default"/>
+            bootstrap:bb_roundedCorners="true"/>
+
     </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/deck_listview"
-        android:layout_below="@+id/linearLayout">
+        android:layout_below="@+id/linearLayout"
+        android:dividerHeight="@dimen/divider_height">
     </ListView>
 
 </RelativeLayout>

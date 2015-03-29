@@ -47,7 +47,8 @@
         android:layout_alignParentStart="true"
         bootstrap:bb_type="default"
         android:textSize="@dimen/text_size_button"
-        android:onClick="addCard" />
+        android:onClick="addCard"
+        bootstrap:bb_roundedCorners="true"/>
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="@dimen/button_width"
@@ -61,6 +62,7 @@
         android:layout_marginStart="98dp"
         android:layout_alignTop="@+id/button19"
         bootstrap:bb_type="default"
-        android:textSize="@dimen/text_size_button" />
+        android:textSize="@dimen/text_size_button"
+        bootstrap:bb_roundedCorners="true"/>
 
 </RelativeLayout>

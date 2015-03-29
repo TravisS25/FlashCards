@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(No Grade For Deck)"
+            android:text="(No Cards To Edit)"
             android:id="@+id/question"
             android:layout_gravity="center_horizontal"
             android:textSize="@dimen/text_size"/>

@@ -25,10 +25,10 @@ import gamerzdisease.com.flashcards.deck.StudyMode;
  */
 public class CardBackFragment extends Fragment {
 
-    public final static String CARD_POSITION = "card position";
     private final static String TAG = "CardBackFragment";
-    private DeckHolder mDeckInfo;
-    private IAnimation  mAnimationListener;
+    private Deck mDeck;
+    private CardFragmentActivity mAnimationListener;
+    private Button.OnClickListener mCorrectListener, mIncorrectListener, mCompleteListener;
 
     public CardBackFragment() {}
 
@@ -39,7 +39,7 @@ public class CardBackFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mAnimationListener = (IAnimation) activity;
+            mAnimationListener = (CardFragmentActivity) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement IAnimation");
@@ -68,28 +68,34 @@ public class CardBackFragment extends Fragment {
 //==================================================================================================
 
     private void initiateObjects(){
-        mDeckInfo = (DeckHolder) getActivity().getApplication();
+        DeckHolder deckInfo = (DeckHolder) getActivity().getApplication();
+        ArrayList<Deck> deckList = deckInfo.getDeckList();
+        int deckPostion = deckInfo.getDeckPosition();
+        mDeck = deckList.get(deckPostion);
     }
 
     private void initiateAnswer(){
         TextView questionTextView = (TextView)getView().findViewById(R.id.answer);
-        ArrayList<Deck> deckList = mDeckInfo.getDeckList();
-        int deckPostion = mDeckInfo.getDeckPosition();
-        Deck deck = deckList.get(deckPostion);
         int position = StudyMode.getPosition();
-        String answerText = deck.getQuestions().get(position);
+        String answerText = mDeck.getAnswers().get(position);
         questionTextView.setText(answerText);
     }
 
     private void initiateButtons(){
         BootstrapButton correctButton, incorrectButton, completeButton;
-        Button.OnClickListener correctListener, incorrectListener, completeListener;
 
+        initiateButtonListeners();
         correctButton = (BootstrapButton)getView().findViewById(R.id.correct_button);
         incorrectButton = (BootstrapButton)getView().findViewById(R.id.incorrect_button);
         completeButton = (BootstrapButton)getView().findViewById(R.id.complete_button);
-        
-        correctListener = new Button.OnClickListener(){
+
+        correctButton.setOnClickListener(mCorrectListener);
+        incorrectButton.setOnClickListener(mIncorrectListener);
+        completeButton.setOnClickListener(mCompleteListener);
+    }
+
+    private void initiateButtonListeners(){
+        mCorrectListener = new Button.OnClickListener(){
             @Override
             public void onClick(View v){
                 StudyMode.increasePosition();
@@ -99,7 +105,7 @@ public class CardBackFragment extends Fragment {
             }
         };
 
-        incorrectListener = new Button.OnClickListener(){
+        mIncorrectListener = new Button.OnClickListener(){
             @Override
             public void onClick(View v){
                 StudyMode.increasePosition();
@@ -107,17 +113,12 @@ public class CardBackFragment extends Fragment {
             }
         };
 
-        completeListener = new Button.OnClickListener(){
+        mCompleteListener = new Button.OnClickListener(){
             @Override
             public void onClick(View v){
                 mAnimationListener.complete();
             }
         };
-
-        correctButton.setOnClickListener(correctListener);
-        incorrectButton.setOnClickListener(incorrectListener);
-        completeButton.setOnClickListener(completeListener);
-
     }
 
 }
