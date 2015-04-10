@@ -6,7 +6,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:id="@+id/grg">
+    android:id="@+id/edit_card_layout"
+    android:focusable="false"
+    android:onClick="editKeyBoard">
 
 
     <TextView
@@ -56,6 +58,7 @@
         bootstrap:bb_type="default"
         bootstrap:bb_roundedCorners="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        />
 
 </RelativeLayout>

@@ -11,11 +11,7 @@ public final class Consts {
     public final static String DECK_NAME = "gamerzdisease.com.flashcards.DECKNAME";
     public final static String DECK = "gamerzdisease.com.flashcards.DECK";
     public static String DECK_FILEPATH;
-    public static String GRADE_FILEPATH;
-    public static String DECK_POSITION_FILEPATH;
     public final static String DECK_FILENAME = "decks";
-    public final static String GRADE_FILENAME = "grades";
-    public final static String DECK_POSITION_FILENAME = "position";
 
     //NewDeckActivity
     public final static String DECK_NAME_EXISTS = "That deck name already exists";

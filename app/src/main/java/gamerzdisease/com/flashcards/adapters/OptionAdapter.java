@@ -2,19 +2,14 @@ package gamerzdisease.com.flashcards.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.zip.Inflater;
 
 import gamerzdisease.com.flashcards.R;
 
@@ -53,7 +48,7 @@ public class OptionAdapter extends BaseAdapter {
         View rowView;
 
         if(convertView == null){
-            rowView = mInflate.inflate(R.layout.option_list, null);
+            rowView = mInflate.inflate(R.layout.option_listview_layout, null);
             TextView optionText = (TextView)rowView.findViewById(R.id.option_text);
             ImageView optionImage = (ImageView)rowView.findViewById(R.id.option_image);
             optionText.setText(mText.get(position));

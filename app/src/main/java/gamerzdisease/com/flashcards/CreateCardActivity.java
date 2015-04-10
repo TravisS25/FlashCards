@@ -74,6 +74,7 @@ public class CreateCardActivity extends Activity {
         initiateOptionsIntent();
     }
 
+    //Lowers the keyboard whenever the user clicks off of the textboxes
     public void keyBoard(View v){
         if(findViewById(R.id.question_edit).isFocused() || findViewById(R.id.answer_edit).isFocused())
             hideKeyBoard(v);
@@ -86,6 +87,7 @@ public class CreateCardActivity extends Activity {
         mDeckInfo = (DeckHolder)getApplication();
     }
 
+    //Lowers the keyboard
     private void hideKeyBoard(View view){
         Log.d(TAG, "Made to hide keyboard");
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -137,6 +139,12 @@ public class CreateCardActivity extends Activity {
         storage = new DeckWriter(mDeckInfo.getDeckList(), Consts.DECK_FILEPATH);
         t1 = new Thread(storage);
         t1.start();
+        try {
+            t1.join();
+        }
+        catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package gamerzdisease.com.flashcards;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
@@ -20,6 +21,7 @@ import gamerzdisease.com.flashcards.adapters.GradeAdapter;
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
+import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
 import gamerzdisease.com.flashcards.filesystem.GradeReader;
 import gamerzdisease.com.flashcards.filesystem.IStorageReader;
 
@@ -30,6 +32,7 @@ public class GradeActivity extends Activity {
 
     private final static String TAG = "EditDeckActivity";
     private HashMap<String, ArrayList<Double>> mGradeList;
+    private Cursor mCursor;
     private String mDeckName;
 
     @Override
@@ -38,7 +41,6 @@ public class GradeActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         initiateObjects();
         readGradeFromStorage();
-        Log.d(TAG, "mGradeList size: " + mGradeList.size());
         if(isGradeForDeck()) {
             setContentView(R.layout.grades_activity);
             initiateListAdapter();
@@ -73,40 +75,24 @@ public class GradeActivity extends Activity {
     }
 
     private boolean isGradeForDeck(){
-        Set deckGrades = mGradeList.keySet();
-        return deckGrades.contains(mDeckName);
+        return mCursor.getCount() != 0;
     }
 
     private void readGradeFromStorage(){
-        IStorageReader gradeReader;
-        ExecutorService service;
-        Future<Object> future;
-
-        gradeReader = new GradeReader(Consts.GRADE_FILEPATH);
-        service = Executors.newFixedThreadPool(6);
-        future = service.submit(gradeReader);
-
-        while(true){
-            try{
-                if(future.isDone()){
-                    mGradeList = new HashMap<>((HashMap<String, ArrayList<Double>>)future.get());
-                    return;
-                }
-            }
-            catch (InterruptedException | ExecutionException ex){
-                ex.printStackTrace();
-            }
-        }
+        String tableName = DeckDatabaseAdapter.DeckHelper.GRADE_TABLE;
+        String id = DeckDatabaseAdapter.DeckHelper.UID_COLUMN;
+        String deckColumn = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
+        String gradeColumn = DeckDatabaseAdapter.DeckHelper.GRADE_COLUMN;
+        String[] columns = {id, gradeColumn};
+        String selection = deckColumn + " = ?";
+        String[] selectionArgs = {mDeckName};
+        DeckDatabaseAdapter deckDatabaseAdapter = new DeckDatabaseAdapter(this);
+        mCursor = deckDatabaseAdapter.tableQuery(tableName, columns, selection, selectionArgs, null, null, null, null);
     }
 
     private void initiateListAdapter(){
-        ListView listView;
-        GradeAdapter gradeAdapter;
-        ArrayList<Double> grades;
-
-        listView = (ListView)findViewById(R.id.grade_listview);
-        grades = new ArrayList<>(mGradeList.get(mDeckName));
-        gradeAdapter = new GradeAdapter(grades);
+        ListView listView = (ListView)findViewById(R.id.grade_listview);
+        GradeAdapter gradeAdapter = new GradeAdapter(this, mCursor);
         listView.setAdapter(gradeAdapter);
     }
 }

@@ -26,8 +26,7 @@
         android:layout_below="@+id/linearLayout2"
         android:id="@+id/option_listview">
 
-
-        </ListView>
+    </ListView>
 
 
 

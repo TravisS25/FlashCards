@@ -1,52 +1,50 @@
 package gamerzdisease.com.flashcards;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
 import gamerzdisease.com.flashcards.deck.Grade;
 import gamerzdisease.com.flashcards.deck.StudyMode;
-import gamerzdisease.com.flashcards.filesystem.GradeReader;
-import gamerzdisease.com.flashcards.filesystem.GradeWriter;
-import gamerzdisease.com.flashcards.filesystem.IStorageReader;
+import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
+import gamerzdisease.com.flashcards.filesystem.DeckPositionWriter;
 import gamerzdisease.com.flashcards.filesystem.IStorageWriter;
+
 
 /**
  * Created by Travis on 3/20/2015.
  */
+
+//Activity is used to calculate and display the grade after user is done with study mode of a deck
 public class DeckScoreActivity extends Activity {
 
     private final static String TAG = "DeckScoreActivity";
-    DeckHolder mDeckInfo;
-    HashMap<String, ArrayList<Double>> mGradeList;
-    ArrayList<Double> mGrades;
-    double mGrade;
+    private Deck mDeck;
+    private DeckDatabaseAdapter mDeckDatabaseAdapter;
+    private HashMap<String, Integer> mDeckPosition;
+    private HashMap<String, ArrayList<Double>> mGradeList;
+    private double mGrade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.finished_deck);
+        setContentView(R.layout.deck_score_activity);
         initiateObjects();
         displayGrade();
-        readGradeFromStorage();
         writeGradeToStorage();
+        removeDeckFromList();
         reset();
     }
 
@@ -72,14 +70,17 @@ public class DeckScoreActivity extends Activity {
 //================================================================================================
 
     private void initiateObjects(){
-        mDeckInfo = (DeckHolder)getApplication();
+        DeckHolder deckInfo = (DeckHolder)getApplication();
+        ArrayList<Deck> deckList = deckInfo.getDeckList();
+        int deckPostion = deckInfo.getDeckPosition();
+        mDeck = deckList.get(deckPostion);
+        mDeckDatabaseAdapter = new DeckDatabaseAdapter(this);
     }
 
     private void displayGrade(){
         TextView gradePercentage = (TextView)findViewById(R.id.deck_percentage);
         TextView gradeSize = (TextView)findViewById(R.id.deck_size);
-        Deck deck = mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition());
-        int deckSize = deck.getQuestions().size();
+        int deckSize = mDeck.getQuestions().size();
 
         mGrade = Grade.calculateGrade(deckSize);
         String percentage = String.format("%.1f", mGrade) + "%";
@@ -89,56 +90,22 @@ public class DeckScoreActivity extends Activity {
         gradeSize.setText(gradeCount);
     }
 
-    private void readGradeFromStorage(){
-        IStorageReader gradeReader;
-        ExecutorService service;
-        Future<Object> future;
+    private void writeGradeToStorage(){
+        ContentValues contentValues = new ContentValues();
+        String tableName = DeckDatabaseAdapter.DeckHelper.GRADE_TABLE;
+        String deckColumn = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
+        String gradeColumn = DeckDatabaseAdapter.DeckHelper.GRADE_COLUMN;
+        contentValues.put(deckColumn, mDeck.getName());
+        contentValues.put(gradeColumn, mGrade);
+        mDeckDatabaseAdapter.tableInsert(tableName, null, contentValues);
 
-        gradeReader = new GradeReader(Consts.GRADE_FILEPATH);
-        service = Executors.newFixedThreadPool(6);
-        future = service.submit(gradeReader);
-
-        while(true){
-            try{
-                if(future.isDone()){
-                    mGradeList = new HashMap<>((HashMap<String, ArrayList<Double>>)future.get());
-                    return;
-                }
-            }
-            catch (InterruptedException | ExecutionException ex){
-                ex.printStackTrace();
-            }
-        }
     }
 
-    private void writeGradeToStorage(){
-        IStorageWriter gradeWriter;
-        Thread t;
-        Deck deck;
-        String deckName;
-        boolean flag = false;
-
-        deck = mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition());
-        deckName = deck.getName();
-
-        for(String key : mGradeList.keySet()){
-            if(key.equals(deckName))
-                flag = true;
-        }
-
-        if(flag)
-            mGrades = new ArrayList<>(mGradeList.get(deckName));
-        else
-            mGrades = new ArrayList<>();
-
-        Log.d(TAG, "Value of grades: " + mGrades);
-        Log.d(TAG, "Keys of gradelist: " + mGradeList.keySet());
-        mGrades.add(mGrade);
-        Log.d(TAG, "Value of mGrades: " + mGrades);
-        mGradeList.put(deckName, mGrades);
-        gradeWriter = new GradeWriter(mGradeList, Consts.GRADE_FILEPATH);
-        t = new Thread(gradeWriter);
-        t.start();
+    public void removeDeckFromList(){
+        String tableName = DeckDatabaseAdapter.DeckHelper.STUDY_INFO_TABLE;
+        String whereClause = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN + " = ?";
+        String[] whereArgs = {mDeck.getName()};
+        mDeckDatabaseAdapter.tableRemove(tableName,whereClause, whereArgs);
     }
 
     private void reset(){

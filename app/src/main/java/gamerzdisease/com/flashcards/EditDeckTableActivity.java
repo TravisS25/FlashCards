@@ -35,7 +35,6 @@ import gamerzdisease.com.flashcards.deck.Grade;
 public class EditDeckTableActivity extends Activity {
 
     private final static String TAG = "EditDeckActivity";
-    private AdapterView.OnItemClickListener mOnItemClickListener;
     private DeckHolder mDeckInfo;
     private Deck mDeck;
 
@@ -79,12 +78,19 @@ public class EditDeckTableActivity extends Activity {
     }
 
 //=================================================================================================
-    private void initiateListener(){
-        mOnItemClickListener = new AdapterView.OnItemClickListener() {
+
+    private void initiateObjects(){
+        mDeckInfo = (DeckHolder)getApplication();
+        ArrayList<Deck> deckList = mDeckInfo.getDeckList();
+        int position = mDeckInfo.getDeckPosition();
+        mDeck = deckList.get(position);
+    }
+
+    private void initiateListAdapter(Deck deck){
+        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(parent.getContext(), EditCardActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                 int deckPosition = mDeckInfo.getDeckPosition();
                 Deck deck = mDeckInfo.getDeckList().get(deckPosition);
@@ -99,19 +105,11 @@ public class EditDeckTableActivity extends Activity {
                 startActivity(intent);
             }
         };
-    }
 
-    private void initiateObjects(){
-        mDeckInfo = (DeckHolder)getApplication();
-        mDeck = mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition());
-    }
-
-    private void initiateListAdapter(Deck deck){
         ListView listView = (ListView) findViewById(R.id.deck_listview);
         CardAdapter cardAdapter = new CardAdapter(deck);
         listView.setAdapter(cardAdapter);
-        initiateListener();
-        listView.setOnItemClickListener(mOnItemClickListener);
+        listView.setOnItemClickListener(onItemClickListener);
     }
 
 }

@@ -27,12 +27,11 @@
         android:layout_height="wrap_content"
         android:text="0%"
         android:id="@+id/deck_percentage"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="52dp"
         android:textColor="@color/text"
         android:textSize="@dimen/text_size_small_header"
         android:layout_below="@+id/textView"
-        android:layout_alignRight="@+id/deck_size"
-        android:layout_alignEnd="@+id/deck_size" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,7 +51,6 @@
         android:id="@+id/finished_button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/textbox_background"
         android:onClick="toOptionsActivity"
         android:textSize="@dimen/text_size_button"
         bootstrap:bb_type="default"

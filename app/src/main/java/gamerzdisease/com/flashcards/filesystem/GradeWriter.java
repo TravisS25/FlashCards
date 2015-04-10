@@ -27,18 +27,17 @@ public class GradeWriter implements IStorageWriter {
     @Override
     public void run(){
         try{
-            writeToStorage(mGradeList);
+            writeToStorage();
         }
         catch (IOException ex){
             ex.printStackTrace();
         }
     }
 
-    public void writeToStorage(Object grade) throws IOException {
+    public void writeToStorage() throws IOException {
         FileOutputStream fileOutputStream;
         ObjectOutputStream objectOutputStream;
 
-        mGradeList = new HashMap<>((HashMap<String, ArrayList<Double>>)grade);
         fileOutputStream = new FileOutputStream(mGradeFile);
         objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(mGradeList);

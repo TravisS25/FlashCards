@@ -14,13 +14,13 @@ import gamerzdisease.com.flashcards.deck.Consts;
 /**
  * Created by Travis on 3/23/2015.
  */
-public class YesNoDialog extends DialogFragment {
+public class ContinueRestartDialog extends DialogFragment {
 
     private AlertDialog.OnClickListener mRestartListener, mContinueListener;
     private DialogClickListener mCallback;
     private HashMap<String, Integer> mDeckPosition;
 
-    public YesNoDialog(){}
+    public ContinueRestartDialog(){}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

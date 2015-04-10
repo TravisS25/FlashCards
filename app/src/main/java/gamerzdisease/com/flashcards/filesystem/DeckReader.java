@@ -18,21 +18,9 @@ import gamerzdisease.com.flashcards.deck.Deck;
 public class DeckReader implements IStorageReader {
 
     private final static String TAG = "DeckReader";
-    private ArrayList<Deck> mDeckList;
     private File mDeckFile;
 
-    public DeckReader(ArrayList<Deck> deckList) {
-        mDeckList = new ArrayList<>(deckList);
-    }
-
-    public DeckReader(String deckFile) {
-        mDeckFile = new File(deckFile);
-    }
-
-    public DeckReader(ArrayList<Deck> deckList, String deckFile) {
-        mDeckList = new ArrayList<>(deckList);
-        mDeckFile = new File(deckFile);
-    }
+    public DeckReader(String deckFile) { mDeckFile = new File(deckFile); }
 
     public ArrayList<Deck> call(){
         try{
@@ -59,7 +47,7 @@ public class DeckReader implements IStorageReader {
         fileInputStream = new FileInputStream(mDeckFile);
         bufferedInputStream = new BufferedInputStream(fileInputStream);
         objectInputStream = new ObjectInputStream(bufferedInputStream);
-        deckList = (ArrayList<Deck>) objectInputStream.readObject();
+        deckList = new ArrayList<>((ArrayList<Deck>) objectInputStream.readObject());
         objectInputStream.close();
         fileInputStream.close();
         return deckList;

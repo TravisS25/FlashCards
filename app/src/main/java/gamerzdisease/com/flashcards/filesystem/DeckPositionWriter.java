@@ -22,11 +22,10 @@ public class DeckPositionWriter implements IStorageWriter {
         mDeckPosition = new HashMap<>(deckposition);
     }
 
-    public void writeToStorage(Object object)throws IOException {
+    public void writeToStorage()throws IOException {
         FileOutputStream fileOutputStream;
         ObjectOutputStream objectOutputStream;
 
-        mDeckPosition = new HashMap<>((HashMap<String, Integer>)object);
         fileOutputStream = new FileOutputStream(mDeckPositionFile);
         objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(mDeckPosition);
@@ -37,7 +36,7 @@ public class DeckPositionWriter implements IStorageWriter {
 
     public void run(){
         try{
-            writeToStorage(mDeckPosition);
+            writeToStorage();
         }
         catch (IOException ex){
             ex.printStackTrace();

@@ -33,7 +33,6 @@ import gamerzdisease.com.flashcards.filesystem.IStorageReader;
 public class OptionsActivity extends Activity {
 
     private final static String TAG = "OptionsActivity";
-    private AdapterView.OnItemClickListener mOnItemClickListener;
     private Intent mIntent;
     private DeckHolder mDeckInfo;
     private ArrayList<String> mOptions;
@@ -46,7 +45,6 @@ public class OptionsActivity extends Activity {
         initiateObjects();
         initiateListAdapter();
         setDeckName();
-        test();
         Log.d(TAG, "StudyMode position: " + StudyMode.getPosition());
     }
 
@@ -67,20 +65,6 @@ public class OptionsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void studyDeck(View v){
-        initiateStudyDeckIntent();
-    }
-
-    public void editDeck(View V){initiateEditDeckIntent();}
-
-    public void addCard(View v){
-        initiateAddCardIntent();
-    }
-
-    public void grades(View v){initiateGradeIntent();}
-
-
-
 //=================================================================================================
 
     void initiateObjects(){
@@ -89,9 +73,10 @@ public class OptionsActivity extends Activity {
         mImages = new ArrayList<>(Arrays.asList(R.drawable.study, R.drawable.edit, R.drawable.add, R.drawable.checkmark));
     }
 
-    //Initializes onclicklistener for listview
-    private void initiateListener(){
-        mOnItemClickListener = new AdapterView.OnItemClickListener() {
+    //Sets up and creates the listview of decks
+    private void initiateListAdapter(){
+
+        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             Intent intent;
 
             @Override
@@ -117,35 +102,11 @@ public class OptionsActivity extends Activity {
                 }
             }
         };
-    }
 
-    //Sets up and creates the listview of decks
-    private void initiateListAdapter(){
         ListView listView = (ListView) findViewById(R.id.option_listview);
         OptionAdapter optionsAdapter = new OptionAdapter(this, mOptions, mImages);
         listView.setAdapter(optionsAdapter);
-        initiateListener();
-        listView.setOnItemClickListener(mOnItemClickListener);
-    }
-
-    private void initiateStudyDeckIntent(){
-        mIntent = new Intent(this, StudyDeckActivity.class);
-        startActivity(mIntent);
-    }
-
-    private void initiateAddCardIntent(){
-        mIntent = new Intent(this, CreateCardActivity.class);
-        startActivity(mIntent);
-    }
-
-    private void initiateEditDeckIntent(){
-        mIntent = new Intent(this, EditDeckTableActivity.class);
-        startActivity(mIntent);
-    }
-
-    private void initiateGradeIntent(){
-        mIntent = new Intent(this, GradeActivity.class);
-        startActivity(mIntent);
+        listView.setOnItemClickListener(onItemClickListener);
     }
 
     private void setDeckName(){
@@ -154,20 +115,5 @@ public class OptionsActivity extends Activity {
         textView.setText(deckName);
     }
 
-    private void test(){
-        HashMap<String, Integer> grades;
-        IStorageReader reader = new GradeReader(Consts.DECK_POSITION_FILEPATH);
-        try {
-            grades = new HashMap<>((HashMap<String, Integer>)reader.readFromStorage());
-            Log.d(TAG, "Deck position: " + grades);
-        }
-        catch (EOFException ex) {
-            Log.d(TAG, "EOFException reached");
-            grades = new HashMap<>();
-        }
-        catch (IOException | ClassNotFoundException ex){
-            ex.printStackTrace();
-        }
 
-    }
 }

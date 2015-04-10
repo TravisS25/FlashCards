@@ -10,16 +10,17 @@ import java.util.HashMap;
 import gamerzdisease.com.flashcards.deck.Deck;
 
 /**
- * Created by Travis on 4/1/2015.
+ * Created by Travis on 3/30/2015.
  */
-public class DeckWriter implements IStorageWriter {
+public class StudyWriter implements Runnable {
+
     private final static String TAG = "StudyWriter";
-    private ArrayList<Deck> mDeckList;
+    private HashMap<String, Boolean> mIsFirstStudy;
     private File mFile;
 
-    public DeckWriter(ArrayList<Deck> deckList, String fileName){
-        mDeckList = new ArrayList<>(deckList);
-        mFile = new File(fileName);
+    public StudyWriter(HashMap<String, Boolean> isFirstStudy, String filename){
+        mIsFirstStudy = new HashMap<>(isFirstStudy);
+        mFile = new File(filename);
     }
 
     @Override
@@ -32,13 +33,13 @@ public class DeckWriter implements IStorageWriter {
         }
     }
 
-    public void writeToStorage() throws IOException {
+    protected void writeToStorage() throws IOException {
         FileOutputStream fileOutputStream;
         ObjectOutputStream objectOutputStream;
 
         fileOutputStream = new FileOutputStream(mFile);
         objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(mDeckList);
+        objectOutputStream.writeObject(mIsFirstStudy);
         objectOutputStream.flush();
         objectOutputStream.close();
         fileOutputStream.close();

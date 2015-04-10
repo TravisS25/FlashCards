@@ -51,7 +51,8 @@
         android:layout_alignRight="@+id/linearLayout4"
         android:layout_alignEnd="@+id/linearLayout4"
         android:textSize="@dimen/text_size_button"
-        bootstrap:bb_type="default"/>
+        bootstrap:bb_type="default"
+        bootstrap:bb_roundedCorners="true"/>
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="@dimen/button_width"
@@ -62,20 +63,22 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textSize="@dimen/text_size_button"
-        bootstrap:bb_type="default"/>
+        bootstrap:bb_type="default"
+        bootstrap:bb_roundedCorners="true"/>
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height_small"
         android:text="@string/incorrect"
-        android:id="@+id/button22"
+        android:id="@+id/incorrect_button"
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/correct_button"
         android:layout_toEndOf="@+id/correct_button"
         android:textSize="@dimen/text_size_button"
-        bootstrap:bb_type="default"/>
+        bootstrap:bb_type="default"
+        bootstrap:bb_roundedCorners="true"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -96,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text"
-                android:id="@+id/textView15"
+                android:id="@+id/answer"
                 android:layout_gravity="center_horizontal"
                 android:textSize="@dimen/text_size"
                 android:textColor="@color/text" />

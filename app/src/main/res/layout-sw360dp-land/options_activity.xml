@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout2"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
@@ -19,46 +19,59 @@
             android:textSize="@dimen/text_size_header" />
     </LinearLayout>
 
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout2"
+        android:id="@+id/option_listview">
+
+
+        </ListView>
+
+
+
+
+
+<!--
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout"
-        android:fadeScrollbars="false">
-
+        android:layout_below="@+id/linearLayout2">
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout"
             android:id="@+id/tableLayout">
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:clickable="true"
-                android:onClick="studyDeck">
-                <LinearLayout
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/study"
-                        android:contentDescription="study"
-                        android:adjustViewBounds="false" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/study_deck"
-                        android:id="@+id/study_deck_text"
-                        android:textSize="@dimen/text_size_small_header"
-                        android:clickable="false"
-                        android:layout_marginTop="@dimen/image_top_margin"
-                        android:layout_marginLeft="@dimen/image_left_margin" />
-                </LinearLayout>
-            </TableRow>
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:onClick="studyDeck"
+                    android:layout_marginTop="@dimen/row_margin">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/study"
+                            android:contentDescription="study"
+                            android:adjustViewBounds="false" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/study_deck"
+                            android:id="@+id/study_deck_text"
+                            android:textSize="@dimen/text_size_small_header"
+                            android:clickable="false"
+                            android:layout_marginTop="@dimen/image_top_margin"
+                            android:layout_marginLeft="@dimen/image_left_margin" />
+                    </LinearLayout>
+                </TableRow>
 
 
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
+            <TableRow android:layout_marginTop="@dimen/row_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -81,12 +94,12 @@
                         android:textSize="@dimen/text_size_small_header"
                         android:clickable="false"
                         android:gravity="center"
-                        android:layout_marginTop="@dimen/image_top_margin1"
+                        android:layout_marginTop="@dimen/image_top_margin"
                         android:layout_marginLeft="@dimen/image_left_margin" />
                 </LinearLayout>
             </TableRow>
 
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
+            <TableRow android:layout_marginTop="@dimen/row_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -113,7 +126,7 @@
                 </LinearLayout>
             </TableRow>
 
-            <TableRow android:layout_marginTop="@dimen/row_margin_land"
+            <TableRow android:layout_marginTop="@dimen/row_margin"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -142,4 +155,5 @@
 
         </TableLayout>
     </ScrollView>
+-->
 </RelativeLayout>

@@ -13,12 +13,16 @@ import android.widget.TextView;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import gamerzdisease.com.flashcards.R;
+import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
 import gamerzdisease.com.flashcards.deck.Grade;
 import gamerzdisease.com.flashcards.deck.StudyMode;
+import gamerzdisease.com.flashcards.filesystem.DeckPositionWriter;
+import gamerzdisease.com.flashcards.filesystem.IStorageWriter;
 
 /**
  * Created by Travis on 3/14/2015.
@@ -28,7 +32,6 @@ public class CardBackFragment extends Fragment {
     private final static String TAG = "CardBackFragment";
     private Deck mDeck;
     private CardFragmentActivity mAnimationListener;
-    private Button.OnClickListener mCorrectListener, mIncorrectListener, mCompleteListener;
 
     public CardBackFragment() {}
 
@@ -84,18 +87,7 @@ public class CardBackFragment extends Fragment {
     private void initiateButtons(){
         BootstrapButton correctButton, incorrectButton, completeButton;
 
-        initiateButtonListeners();
-        correctButton = (BootstrapButton)getView().findViewById(R.id.correct_button);
-        incorrectButton = (BootstrapButton)getView().findViewById(R.id.incorrect_button);
-        completeButton = (BootstrapButton)getView().findViewById(R.id.complete_button);
-
-        correctButton.setOnClickListener(mCorrectListener);
-        incorrectButton.setOnClickListener(mIncorrectListener);
-        completeButton.setOnClickListener(mCompleteListener);
-    }
-
-    private void initiateButtonListeners(){
-        mCorrectListener = new Button.OnClickListener(){
+        Button.OnClickListener correctListener = new Button.OnClickListener(){
             @Override
             public void onClick(View v){
                 StudyMode.increasePosition();
@@ -105,7 +97,7 @@ public class CardBackFragment extends Fragment {
             }
         };
 
-        mIncorrectListener = new Button.OnClickListener(){
+        Button.OnClickListener incorrectListener = new Button.OnClickListener(){
             @Override
             public void onClick(View v){
                 StudyMode.increasePosition();
@@ -113,12 +105,21 @@ public class CardBackFragment extends Fragment {
             }
         };
 
-        mCompleteListener = new Button.OnClickListener(){
+        Button.OnClickListener completeListener = new Button.OnClickListener(){
             @Override
             public void onClick(View v){
                 mAnimationListener.complete();
             }
         };
+
+        correctButton = (BootstrapButton)getView().findViewById(R.id.correct_button);
+        incorrectButton = (BootstrapButton)getView().findViewById(R.id.incorrect_button);
+        completeButton = (BootstrapButton)getView().findViewById(R.id.complete_button);
+
+        correctButton.setOnClickListener(correctListener);
+        incorrectButton.setOnClickListener(incorrectListener);
+        completeButton.setOnClickListener(completeListener);
     }
+
 
 }

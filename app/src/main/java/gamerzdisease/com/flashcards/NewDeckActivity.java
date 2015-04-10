@@ -14,6 +14,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.InterruptedIOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,13 +65,20 @@ public class NewDeckActivity extends Activity {
             Toast.makeText(this, Consts.DECK_CHARACTERS, Toast.LENGTH_SHORT).show();
         else if(deckCharacterLimit())
             Toast.makeText(this, Consts.DECK_CHARACTER_LIMIT, Toast.LENGTH_SHORT).show();
-        else
-            initiateMainActivityIntent(getDeckName());
+        else {
+            storeDeckName(getDeckName());
+            initiateMainActivityIntent();
+        }
 
     }
 
 
     //===============================================================================================
+
+    //Initializes class variables
+    private void initiateObjects(){
+        mDeckInfo = (DeckHolder)getApplication();
+    }
 
     //Sets deck name to class variable mDeckEditText
     private String getDeckName(){
@@ -106,26 +117,26 @@ public class NewDeckActivity extends Activity {
 
     //Starts intent for MainActivity and adds deck name to application variable mDeckInfo
     //Also writes to storage
-    private void initiateMainActivityIntent(String deckName){
-        Thread t1;
+    private void initiateMainActivityIntent(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void storeDeckName(String deckName){
         IStorageWriter storageWriter;
-        Intent intent;
+        Thread t1;
 
         mDeckInfo.setDeck(deckName);
         mDeckInfo.getDeckList().add(mDeckInfo.getDeck());
 
-        Log.d(TAG, Consts.GRADE_FILEPATH);
         storageWriter = new DeckWriter(mDeckInfo.getDeckList(), Consts.DECK_FILEPATH);
         t1 = new Thread(storageWriter);
         t1.start();
-
-        intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        try {
+            t1.join();
+        }
+        catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
     }
-
-    //Initializes class variables
-    private void initiateObjects(){
-        mDeckInfo = (DeckHolder)getApplication();
-    }
-
 }

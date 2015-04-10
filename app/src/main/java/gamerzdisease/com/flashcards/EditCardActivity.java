@@ -29,7 +29,6 @@ public class EditCardActivity extends Activity {
     private final static String TAG = "EditCardActivity";
     private DeckHolder mDeckInfo;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +56,7 @@ public class EditCardActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    //The "Done" button that saves the changes to the card
     public void editCard(View v){
         if (!isEditBoxesFilled())
             Toast.makeText(this, Consts.MESSAGE, Toast.LENGTH_SHORT).show();
@@ -67,7 +67,8 @@ public class EditCardActivity extends Activity {
         }
     }
 
-    public void keyBoard(View v){
+    //Hides the keyboard when user clicks outside the textboxes
+    public void editKeyBoard(View v){
         if(findViewById(R.id.question_edit).isFocused() || findViewById(R.id.answer_edit).isFocused())
             hideKeyBoard(v);
     }
@@ -79,18 +80,21 @@ public class EditCardActivity extends Activity {
         mDeckInfo = (DeckHolder)getApplication();
     }
 
+    //Displays the text to edit the question in a textbox
     private void setQuestionTextBox(){
         EditText questionEdit = (EditText)findViewById(R.id.question_edit);
         String question = mDeckInfo.getQuestion();
         questionEdit.setText(question);
     }
 
+    //Displays the text to edit the answer in a textbox
     private void setAnswerTextBox(){
         EditText questionEdit = (EditText)findViewById(R.id.answer_edit);
         String answer = mDeckInfo.getAnswer();
         questionEdit.setText(answer);
     }
 
+    //If user clicks off textboxes will lower keyboard
     private void hideKeyBoard(View view){
         Log.d(TAG, "Made to hide keyboard");
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);

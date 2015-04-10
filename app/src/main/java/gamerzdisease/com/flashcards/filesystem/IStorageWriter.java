@@ -11,5 +11,5 @@ import gamerzdisease.com.flashcards.deck.DeckHolder;
  * Created by Travis on 3/3/2015.
  */
 public interface IStorageWriter extends Runnable{
-    void writeToStorage(Object object) throws IOException;
+    void writeToStorage() throws IOException;
 }

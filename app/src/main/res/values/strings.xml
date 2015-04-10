@@ -34,7 +34,7 @@
     <string name="incorrect">Incorrect</string>
     <string name="answer">Answer</string>
 
-    <!-- finished_deck -->
+    <!-- deck_score_activity -->
     <string name="ok">OK</string>
 
 </resources>

@@ -4,18 +4,10 @@
 - Create delete deck option in OptionsActivity
 
 // Bug fixes
-x Fix the size of the "no study" and "no grade" and "no edit" to be all the same size
-x Make the icons smaller on the options activity
-x Make the options activity a list view
-x New Deck button is slightly cut off in landscape mode
-- Fix error when switching to landscape mode for AnswerFragment
-- Fix landscape mode for Add Card Activity
-x When adding or editing card, be able to lower keyboard when click on screen
-x Fix where if user clicks study mode with no cards but then comes back with cards but dialog box
-comes up
-- Not sure but when first installing app, if user makes deck, wont show but will for the rest of the
-app
-x Once user is done with studying a deck, they are able to go back with back button.  Get rid of this
-x Make so you can press back on editing card
+
+
+//Work on
+CardFrontActivity
+
 
 

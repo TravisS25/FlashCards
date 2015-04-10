@@ -46,21 +46,21 @@ public class CardAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         Context context = parent.getContext();
-        int textSize = (int)context.getResources().getDimension(R.dimen.text_size), questionLength, maxLength = 30, color = 0xFFC9C6C7;
+        int textSize = (int)context.getResources().getDimension(R.dimen.text_size_edit), questionLength, maxLength = 30;
         String questionText;
 
         if(convertView == null){
             LinearLayout view = new LinearLayout(context);
             TextView nameTextView = new TextView(context);
             questionLength = mDeck.getQuestions().get(position).trim().length();
-
-            if(questionLength > maxLength)
-                questionText =  mDeck.getQuestions().get(position).trim().substring(0, 30) + "...";
-            else
-                questionText = mDeck.getQuestions().get(position).trim();
+            questionText =  mDeck.getQuestions().get(position).trim();
+            if(questionText.contains("\n"))
+                questionText = questionText.substring(0, questionText.indexOf("\n")) + "...";
+            else if(questionLength > maxLength)
+                questionText =  mDeck.getQuestions().get(position).trim().substring(0, 29) + "...";
 
             nameTextView.setText(questionText);
-            nameTextView.setPadding(15, 10, 0, 10);
+            nameTextView.setPadding(15, 13, 0, 13);
             nameTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
             view.addView(nameTextView);
 

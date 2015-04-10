@@ -36,9 +36,9 @@
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:onClick="flip"
-        android:background="@color/textbox_background"
         android:textSize="@dimen/text_size_button"
-        bootstrap:bb_type="default"/>
+        bootstrap:bb_type="default"
+        bootstrap:bb_roundedCorners="true"/>
 
     <LinearLayout
         android:orientation="vertical"

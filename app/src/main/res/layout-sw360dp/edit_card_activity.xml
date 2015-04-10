@@ -10,7 +10,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/edit_card_layout"
     android:clickable="true"
-    android:onClick="keyboard">
+    android:onClick="editKeyBoard">
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
         android:layout_width="match_parent"
