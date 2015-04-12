@@ -33,10 +33,13 @@ public class GradeAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         String gradeColumn = DeckDatabaseAdapter.DeckHelper.GRADE_COLUMN;
+        String dateColumn = DeckDatabaseAdapter.DeckHelper.DATE_COLUMN;
         TextView gradeTextView = (TextView)view.findViewById(R.id.grade_text);
+        TextView dateTextView = (TextView)view.findViewById(R.id.date_text);
         String gradeText = cursor.getString(cursor.getColumnIndex(gradeColumn));
-        Log.d(TAG, "grade value: " +gradeText);
+        String dateText = cursor.getString(cursor.getColumnIndex(dateColumn));
         gradeTextView.setText(gradeText);
+        dateTextView.setText(dateText);
     }
 
 }

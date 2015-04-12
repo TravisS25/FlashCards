@@ -69,7 +69,7 @@ public class OptionsActivity extends Activity {
 
     void initiateObjects(){
         mDeckInfo = (DeckHolder)getApplication();
-        mOptions = new ArrayList<>(Arrays.asList("Study Deck", "Edit Deck", "Add Card", "Grades"));
+        mOptions = new ArrayList<>(Arrays.asList("Study Deck", "Edit Deck", "Add Card", "Grades", "Delete"));
         mImages = new ArrayList<>(Arrays.asList(R.drawable.study, R.drawable.edit, R.drawable.add, R.drawable.checkmark));
     }
 

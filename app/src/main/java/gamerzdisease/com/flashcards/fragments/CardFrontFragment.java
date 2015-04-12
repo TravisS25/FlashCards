@@ -21,6 +21,7 @@ import gamerzdisease.com.flashcards.R;
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
+import gamerzdisease.com.flashcards.deck.Grade;
 import gamerzdisease.com.flashcards.deck.StudyMode;
 import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
 
@@ -32,9 +33,10 @@ public class CardFrontFragment extends Fragment implements DialogClickListener {
 
     private final static String TAG = "CardFrontFragment";
     private Deck mDeck;
-    private HashMap<String, Integer> mDeckPosition;
-    private HashMap<String, Boolean> mIsFirstStudy;
+    private Cursor mCursor;
     private CardFragmentActivity mAnimationListener;
+    private DeckDatabaseAdapter mDeckDatabaseAdapter;
+    private int mStudyPosition, mGradePosition;
 
     public CardFrontFragment() {}
 
@@ -56,6 +58,7 @@ public class CardFrontFragment extends Fragment implements DialogClickListener {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         initiateObjects();
+        readFromDatabase();
         Log.d(TAG, "OnCreate Called");
     }
 
@@ -75,6 +78,7 @@ public class CardFrontFragment extends Fragment implements DialogClickListener {
             if(isPreviousStudy()) {
                 Log.d(TAG, "Made it to previous study");
                 displayDialog();
+                removeDeckFromList();
             }
             else {
                 Log.d(TAG, "Made it to else statement");
@@ -85,8 +89,8 @@ public class CardFrontFragment extends Fragment implements DialogClickListener {
     }
 
     @Override
-    public void onContinueClick(HashMap<String, Integer> deckPosition){
-        continueFromLastQuestion(deckPosition);
+    public void onContinueClick(int studyPosition, int gradePosition){
+        continueFromLastQuestion(studyPosition, gradePosition);
         initiateButton();
     }
 
@@ -104,47 +108,57 @@ public class CardFrontFragment extends Fragment implements DialogClickListener {
         ArrayList<Deck> deckList = deckInfo.getDeckList();
         int deckPosition = deckInfo.getDeckPosition();
         mDeck = deckList.get(deckPosition);
+        mDeckDatabaseAdapter = new DeckDatabaseAdapter(getActivity());
     }
 
-    private boolean isPreviousStudy(){
-        String tableName = DeckDatabaseAdapter.DeckHelper.STUDY_INFO_TABLE;
-        String deckColumnName = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
-        String[] columns = {deckColumnName};
-        String selection = deckColumnName + " = ?";
-        String[] selectionArgs = {mDeck.getName()};
-        DeckDatabaseAdapter deckDatabaseAdapter = new DeckDatabaseAdapter(getActivity());
-        Cursor cursor = deckDatabaseAdapter.tableQuery(tableName, columns, selection, selectionArgs, null, null, null, null);
-        return cursor.moveToFirst();
-    }
-
-    private int removeDeckFromTable(){
-        String tableName = DeckDatabaseAdapter.DeckHelper.STUDY_INFO_TABLE;
-        String deckColumnName = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
-        String whereClause = deckColumnName + " = ?";
-        String[] whereArgs = {mDeck.getName()};
-        DeckDatabaseAdapter deckDatabaseAdapter = new DeckDatabaseAdapter(getActivity());
-        return deckDatabaseAdapter.tableRemove(tableName, whereClause, whereArgs);
-    }
-
-    private int getStudyPosition(){
+    private void readFromDatabase(){
         String tableName = DeckDatabaseAdapter.DeckHelper.STUDY_INFO_TABLE;
         String deckColumnName = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
         String studyPositionColumnName = DeckDatabaseAdapter.DeckHelper.STUDY_POSITION_COLUMN;
-        String[] columns = {deckColumnName, studyPositionColumnName};
+        String gradePositionColumn = DeckDatabaseAdapter.DeckHelper.GRADE_POSITION_COLUMN;
+        String[] columns = {deckColumnName, studyPositionColumnName, gradePositionColumn};
         String selection = deckColumnName + " = ?";
         String[] selectionArgs = {mDeck.getName()};
-        DeckDatabaseAdapter deckDatabaseAdapter = new DeckDatabaseAdapter(getActivity());
-        Cursor cursor = deckDatabaseAdapter.tableQuery(tableName, columns, selection, selectionArgs, null, null, null, null);
-        cursor.moveToFirst();
-        return cursor.getInt(cursor.getColumnIndex(studyPositionColumnName));
+        mCursor = mDeckDatabaseAdapter.tableQuery(tableName, columns, selection, selectionArgs, null, null, null, null);
+    }
+
+    public void removeDeckFromList(){
+        String tableName = DeckDatabaseAdapter.DeckHelper.STUDY_INFO_TABLE;
+        String whereClause = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN + " = ?";
+        String[] whereArgs = {mDeck.getName()};
+        mDeckDatabaseAdapter.tableRemove(tableName, whereClause, whereArgs);
+    }
+
+
+    private boolean isPreviousStudy(){
+        return mCursor.getCount() > 0;
+    }
+
+    private int getStudyPosition(){
+        String studyPositionColumnName = DeckDatabaseAdapter.DeckHelper.STUDY_POSITION_COLUMN;
+        mCursor.moveToFirst();
+        return mCursor.getInt(mCursor.getColumnIndex(studyPositionColumnName));
+    }
+
+    private int getGradePosition(){
+        String gradePositionColumn = DeckDatabaseAdapter.DeckHelper.GRADE_POSITION_COLUMN;
+        mCursor.moveToFirst();
+        return mCursor.getInt(mCursor.getColumnIndex(gradePositionColumn));
     }
     private void displayDialog(){
+        String deckColumnName = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
+        String studyPositionColumnName = DeckDatabaseAdapter.DeckHelper.STUDY_POSITION_COLUMN;
+        String gradePositionColumnName = DeckDatabaseAdapter.DeckHelper.GRADE_POSITION_COLUMN;
+
         Bundle bundle = new Bundle();
         String deckName = mDeck.getName();
-        int position = getStudyPosition();
-        removeDeckFromTable();
-        bundle.putInt(Consts.DECK_POSITION, position);
-        bundle.putString(Consts.DECK_NAME, deckName);
+        int studyPosition = getStudyPosition();
+        int gradePosition = getGradePosition();
+        mCursor.close();
+
+        bundle.putString(deckColumnName, deckName);
+        bundle.putInt(studyPositionColumnName, studyPosition);
+        bundle.putInt(gradePositionColumnName, gradePosition);
 
         DialogFragment dialogFragment = new ContinueRestartDialog();
         dialogFragment.setArguments(bundle);
@@ -162,14 +176,11 @@ public class CardFrontFragment extends Fragment implements DialogClickListener {
         questionTextView.setText(questionText);
     }
 
-    private void continueFromLastQuestion(HashMap<String, Integer> deckPosition){
+    private void continueFromLastQuestion(int studyPosition, int gradePosition){
         TextView questionTextView = (TextView)getView().findViewById(R.id.question);
-        Log.d(TAG, "Value of Deck Position" + deckPosition);
-        Log.d(TAG, "Value of Deck name" + mDeck.getName());
-        int position = deckPosition.get(mDeck.getName());
-        Log.d(TAG, "Question text from continue: " + position);
-        String questionText = mDeck.getQuestions().get(position);
-        StudyMode.setPosition(position);
+        String questionText = mDeck.getQuestions().get(studyPosition);
+        StudyMode.setPosition(studyPosition);
+        Grade.setNumCorrect(gradePosition);
         questionTextView.setText(questionText);
     }
 

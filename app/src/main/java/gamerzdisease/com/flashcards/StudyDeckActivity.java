@@ -32,7 +32,6 @@ public class StudyDeckActivity extends Activity implements FragmentManager.OnBac
 
     private final static String TAG = "StudyDeckActivity";
     private Handler mHandler;
-    private FragmentFileWriter mFragmentFileWriter;
     private Deck mDeck;
 
     public StudyDeckActivity(){}
@@ -181,31 +180,7 @@ public class StudyDeckActivity extends Activity implements FragmentManager.OnBac
         contentValues.put(studyModeColumn, StudyMode.IN_ORDER_MODE);
         deckDatabaseAdapter.tableReplace(tableName, studyPositionColumn, contentValues);
     }
-/*
-    private void storeStudyPosition(){
-        DeckDatabaseAdapter deckDatabaseAdapter = new DeckDatabaseAdapter(this);
-        ContentValues contentValues = new ContentValues();
-        String tableName = DeckDatabaseAdapter.DeckHelper.STUDY_POSITION_TABLE;
-        String deckColumnName = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
-        String studyPosition = DeckDatabaseAdapter.DeckHelper.STUDY_POSITION_COLUMN;
-        int position = StudyMode.getPosition();
-        contentValues.put(deckColumnName, mDeck.getName());
-        contentValues.put(studyPosition, position);
-        deckDatabaseAdapter.tableReplace(tableName, null, contentValues);
-    }
 
-    private void storeGrade(){
-        DeckDatabaseAdapter deckDatabaseAdapter = new DeckDatabaseAdapter(this);
-        ContentValues contentValues = new ContentValues();
-        String tableName = DeckDatabaseAdapter.DeckHelper.GRADE_POSITION_TABLE;
-        String deckColumnName = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
-        String studyPosition = DeckDatabaseAdapter.DeckHelper.GRADE_POSITION_COLUMN;
-        int position = Grade.getNumCorrect();
-        contentValues.put(deckColumnName, mDeck.getName());
-        contentValues.put(studyPosition, position);
-        deckDatabaseAdapter.tableReplace(tableName, null, contentValues);
-    }
-*/
     private void flipCardToBack() {
         CardBackFragment cardBackFragment = new CardBackFragment();
         getFragmentManager()

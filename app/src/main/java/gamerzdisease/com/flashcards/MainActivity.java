@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.main_activity);
         initiateObjects();
         readDeckFromFile();
-        readGradesFromDatabase();
+        //readGradesFromDatabase();
         initiateListAdapter();
         switch (getResources().getDisplayMetrics().densityDpi) {
             case DisplayMetrics.DENSITY_LOW:
@@ -194,6 +194,7 @@ public class MainActivity extends Activity {
         String gradeTable = DeckDatabaseAdapter.DeckHelper.GRADE_TABLE;
         String deckColumn = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
         String gradeColumn = DeckDatabaseAdapter.DeckHelper.GRADE_COLUMN;
+
         String query = "SELECT " + deckColumn + ", " + gradeColumn +
                        " FROM " + gradeTable +
                        " INNER JOIN " +

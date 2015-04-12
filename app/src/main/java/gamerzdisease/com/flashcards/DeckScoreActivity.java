@@ -44,7 +44,6 @@ public class DeckScoreActivity extends Activity {
         initiateObjects();
         displayGrade();
         writeGradeToStorage();
-        removeDeckFromList();
         reset();
     }
 
@@ -98,14 +97,6 @@ public class DeckScoreActivity extends Activity {
         contentValues.put(deckColumn, mDeck.getName());
         contentValues.put(gradeColumn, mGrade);
         mDeckDatabaseAdapter.tableInsert(tableName, null, contentValues);
-
-    }
-
-    public void removeDeckFromList(){
-        String tableName = DeckDatabaseAdapter.DeckHelper.STUDY_INFO_TABLE;
-        String whereClause = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN + " = ?";
-        String[] whereArgs = {mDeck.getName()};
-        mDeckDatabaseAdapter.tableRemove(tableName,whereClause, whereArgs);
     }
 
     private void reset(){

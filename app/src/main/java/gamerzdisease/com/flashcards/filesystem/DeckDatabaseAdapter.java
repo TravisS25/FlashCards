@@ -26,11 +26,12 @@ import gamerzdisease.com.flashcards.deck.Deck;
  */
 public class DeckDatabaseAdapter {
 
-    DeckHelper mHelper;
+    private DeckHelper mHelper;
+
     private final static String TAG = "DeckDatabaseAdapter";
 
     public DeckDatabaseAdapter(Context context) {
-        mHelper = new DeckHelper(context);
+        mHelper = DeckHelper.getInstance(context);
     }
 
     public long tableInsert(String deckTable, String hackColumn, ContentValues contentValues) {
@@ -60,6 +61,8 @@ public class DeckDatabaseAdapter {
     }
 
     public static class DeckHelper extends SQLiteOpenHelper {
+        private static DeckHelper sInstance;
+
         private final static String TAG = "DeckHelper";
 
         public final static String DATABASE_NAME = "FlashCards.db";
@@ -77,8 +80,6 @@ public class DeckDatabaseAdapter {
         private final static String DROP_GRADE_TABLE = "DROP_TABLE IF EXISTS " + GRADE_TABLE;
         private final static int DATABASE_VERSION = 1;
 
-        Context mContext;
-
         private final static String CREATE_GRADE_TABLE = "CREATE TABLE "+ GRADE_TABLE + " ( " +
                 "" + UID_COLUMN + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                 "" + DECK_NAME_COLUMN + " TEXT NOT NULL, " +
@@ -95,20 +96,25 @@ public class DeckDatabaseAdapter {
                 "" + STUDY_MODE_COLUMN + " INTEGER NOT NULL " +
                 ");";
 
+        public static synchronized DeckHelper getInstance(Context context){
+            if (sInstance == null) {
+                sInstance = new DeckHelper(context.getApplicationContext());
+            }
+            return sInstance;
+        }
 
         private DeckHelper(Context context){
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
             Log.d(TAG, "Deckhelper constructor");
-            mContext = context;
         }
 
         @Override
-        public void onCreate(SQLiteDatabase db) {
-            Log.d(TAG, "Sqlhelper OnCreate");
+        public void onCreate(final SQLiteDatabase db) {
             try {
                 db.execSQL(CREATE_STUDY_INFO_TABLE);
                 db.execSQL(CREATE_GRADE_TABLE);
-            } catch (SQLException ex) {
+            }
+            catch (SQLException ex){
                 ex.printStackTrace();
             }
         }
@@ -137,7 +143,7 @@ public class DeckDatabaseAdapter {
 
         public long insert(final String hackColumn, final ContentValues contentValues) {
             final SQLiteDatabase db = mHelper.getWritableDatabase();
-            ExecutorService executor = Executors.newFixedThreadPool(2);
+            ExecutorService executor = Executors.newFixedThreadPool(4);
             Callable<Long> callable = new Callable<Long>() {
                 @Override
                 public Long call() throws Exception {
@@ -146,18 +152,21 @@ public class DeckDatabaseAdapter {
             };
             Future<Long> future = executor.submit(callable);
 
-            try {
-                return future.get();
-            } catch (InterruptedException | ExecutionException ex) {
-                ex.printStackTrace();
+            while(true) {
+                try {
+                    if(future.isDone()) {
+                        return future.get();
+                    }
+                } catch (InterruptedException | ExecutionException ex) {
+                    ex.printStackTrace();
+                }
             }
-            return -1;
         }
 
         private Cursor select(final String[] columns, final String selection, final String[] selectionArgs,
                               final String groupBy, final String having, final String orderBy, final String limit) {
             final SQLiteDatabase db = mHelper.getWritableDatabase();
-            ExecutorService executor = Executors.newFixedThreadPool(2);
+            ExecutorService executor = Executors.newFixedThreadPool(4);
             Callable<Cursor> callable = new Callable<Cursor>() {
                 @Override
                 public Cursor call() throws Exception {
@@ -166,17 +175,20 @@ public class DeckDatabaseAdapter {
             };
             Future<Cursor> future = executor.submit(callable);
 
-            try {
-                return future.get();
-            } catch (InterruptedException | ExecutionException ex) {
-                ex.printStackTrace();
+            while(true) {
+                try {
+                    if(future.isDone()) {
+                        return future.get();
+                    }
+                } catch (InterruptedException | ExecutionException ex) {
+                    ex.printStackTrace();
+                }
             }
-            return null;
         }
 
         private long replace(final String hackColumn, final ContentValues contentValues) {
             final SQLiteDatabase db = mHelper.getWritableDatabase();
-            ExecutorService executor = Executors.newFixedThreadPool(2);
+            ExecutorService executor = Executors.newFixedThreadPool(4);
             Callable<Long> callable = new Callable<Long>() {
                 @Override
                 public Long call() throws Exception {
@@ -185,17 +197,20 @@ public class DeckDatabaseAdapter {
             };
             Future<Long> future = executor.submit(callable);
 
-            try {
-                return future.get();
-            } catch (InterruptedException | ExecutionException ex) {
-                ex.printStackTrace();
+            while(true) {
+                try {
+                    if(future.isDone()) {
+                        return future.get();
+                    }
+                } catch (InterruptedException | ExecutionException ex) {
+                    ex.printStackTrace();
+                }
             }
-            return -1;
         }
 
         private int delete(final String whereClause, final String[] whereArgs){
             final SQLiteDatabase db = mHelper.getWritableDatabase();
-            ExecutorService executor = Executors.newFixedThreadPool(2);
+            ExecutorService executor = Executors.newFixedThreadPool(4);
             Callable<Integer> callable = new Callable<Integer>() {
                 @Override
                 public Integer call() throws Exception {
@@ -204,19 +219,22 @@ public class DeckDatabaseAdapter {
             };
             Future<Integer> future = executor.submit(callable);
 
-            try {
-                return future.get();
-            } catch (InterruptedException | ExecutionException ex) {
-                ex.printStackTrace();
+            while(true) {
+                try {
+                    if(future.isDone()) {
+                        return future.get();
+                    }
+                } catch (InterruptedException | ExecutionException ex) {
+                    ex.printStackTrace();
+                }
             }
-            return -1;
         }
 
         private Cursor rawQuery(final String sql, final String[] selectionArgs){
             Log.d(TAG, "Table called");
             final SQLiteDatabase db = mHelper.getWritableDatabase();
 
-            ExecutorService executor = Executors.newFixedThreadPool(2);
+            ExecutorService executor = Executors.newFixedThreadPool(4);
             Callable<Cursor> callable = new Callable<Cursor>() {
                 @Override
                 public Cursor call() throws Exception {
@@ -225,12 +243,15 @@ public class DeckDatabaseAdapter {
             };
             Future<Cursor> future = executor.submit(callable);
 
-            try {
-                return future.get();
-            } catch (InterruptedException | ExecutionException ex) {
-                ex.printStackTrace();
+            while(true) {
+                try {
+                    if(future.isDone()) {
+                        return future.get();
+                    }
+                } catch (InterruptedException | ExecutionException ex) {
+                    ex.printStackTrace();
+                }
             }
-            return null;
 
         }
     }

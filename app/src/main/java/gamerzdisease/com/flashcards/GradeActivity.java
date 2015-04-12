@@ -80,14 +80,16 @@ public class GradeActivity extends Activity {
 
     private void readGradeFromStorage(){
         String tableName = DeckDatabaseAdapter.DeckHelper.GRADE_TABLE;
-        String id = DeckDatabaseAdapter.DeckHelper.UID_COLUMN;
+        String idColumn = DeckDatabaseAdapter.DeckHelper.UID_COLUMN;
         String deckColumn = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
         String gradeColumn = DeckDatabaseAdapter.DeckHelper.GRADE_COLUMN;
-        String[] columns = {id, gradeColumn};
+        String dateColumn = DeckDatabaseAdapter.DeckHelper.DATE_COLUMN;
+        String[] columns = {idColumn, gradeColumn, dateColumn};
         String selection = deckColumn + " = ?";
         String[] selectionArgs = {mDeckName};
+        String orderBy = dateColumn + " DESC";
         DeckDatabaseAdapter deckDatabaseAdapter = new DeckDatabaseAdapter(this);
-        mCursor = deckDatabaseAdapter.tableQuery(tableName, columns, selection, selectionArgs, null, null, null, null);
+        mCursor = deckDatabaseAdapter.tableQuery(tableName, columns, selection, selectionArgs, null, null, orderBy, "3");
     }
 
     private void initiateListAdapter(){

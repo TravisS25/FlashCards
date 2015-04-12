@@ -13,6 +13,8 @@ public class Grade {
         return mNumCorrect;
     }
 
+    public static void setNumCorrect(int correct) { mNumCorrect = correct; }
+
     public static void increaseNumCorrect(){
         mNumCorrect++;
     }

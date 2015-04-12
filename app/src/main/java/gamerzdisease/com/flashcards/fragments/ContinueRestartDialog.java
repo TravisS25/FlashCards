@@ -10,6 +10,7 @@ import android.os.Bundle;
 import java.util.HashMap;
 
 import gamerzdisease.com.flashcards.deck.Consts;
+import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
 
 /**
  * Created by Travis on 3/23/2015.
@@ -18,7 +19,8 @@ public class ContinueRestartDialog extends DialogFragment {
 
     private AlertDialog.OnClickListener mRestartListener, mContinueListener;
     private DialogClickListener mCallback;
-    private HashMap<String, Integer> mDeckPosition;
+    private int mStudyPosition, mGradePosition;
+
 
     public ContinueRestartDialog(){}
 
@@ -26,10 +28,12 @@ public class ContinueRestartDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        String deckName = bundle.getString(Consts.DECK_NAME);
-        int position = bundle.getInt(Consts.DECK_POSITION);
-        mDeckPosition = new HashMap<>();
-        mDeckPosition.put(deckName, position);
+
+        String studyPositionColumnName = DeckDatabaseAdapter.DeckHelper.STUDY_POSITION_COLUMN;
+        String gradePositionColumnName = DeckDatabaseAdapter.DeckHelper.GRADE_POSITION_COLUMN;
+
+        mStudyPosition = bundle.getInt(studyPositionColumnName);
+        mGradePosition = bundle.getInt(gradePositionColumnName);
 
         try {
             mCallback = (DialogClickListener) getTargetFragment();
@@ -66,7 +70,7 @@ public class ContinueRestartDialog extends DialogFragment {
         mContinueListener = new AlertDialog.OnClickListener(){
             @Override
             public void onClick(DialogInterface arg0, int arg1){
-                mCallback.onContinueClick(mDeckPosition);
+                mCallback.onContinueClick(mStudyPosition, mGradePosition);
             }
         };
     }
