@@ -1,14 +1,8 @@
 package gamerzdisease.com.flashcards;
 
 import android.app.Activity;
-import android.app.LoaderManager;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -18,10 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.io.IOException;
-import java.nio.DoubleBuffer;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,14 +22,9 @@ import gamerzdisease.com.flashcards.adapters.DeckAdapter;
 import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
-import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
-import gamerzdisease.com.flashcards.filesystem.DeckPositionReader;
 import gamerzdisease.com.flashcards.filesystem.DeckReader;
-import gamerzdisease.com.flashcards.filesystem.GradeReader;
 import gamerzdisease.com.flashcards.filesystem.IStorageReader;
-import gamerzdisease.com.flashcards.filesystem.IStorageWriter;
-import gamerzdisease.com.flashcards.filesystem.StudyReader;
-import gamerzdisease.com.flashcards.filesystem.StudyWriter;
+
 
 
 public class MainActivity extends Activity {
@@ -55,7 +41,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.main_activity);
         initiateObjects();
         readDeckFromFile();
-        //readGradesFromDatabase();
         initiateListAdapter();
         switch (getResources().getDisplayMetrics().densityDpi) {
             case DisplayMetrics.DENSITY_LOW:
@@ -187,30 +172,4 @@ public class MainActivity extends Activity {
             }
         }
     }
-
-    //Gets the max grade for each deck and assigns the decks to mDecks and grades to mGrades
-    private void readGradesFromDatabase() {
-        DeckDatabaseAdapter deckDatabaseAdapter = new DeckDatabaseAdapter(this);
-        String gradeTable = DeckDatabaseAdapter.DeckHelper.GRADE_TABLE;
-        String deckColumn = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
-        String gradeColumn = DeckDatabaseAdapter.DeckHelper.GRADE_COLUMN;
-
-        String query = "SELECT " + deckColumn + ", " + gradeColumn +
-                       " FROM " + gradeTable +
-                       " INNER JOIN " +
-                           "(SELECT " + deckColumn + ", MAX(" + gradeColumn + ") AS " + gradeColumn +
-                           " FROM " + gradeTable +
-                           " GROUP BY " + deckColumn + ") USING (" + deckColumn + ", " + gradeColumn + ")";
-
-        Cursor cursor = deckDatabaseAdapter.tableRawQuery(query, null);
-        if(cursor.moveToNext()){
-            while (!cursor.isAfterLast()){
-                String deckName = cursor.getString(cursor.getColumnIndex(deckColumn));
-                double grade = cursor.getDouble(cursor.getColumnIndex(gradeColumn));
-                mDecks.add(deckName);
-                mGrades.add(grade);
-            }
-        }
-    }
-
 }

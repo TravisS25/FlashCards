@@ -1,10 +1,5 @@
 package gamerzdisease.com.flashcards.fragments;
 
-import android.os.Bundle;
-import android.view.View;
-
-import java.util.HashMap;
-
 /**
  * Created by Travis on 3/18/2015.
  */

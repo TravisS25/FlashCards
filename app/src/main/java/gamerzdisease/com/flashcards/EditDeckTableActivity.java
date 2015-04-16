@@ -1,33 +1,20 @@
 package gamerzdisease.com.flashcards;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import gamerzdisease.com.flashcards.adapters.CardAdapter;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
-import gamerzdisease.com.flashcards.deck.Grade;
 
 /**
  * Created by Travis on 2/10/2015.
@@ -107,7 +94,7 @@ public class EditDeckTableActivity extends Activity {
         };
 
         ListView listView = (ListView) findViewById(R.id.deck_listview);
-        CardAdapter cardAdapter = new CardAdapter(deck);
+        CardAdapter cardAdapter = new CardAdapter(this, deck);
         listView.setAdapter(cardAdapter);
         listView.setOnItemClickListener(onItemClickListener);
     }

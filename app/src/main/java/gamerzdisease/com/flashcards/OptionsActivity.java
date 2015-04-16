@@ -12,28 +12,33 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-import gamerzdisease.com.flashcards.adapters.DeckAdapter;
 import gamerzdisease.com.flashcards.adapters.OptionAdapter;
 import gamerzdisease.com.flashcards.deck.Consts;
+import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
 import gamerzdisease.com.flashcards.deck.StudyMode;
-import gamerzdisease.com.flashcards.filesystem.GradeReader;
+import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
+import gamerzdisease.com.flashcards.filesystem.DeckReader;
+import gamerzdisease.com.flashcards.filesystem.DeckWriter;
 import gamerzdisease.com.flashcards.filesystem.IStorageReader;
+import gamerzdisease.com.flashcards.filesystem.IStorageWriter;
+import gamerzdisease.com.flashcards.fragments.DeleteDeckDialog;
+import gamerzdisease.com.flashcards.fragments.DeleteDeckListener;
 
 /**
  * Created by Travis on 2/8/2015.
  */
-public class OptionsActivity extends Activity {
+public class OptionsActivity extends Activity implements DeleteDeckListener{
 
     private final static String TAG = "OptionsActivity";
-    private Intent mIntent;
+    private String mDeckName;
     private DeckHolder mDeckInfo;
     private ArrayList<String> mOptions;
     private ArrayList<Integer> mImages;
@@ -65,13 +70,66 @@ public class OptionsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void deleteDeck(){
+        IStorageReader storageReader = new DeckReader(Consts.DECK_FILEPATH);
+        ArrayList<Deck> origDeckList, deckList;
+        Intent intent;
+        DeckDatabaseAdapter deckDatabaseAdapter = new DeckDatabaseAdapter(this);
+        ExecutorService service = Executors.newFixedThreadPool(2);
+        Future<Object> deckRetrieve = service.submit(storageReader);
+
+        while(true) {
+            try {
+                if (deckRetrieve.isDone()) {
+                    Log.d(TAG, "Future done");
+                    origDeckList = new ArrayList<>((ArrayList<Deck>) deckRetrieve.get());
+                    deckList = new ArrayList<>(origDeckList);
+                    Log.d(TAG, "decklist value: " + deckList);
+                    for(Deck deck : deckList){
+                        if(deck.getName().equals(mDeckName)){
+                            origDeckList.remove(deck);
+                            break;
+                        }
+                    }
+
+                    IStorageWriter storageWriter = new DeckWriter(origDeckList, Consts.DECK_FILEPATH);
+                    Thread t1 = new Thread(storageWriter);
+                    t1.start();
+                    try{
+                        t1.join();
+                    }
+                    catch (InterruptedException ex){
+                        ex.printStackTrace();
+                    }
+
+                    break;
+                }
+            } catch (InterruptedException | ExecutionException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        String gradeTable = DeckDatabaseAdapter.DeckHelper.GRADE_TABLE;
+        String deckColumn = DeckDatabaseAdapter.DeckHelper.DECK_NAME_COLUMN;
+        String whereClause = deckColumn + " = ?";
+        String[] whereArgs = {mDeckName};
+        deckDatabaseAdapter.tableRemove(gradeTable, whereClause, whereArgs);
+
+        intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
 //=================================================================================================
 
     void initiateObjects(){
         mDeckInfo = (DeckHolder)getApplication();
+        Deck deck = mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition());
+        mDeckName = deck.getName();
+
         mOptions = new ArrayList<>(Arrays.asList("Study Deck", "Edit Deck", "Add Card", "Grades", "Delete"));
-        mImages = new ArrayList<>(Arrays.asList(R.drawable.study, R.drawable.edit, R.drawable.add, R.drawable.checkmark));
-    }
+        mImages = new ArrayList<>(Arrays.asList(R.drawable.study, R.drawable.edit, R.drawable.add, R.drawable.checkmark, R.drawable.delete));
+}
 
     //Sets up and creates the listview of decks
     private void initiateListAdapter(){
@@ -98,7 +156,10 @@ public class OptionsActivity extends Activity {
                         intent = new Intent(parent.getContext(), GradeActivity.class);
                         startActivity(intent);
                         break;
-
+                    case 4:
+                        DeleteDeckDialog deleteDeckDialog = new DeleteDeckDialog();
+                        deleteDeckDialog.setCancelable(false);
+                        deleteDeckDialog.show(getFragmentManager(), "dialog");
                 }
             }
         };
@@ -110,9 +171,8 @@ public class OptionsActivity extends Activity {
     }
 
     private void setDeckName(){
-        String deckName = mDeckInfo.getDeckList().get(mDeckInfo.getDeckPosition()).getName();
         TextView textView = (TextView) findViewById(R.id.deck_name);
-        textView.setText(deckName);
+        textView.setText(mDeckName);
     }
 
 

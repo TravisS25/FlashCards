@@ -4,26 +4,14 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
 import gamerzdisease.com.flashcards.adapters.GradeAdapter;
-import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
 import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
-import gamerzdisease.com.flashcards.filesystem.GradeReader;
-import gamerzdisease.com.flashcards.filesystem.IStorageReader;
 
 /**
  * Created by Travis on 2/13/2015.
@@ -31,7 +19,6 @@ import gamerzdisease.com.flashcards.filesystem.IStorageReader;
 public class GradeActivity extends Activity {
 
     private final static String TAG = "EditDeckActivity";
-    private HashMap<String, ArrayList<Double>> mGradeList;
     private Cursor mCursor;
     private String mDeckName;
 
@@ -89,7 +76,7 @@ public class GradeActivity extends Activity {
         String[] selectionArgs = {mDeckName};
         String orderBy = dateColumn + " DESC";
         DeckDatabaseAdapter deckDatabaseAdapter = new DeckDatabaseAdapter(this);
-        mCursor = deckDatabaseAdapter.tableQuery(tableName, columns, selection, selectionArgs, null, null, orderBy, "3");
+        mCursor = deckDatabaseAdapter.tableQuery(tableName, columns, selection, selectionArgs, null, null, orderBy, "50");
     }
 
     private void initiateListAdapter(){

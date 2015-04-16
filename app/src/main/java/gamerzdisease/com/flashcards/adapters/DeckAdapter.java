@@ -2,25 +2,16 @@ package gamerzdisease.com.flashcards.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.concurrent.TimeoutException;
 
 import gamerzdisease.com.flashcards.R;
 import gamerzdisease.com.flashcards.deck.Deck;
-import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
 
 /**
  * Created by Travis on 2/8/2015.
@@ -59,25 +50,20 @@ public class DeckAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent){
         View rowView;
 
-        if(convertView == null){
+        if(convertView == null)
             rowView = mInflate.inflate(R.layout.main_activity_listview, null);
-            TextView deckTextView = (TextView)rowView.findViewById(R.id.deck_name);
-            TextView numOfCardsTextView = (TextView)rowView.findViewById(R.id.number_of_cards);
-            TextView gradeTextView = (TextView)rowView.findViewById(R.id.grade);
+        else
+            rowView = convertView;
 
-            String deckText = mDeckList.get(position).getName();
-            int numOfGradesText = mDeckList.get(position).getQuestions().size();
-            deckTextView.setText(deckText);
-            numOfCardsTextView.setText(String.valueOf(numOfGradesText));
-            for(String deckName : mDecks){
-                if(deckText.equals(deckName)){
-                    double grade = mGrades.get(position);
-                    gradeTextView.setText(String.valueOf(String.valueOf(grade)));
-                }
-            }
-            return rowView;
-        }
-        return convertView;
+        TextView deckTextView = (TextView)rowView.findViewById(R.id.deck_name);
+        TextView numOfCardsTextView = (TextView)rowView.findViewById(R.id.number_of_cards);
+
+        String deckText = mDeckList.get(position).getName();
+        int numOfGradesText = mDeckList.get(position).getQuestions().size();
+        deckTextView.setText(deckText);
+        numOfCardsTextView.setText("Cards: " + String.valueOf(numOfGradesText));
+
+        return rowView;
     }
 
 }

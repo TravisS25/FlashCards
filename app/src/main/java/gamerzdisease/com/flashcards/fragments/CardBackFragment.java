@@ -13,16 +13,12 @@ import android.widget.TextView;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import gamerzdisease.com.flashcards.R;
-import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
 import gamerzdisease.com.flashcards.deck.Grade;
 import gamerzdisease.com.flashcards.deck.StudyMode;
-import gamerzdisease.com.flashcards.filesystem.DeckPositionWriter;
-import gamerzdisease.com.flashcards.filesystem.IStorageWriter;
 
 /**
  * Created by Travis on 3/14/2015.

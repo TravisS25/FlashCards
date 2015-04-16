@@ -1,15 +1,11 @@
 package gamerzdisease.com.flashcards.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import java.util.HashMap;
-
-import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
 
 /**
@@ -18,9 +14,8 @@ import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
 public class ContinueRestartDialog extends DialogFragment {
 
     private AlertDialog.OnClickListener mRestartListener, mContinueListener;
-    private DialogClickListener mCallback;
+    private StudyInfoListener mCallback;
     private int mStudyPosition, mGradePosition;
-
 
     public ContinueRestartDialog(){}
 
@@ -36,9 +31,9 @@ public class ContinueRestartDialog extends DialogFragment {
         mGradePosition = bundle.getInt(gradePositionColumnName);
 
         try {
-            mCallback = (DialogClickListener) getTargetFragment();
+            mCallback = (StudyInfoListener) getTargetFragment();
         } catch (ClassCastException e) {
-            throw new ClassCastException("Calling fragment must implement DialogClickListener interface");
+            throw new ClassCastException("Calling fragment must implement StudyInfoListener interface");
         }
     }
 

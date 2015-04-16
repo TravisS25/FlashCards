@@ -1,14 +1,11 @@
 package gamerzdisease.com.flashcards;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -22,7 +19,6 @@ import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
 import gamerzdisease.com.flashcards.fragments.CardBackFragment;
 import gamerzdisease.com.flashcards.fragments.CardFrontFragment;
 import gamerzdisease.com.flashcards.fragments.CardFragmentActivity;
-import gamerzdisease.com.flashcards.fragments.FragmentFileWriter;
 
 /**
  * Created by Travis on 2/8/2015.

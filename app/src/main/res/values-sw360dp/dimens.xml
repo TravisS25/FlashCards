@@ -18,6 +18,7 @@
     <dimen name="textbox_margin_land_1">15dp</dimen>
 
     <dimen name="study_mode_padding_1">10dp</dimen>
+    <dimen name="list_view_padding">8dp</dimen>
 
 
     <!-- main_activity.xml -->

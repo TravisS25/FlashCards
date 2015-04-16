@@ -1,24 +1,18 @@
 package gamerzdisease.com.flashcards.filesystem;
 
-import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.SQLException;
-import android.os.Message;
 import android.util.Log;
 
-import java.lang.reflect.Type;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
-import gamerzdisease.com.flashcards.adapters.DeckAdapter;
-import gamerzdisease.com.flashcards.deck.Deck;
 
 
 /**
@@ -84,7 +78,7 @@ public class DeckDatabaseAdapter {
                 "" + UID_COLUMN + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                 "" + DECK_NAME_COLUMN + " TEXT NOT NULL, " +
                 "" + GRADE_COLUMN + " REAL NOT NULL, " +
-                "" + DATE_COLUMN + " DATETIME DEFAULT CURRENT_TIMESTAMP" +
+                "" + DATE_COLUMN + " DATE DEFAULT (datetime('now', 'localtime'))" +
                 ");";
 
         private final static String CREATE_STUDY_INFO_TABLE = "CREATE TABLE " + STUDY_INFO_TABLE + " ( " +
@@ -170,7 +164,7 @@ public class DeckDatabaseAdapter {
             Callable<Cursor> callable = new Callable<Cursor>() {
                 @Override
                 public Cursor call() throws Exception {
-                    return db.query(mDatabaseTable, columns, selection, selectionArgs, null, null, null);
+                    return db.query(mDatabaseTable, columns, selection, selectionArgs, groupBy, having, orderBy, limit);
                 }
             };
             Future<Cursor> future = executor.submit(callable);

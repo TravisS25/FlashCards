@@ -47,15 +47,16 @@ public class OptionAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent){
         View rowView;
 
-        if(convertView == null){
+        if(convertView == null)
             rowView = mInflate.inflate(R.layout.option_listview_layout, null);
-            TextView optionText = (TextView)rowView.findViewById(R.id.option_text);
-            ImageView optionImage = (ImageView)rowView.findViewById(R.id.option_image);
-            optionText.setText(mText.get(position));
-            optionImage.setImageResource(mImages.get(position));
-            return rowView;
-        }
-        return convertView;
+        else
+            rowView = convertView;
+
+        TextView optionText = (TextView)rowView.findViewById(R.id.option_text);
+        ImageView optionImage = (ImageView)rowView.findViewById(R.id.option_image);
+        optionText.setText(mText.get(position));
+        optionImage.setImageResource(mImages.get(position));
+        return rowView;
     }
 
 }

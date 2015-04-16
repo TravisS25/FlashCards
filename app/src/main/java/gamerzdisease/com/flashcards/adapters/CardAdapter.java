@@ -1,18 +1,12 @@
 package gamerzdisease.com.flashcards.adapters;
 
+import android.app.Activity;
 import android.content.Context;
-import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import gamerzdisease.com.flashcards.R;
 import gamerzdisease.com.flashcards.deck.Deck;
@@ -23,9 +17,11 @@ import gamerzdisease.com.flashcards.deck.Deck;
 public class CardAdapter extends BaseAdapter{
 
     private Deck mDeck;
+    private static LayoutInflater mInflate;
 
-    public CardAdapter(Deck deck){
+    public CardAdapter(Activity editDeckTableActivity, Deck deck){
         mDeck = new Deck(deck);
+        mInflate = (LayoutInflater)editDeckTableActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -45,27 +41,23 @@ public class CardAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        Context context = parent.getContext();
-        int textSize = (int)context.getResources().getDimension(R.dimen.text_size_edit), questionLength, maxLength = 30;
-        String questionText;
+        View rowView;
+        int maxLength = 30;
 
-        if(convertView == null){
-            LinearLayout view = new LinearLayout(context);
-            TextView nameTextView = new TextView(context);
-            questionLength = mDeck.getQuestions().get(position).trim().length();
-            questionText =  mDeck.getQuestions().get(position).trim();
-            if(questionText.contains("\n"))
-                questionText = questionText.substring(0, questionText.indexOf("\n")) + "...";
-            else if(questionLength > maxLength)
-                questionText =  mDeck.getQuestions().get(position).trim().substring(0, 29) + "...";
+        if(convertView == null)
+            rowView = mInflate.inflate(R.layout.edit_card_listview, null);
+        else
+            rowView = convertView;
 
-            nameTextView.setText(questionText);
-            nameTextView.setPadding(15, 13, 0, 13);
-            nameTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
-            view.addView(nameTextView);
+        int questionLength = mDeck.getQuestions().get(position).trim().length();
+        String questionText =  mDeck.getQuestions().get(position).trim();
+        if(questionText.contains("\n"))
+            questionText = questionText.substring(0, questionText.indexOf("\n")) + "...";
+        else if(questionLength > maxLength)
+            questionText =  mDeck.getQuestions().get(position).trim().substring(0, 29) + "...";
 
-            return view;
-        }
-        return convertView;
+        TextView questionTextView = (TextView)rowView.findViewById(R.id.edit_card);
+        questionTextView.setText(questionText);
+        return rowView;
     }
 }

@@ -1,8 +1,6 @@
 package gamerzdisease.com.flashcards;
 
-import android.app.Application;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ApplicationTestCase;
 
 /**
  * Created by Travis on 2/2/2015.

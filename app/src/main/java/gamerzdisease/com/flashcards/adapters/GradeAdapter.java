@@ -2,14 +2,11 @@ package gamerzdisease.com.flashcards.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 import gamerzdisease.com.flashcards.R;
 import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
@@ -36,9 +33,9 @@ public class GradeAdapter extends CursorAdapter {
         String dateColumn = DeckDatabaseAdapter.DeckHelper.DATE_COLUMN;
         TextView gradeTextView = (TextView)view.findViewById(R.id.grade_text);
         TextView dateTextView = (TextView)view.findViewById(R.id.date_text);
-        String gradeText = cursor.getString(cursor.getColumnIndex(gradeColumn));
+        double gradeText = cursor.getDouble(cursor.getColumnIndex(gradeColumn));
         String dateText = cursor.getString(cursor.getColumnIndex(dateColumn));
-        gradeTextView.setText(gradeText);
+        gradeTextView.setText(String.format("%.1f", gradeText) + "%");
         dateTextView.setText(dateText);
     }
 

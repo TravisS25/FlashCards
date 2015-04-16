@@ -15,10 +15,8 @@ import android.widget.TextView;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import gamerzdisease.com.flashcards.R;
-import gamerzdisease.com.flashcards.deck.Consts;
 import gamerzdisease.com.flashcards.deck.Deck;
 import gamerzdisease.com.flashcards.deck.DeckHolder;
 import gamerzdisease.com.flashcards.deck.Grade;
@@ -29,7 +27,7 @@ import gamerzdisease.com.flashcards.filesystem.DeckDatabaseAdapter;
 /**
  * Created by Travis on 3/14/2015.
  */
-public class CardFrontFragment extends Fragment implements DialogClickListener {
+public class CardFrontFragment extends Fragment implements StudyInfoListener {
 
     private final static String TAG = "CardFrontFragment";
     private Deck mDeck;
@@ -128,7 +126,6 @@ public class CardFrontFragment extends Fragment implements DialogClickListener {
         String[] whereArgs = {mDeck.getName()};
         mDeckDatabaseAdapter.tableRemove(tableName, whereClause, whereArgs);
     }
-
 
     private boolean isPreviousStudy(){
         return mCursor.getCount() > 0;
