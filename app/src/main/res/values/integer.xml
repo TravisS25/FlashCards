@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="card_flip_time_full">5</integer>
-    <integer name="card_flip_time_half">2</integer>
+    <integer name="card_flip_time_full">10</integer>
+    <integer name="card_flip_time_half">3</integer>
+    <integer name="duration">100</integer>
 
     <integer name="textbox_lines">4</integer>
 

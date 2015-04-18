@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="gamerzdisease.com.flashcards" >
+    package="com.shankstravis.myflashcards" >
     <uses-sdk android:minSdkVersion="15" />
     <application
-        android:name="gamerzdisease.com.flashcards.deck.DeckHolder"
+        android:name="com.shankstravis.myflashcards.deck.DeckHolder"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="gamerzdisease.com.flashcards.MainActivity"
+            android:name="com.shankstravis.myflashcards.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,73 +19,73 @@
         </activity>
 
         <activity
-            android:name="gamerzdisease.com.flashcards.NewDeckActivity"
+            android:name="com.shankstravis.myflashcards.NewDeckActivity"
             android:label="@string/decks"
-            android:parentActivityName="gamerzdisease.com.flashcards.MainActivity">
+            android:parentActivityName="com.shankstravis.myflashcards.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gamerzdisease.com.flashcards.MainActivity"/>
+                android:value="com.shankstravis.myflashcards.MainActivity"/>
         </activity>
 
         <activity
-            android:name="gamerzdisease.com.flashcards.CreateCardActivity"
+            android:name="com.shankstravis.myflashcards.CreateCardActivity"
             android:label="@string/options"
             android:windowSoftInputMode="adjustPan"
-            android:parentActivityName="gamerzdisease.com.flashcards.OptionsActivity">
+            android:parentActivityName="com.shankstravis.myflashcards.OptionsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gamerzdisease.com.flashcards.OptionsActivity"/>
+                android:value="com.shankstravis.myflashcards.OptionsActivity"/>
         </activity>
 
         <activity
-            android:name="gamerzdisease.com.flashcards.OptionsActivity"
+            android:name="com.shankstravis.myflashcards.OptionsActivity"
             android:label="@string/deck_list"
-            android:parentActivityName="gamerzdisease.com.flashcards.MainActivity">
+            android:parentActivityName="com.shankstravis.myflashcards.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gamerzdisease.com.flashcards.MainActivity"/>
+                android:value="com.shankstravis.myflashcards.MainActivity"/>
         </activity>
 
         <activity
-            android:name="gamerzdisease.com.flashcards.EditDeckTableActivity"
+            android:name="com.shankstravis.myflashcards.EditDeckTableActivity"
             android:label="@string/options"
-            android:parentActivityName="gamerzdisease.com.flashcards.OptionsActivity">
+            android:parentActivityName="com.shankstravis.myflashcards.OptionsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gamerzdisease.com.flashcards.OptionsActivity"/>
+                android:value="com.shankstravis.myflashcards.OptionsActivity"/>
         </activity>
 
         <activity
-            android:name="gamerzdisease.com.flashcards.EditCardActivity"
+            android:name="com.shankstravis.myflashcards.EditCardActivity"
             android:label="@string/card_table"
             android:windowSoftInputMode="adjustPan"
-            android:parentActivityName="gamerzdisease.com.flashcards.EditDeckTableActivity">
+            android:parentActivityName="com.shankstravis.myflashcards.EditDeckTableActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gamerzdisease.com.flashcards.EditDeckTableActivity"/>
+                android:value="com.shankstravis.myflashcards.EditDeckTableActivity"/>
         </activity>
 
         <activity
-            android:name="gamerzdisease.com.flashcards.StudyDeckActivity"
+            android:name="com.shankstravis.myflashcards.StudyDeckActivity"
             android:label="@string/options"
-            android:parentActivityName="gamerzdisease.com.flashcards.OptionsActivity"
+            android:parentActivityName="com.shankstravis.myflashcards.OptionsActivity"
             android:noHistory="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gamerzdisease.com.flashcards.OptionsActivity"/>
+                android:value="com.shankstravis.myflashcards.OptionsActivity"/>
         </activity>
 
         <activity
-            android:name="gamerzdisease.com.flashcards.GradeActivity"
+            android:name="com.shankstravis.myflashcards.GradeActivity"
             android:label="@string/options"
-            android:parentActivityName="gamerzdisease.com.flashcards.OptionsActivity">
+            android:parentActivityName="com.shankstravis.myflashcards.OptionsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gamerzdisease.com.flashcards.OptionsActivity"/>
+                android:value="com.shankstravis.myflashcards.OptionsActivity"/>
         </activity>
 
         <activity
-            android:name="gamerzdisease.com.flashcards.DeckScoreActivity"
+            android:name="com.shankstravis.myflashcards.DeckScoreActivity"
             android:label="@string/options">
         </activity>
 
